@@ -1,0 +1,151 @@
+/*-----共有样式-----*/
+body{
+    font: 14px/1.5 "Helvetica Neue",Helvetica,Arial,"PingFang SC","\5FAE\8F6F\96C5\9ED1","\5b8b\4f53",sans-serif,tahoma;
+    background: #fff;
+}
+
+.main_content {
+    position: relative;
+}
+
+div, h3, h4 {
+    display: block;
+}
+
+/*头部所有内容区*/
+.main_header {
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    /*background-color: royalblue;*/
+    border-bottom: 1px solid #e7e7e7;
+    top: 0;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, .4);
+    z-index: 1025;
+}
+
+.main_header_content {
+    width: 1120px;
+    height: 70px;
+    margin: 0 auto;
+    position: relative;
+    /*background-color: chocolate;*/
+    line-height: 70px;
+}
+
+.main_header_content h1 {
+    width: 240px;
+    height: 100%;
+}
+
+/*logo*/
+div.main_header_content h1 a {
+    display: block;
+    width: 150px;
+    height: 70px;
+    text-decoration: none;
+    font-size: 2.5em;
+    font-family: 华文行楷;
+    font-weight: bolder;
+    color: #E9967A;
+    position: absolute;
+}
+
+/*头部主导航栏*/
+.header_nav_bar {
+    margin-left: 185px;
+}
+
+/*解决高度塌陷和外边距重叠的问题*/
+.clearfix {
+    display: block;
+    content: ".";
+    height: 0;
+    clear: both;
+}
+
+.header_nav_bar li {
+    float: left;
+    line-height: 70px;
+}
+
+.header_nav_bar a {
+    display: block;
+    padding: 0 20px;
+}
+
+/*全局超链接样式*/
+a {
+    color: black;
+    font-size: 14px;
+}
+
+a:link {
+    color: black;
+    text-decoration: none;
+
+}
+
+a:visited {
+    color: darksalmon;
+}
+
+a:hover {
+    color: darksalmon;
+}
+
+a:active {
+    color: darksalmon;
+}
+
+/*搜索框样式*/
+.search_box {
+    position: absolute;
+    margin-left: 640px;
+
+}
+
+.search_box input {
+    width: 200px;
+    height: 35px;
+    border: 2px solid darksalmon;
+    border-radius: 5px;
+    background: transparent;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: small;
+}
+
+.search_box button {
+    border: 2px none darksalmon;
+    background: darksalmon;
+    border-radius: 3px;
+    width: 60px;
+    height: 38px;
+
+}
+
+.search_box button:before {
+    content: "查询";
+    font-size: 13px;
+    color: #F9F0DA;
+}
+
+/*登录注册块*/
+.login_box {
+    float: right;
+}
+
+.login_box a {
+    padding: 0 5px;
+}
+
+/*购物车*/
+.cart_box {
+    float: right;
+    margin-left: 20px;
+}
+
+
+

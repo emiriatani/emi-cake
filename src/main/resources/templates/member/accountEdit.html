@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/accountEdit.css">
+    <title>完善资料-emicake艾米蛋糕</title>
+</head>
+<body>
+
+<div class="main_content">
+    <!--main header-->
+    <div class="main_header">
+        <div class="main_header_content clearfix">
+            <h1>
+                <a href="../common/index.html" title="艾米甜品">Emi Cake</a>
+            </h1>
+            <ul class="header_nav_bar">
+                <li><a href="../common/index.html">首页</a></li>
+                <li><a href="#2">全部商品</a></li>
+                <li><a href="#3">甄选蛋糕</a></li>
+                <li><a href="#4">精选食材</a></li>
+                <li><a c href="#5">会员中心</a></li>
+            </ul>
+            <div class="search_box">
+                <form action="#">
+                    <input type="text" placeholder="请输入手机号或订单号查询订单" name="orderSearch">
+                    <button type="submit"></button>
+                </form>
+            </div>
+            <div class="cart_box">
+                <a href="../cart/cart.html">购物车</a>
+            </div>
+            <div class="login_box">
+                <img src="" alt="">
+                <a href="login.html">登录</a>
+                <span>|</span>
+                <a href="register.html">注册</a>
+            </div>
+        </div>
+    </div>
+
+    <!--main content-->
+    <!--左侧导航栏-->
+    <div class="side_bar clearfix">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;">
+            <li class="layui-nav-item">
+                <a href="memberCentre.html">我的emicake</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="accountOrder.html">我的订单</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="accountEdit.html">修改会员信息</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">我的地址</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">修改密码</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">会员权益</a>
+            </li>
+        </ul>
+    </div>
+
+    <!--修改资料区-->
+    <form class="layui-form member_info_box" action="">
+        <div class="member_title">
+            <span>17305814557</span>
+        </div>
+        <div class=" member_info">
+            <div class="layui-form-item member_info_item">
+                <label class="layui-form-label">手机号码</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item member_info_item">
+                <label class="layui-form-label">真实姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item member_info_item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <input type="radio" name="sex" value="女" title="女">
+                </div>
+
+            </div>
+            <div class="layui-form-item member_info_item">
+                <label class="layui-form-label">生日</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="date" id="date" lay-verify="date" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+
+            </div>
+            <div class="layui-form-item member_info_item">
+                <label class="layui-form-label">电子邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline update_submit">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script>
+
+    layui.use(['element', 'form', 'laydate'], function () {
+        var element = layui.element
+            , form = layui.form
+            , laydate = layui.laydate; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        laydate.render({
+            elem: '#date'
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+/*侧边导航栏*/
+.side_bar{
+    width: 200px;
+    height: 500px;
+    border: 1px solid #e7e7e7;
+    position: absolute;
+    margin-top: 160px;
+    margin-left: 210px;
+
+}
+.layui-nav {
+    position: relative;
+    padding: 0 20px;
+    background-color: #fff;
+    color: #182026;
+    border-radius: 2px;
+    font-size: 0;
+    box-sizing: border-box;
+    margin-top: 30px;
+}
+.layui-nav .layui-nav-item a {
+    display: block;
+    padding: 0px 20px;
+    margin-bottom: 15px;
+    -webkit-transition: all .3s;
+    font-size: 14px;
+}
+.layui-nav-tree .layui-nav-item a {
+    position: relative;
+    height: 45px;
+    line-height: 45px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: black;
+}
+.layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover {
+    background-color: #fff;
+}
+.layui-nav-tree .layui-nav-item a:hover {
+    background-color: #fff;
+    /*color: black;*/
+    color: #009688;
+}
+.layui-nav-tree .layui-nav-item a:active {
+    /*color: #009688;*/
+}
+
+/*会员信息*/
+.member_info_box{
+    width: 865px;
+    height: 500px;
+    /*border: 1px solid black;*/
+    position: absolute;
+    margin-top: 160px;
+    margin-left: 440px;
+}
+
+.member_title{
+    height: 65px;
+    border-bottom: 1px solid #e7e7e7;
+    margin-left: 30px;
+}
+.member_title span{
+    font-size: 30px;
+    color: #009688;
+    position: relative;
+    display: block;
+    line-height: 65px;
+
+}
+.member_info{
+    height: 435px;
+    margin-left: 30px;
+}
+.layui-form-item.member_info_item {
+    margin: 30px auto;
+}
+.layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 20px 9px 0px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+}
+.member_info .layui-form-item:last-child .layui-input-inline{
+    float: left;
+    width: 290px;
+    margin-right: 10px;
+}
+.update_submit button[type="submit"]{
+    float: right;
+}

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myf.myproject.dao.MemberMapper">
+  <resultMap id="BaseResultMap" type="com.myf.myproject.entity.Member">
+    <!--@mbg.generated-->
+    <!--@Table member-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="member_id" jdbcType="VARCHAR" property="memberId" />
+    <result column="member_password" jdbcType="VARCHAR" property="memberPassword" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="status" jdbcType="BOOLEAN" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_ip" jdbcType="INTEGER" property="createIp" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="login_ip" jdbcType="INTEGER" property="loginIp" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, member_id, member_password, phone, `status`, create_time, create_ip, login_time, 
+    login_ip, update_time, salt
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.myproject.entity.Member" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into member (member_id, member_password, phone, 
+      `status`, create_time, create_ip, 
+      login_time, login_ip, update_time, 
+      salt)
+    values (#{memberId,jdbcType=VARCHAR}, #{memberPassword,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BOOLEAN}, #{createTime,jdbcType=TIMESTAMP}, #{createIp,jdbcType=INTEGER}, 
+      #{loginTime,jdbcType=TIMESTAMP}, #{loginIp,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{salt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.myproject.entity.Member" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="memberPassword != null">
+        member_password,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createIp != null">
+        create_ip,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="loginIp != null">
+        login_ip,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPassword != null">
+        #{memberPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BOOLEAN},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createIp != null">
+        #{createIp,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginIp != null">
+        #{loginIp,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.myproject.entity.Member">
+    <!--@mbg.generated-->
+    update member
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPassword != null">
+        member_password = #{memberPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BOOLEAN},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createIp != null">
+        create_ip = #{createIp,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginIp != null">
+        login_ip = #{loginIp,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myf.myproject.entity.Member">
+    <!--@mbg.generated-->
+    update member
+    set member_id = #{memberId,jdbcType=VARCHAR},
+      member_password = #{memberPassword,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BOOLEAN},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_ip = #{createIp,jdbcType=INTEGER},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      login_ip = #{loginIp,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      salt = #{salt,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

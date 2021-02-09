@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/addAccountAddress.css">
+    <title>添加新地址-emicake艾米蛋糕</title>
+</head>
+<body>
+<div class="main_content">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">收货人</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" autocomplete="off" lay-verify="required"
+                           placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">收货人手机</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="phone" lay-verify="required|phone"
+                           lay-reqtext="收货人手机不能为空" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">所在地区</label>
+                <div class="layui-input-inline">
+                    <select name="quiz1">
+                        <option value="宁波" selected>宁波</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="quiz3">
+                        <option value="宁波">海曙区</option>
+                        <option value="宁波" selected>江北区</option>
+                        <option value="宁波">镇海区</option>
+                        <option value="宁波">北仑区</option>
+                        <option value="宁波">鄞州区</option>
+                        <option value="宁波">奉化区</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">收货地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" lay-verify="required" lay-reqtext="收货地址不能为空"
+                           placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script>
+    layui.use(['form'],function () {
+            var form = layui.form;
+
+
+    })
+
+</script>
+</body>
+</html>

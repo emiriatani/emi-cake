@@ -1,0 +1,156 @@
+/*-----cart.html-----*/
+/*购物车主要内容*/
+.cart_contentBox {
+    position: relative;
+    width: 1120px;
+    margin: 140px auto;
+    /*background-color: mediumpurple;*/
+}
+
+.cart_title h1 {
+    /*width: 100%;*/
+    padding-bottom: 50px;
+    font-size: larger;
+    color: black;
+}
+
+.main_line {
+    border-bottom: 1px solid #E7E7E7;
+}
+
+/*购物车里的每个商品项*/
+.cart_item {
+    position: relative;
+    height: 160px;
+    /* border: 1px solid black; */
+    /* margin: 20px auto; */
+    padding: 25px 0 25px 5px;
+    border-bottom: 1px solid #E7E7E7;
+}
+
+/*商品信息*/
+.goods_info {
+    position: absolute;
+}
+
+.img {
+    float: left;
+    margin-right: 14px;
+}
+
+.desc {
+    float: left;
+}
+.stock{
+    margin-top: 40px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.goods_info a div img {
+    width: 160px;
+    height: 160px;
+}
+
+.goods_info a div h3 {
+    font-size: 18px;
+    margin-top: 10px;
+    color: black
+}
+
+/*商品价格*/
+.goods_price {
+    margin-left: 55%;
+    margin-top: 10px;
+}
+
+/*商品个数*/
+.goods_count {
+    margin-left: 76%;
+}
+span.count_value {
+    padding: 0 5px;
+}
+
+.add_btn,.del_btn{
+    border: 1px solid darkgrey;
+    color: darkgrey;
+    border-radius: 20%;
+    font-weight: bolder;
+}
+.add_btn:hover,.del_btn:hover{
+    color: black;
+}
+/*商品总价*/
+.goods_total {
+    float: right;
+    height: 160px;
+}
+.goods_total span {
+    display: block;
+    float: right;
+}
+.goods_total a {
+    color: black;
+    position: absolute;
+    right: 0px;
+    top: 160px;
+}
+/*购物车内合计容器*/
+.summation_box {
+    width: 1120px;
+    height: 90px;
+    /*background-color: hotpink;*/
+    /*border: 1px solid black;*/
+    padding: 50px 0;
+}
+
+.sum_bar_left a {
+    color: black;
+    margin-right: 40px;
+}
+
+.sum_bar_left {
+    float: left;
+    line-height: 20px;
+    height: 20px;
+}
+
+.deleteAll {
+    margin-left: 40px;
+}
+
+.sum_bar_right {
+    float: right;
+}
+
+.total_num {
+    margin-right: 40px;
+}
+
+/*结算按钮*/
+.order_btn {
+    float: right;
+    margin-top: 40px;
+
+}
+.order_btn button {
+    font-weight: 300;
+    font-size: 16px;
+    font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 40px;
+    background-color: #fff;
+    color: #1b9af7;
+    border: 1px solid #1b9af7;
+    border-radius: 4px;
+}
+
+.order_btn button:hover {
+    color: #fff;
+    background-color: #1b9af7;
+    box-shadow: 0 0 30px rgba(27, 154, 247, 0.8);
+}

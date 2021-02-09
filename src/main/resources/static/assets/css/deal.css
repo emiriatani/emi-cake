@@ -1,0 +1,96 @@
+.order_box{
+    width: 1120px;
+    height: 1400px;
+    position: relative;
+    margin: 120px auto 0px;
+    /*background-color: darkgrey;*/
+}
+/*配送方式*/
+.delivery_choice{
+    width: 1120px;
+}
+.delivery_choice h1,layui-tab-item h1{
+    font-size: 20px;
+    font-family: 'Microsoft Yahei', 'Arial';
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.layui-tab-title{
+    border-bottom-style: none;
+}
+.layui-tab-content{
+    padding: 0px;
+}
+/*自提地址*/
+.store_add_box,.delivery_info .layui-form-item:last-child{
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e7e7e7;
+}
+.store_add_box .layui-form-item .layui-input-block{
+    margin-left: 0px;
+}
+/*自提人信息*/
+.pickup_info .layui-form-item{
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e7e7e7;
+}
+.pickup_info .layui-form-item .layui-inline{
+    margin-left: -47px;
+    margin-top: 15px;
+}
+/*自提时间*/
+.pickup_date .layui-form-item .layui-inline{
+    margin-top: 15px;
+}
+.pickup_date .layui-form-item{
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e7e7e7;
+}
+/*备注留言*/
+.pickup_msg .layui-form-item .layui-inline{
+    margin-top: 15px;
+}
+.pickup_msg .layui-form-item{
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e7e7e7;
+}
+#order_msg_input{
+    width: 1120px;
+}
+#order_msg_input1{
+    width: 1120px;
+}
+/*支付方式*/
+.payment_mode .layui-form-item{
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e7e7e7;
+}
+.payment_mode .layui-form-item .layui-input-block{
+    margin-left: 0px;
+}
+/*订单结算*/
+.summation_box{
+    width: 1120px;
+    height: 120px;
+    border: 1px solid #e7e7e7;
+    padding: 22px 0;
+    margin-top: 28px;
+    margin-botom: 50px;
+}
+.sum_bar_right{
+    float: right;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+.order_btn{
+    float: right;
+    margin-top: 32px;
+    margin-right: 10px;
+}
+.blank{
+    width: 1120px;
+    height: 80px;
+}
+
+
+

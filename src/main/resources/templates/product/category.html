@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common :: common_head(~{::title})">
+    <title>蛋糕名录-XXX-emicake艾米蛋糕</title>
+</head>
+<body>
+
+<div class="main_content">
+    <!--main header-->
+    <div th:replace="common/common :: menu_bar"></div>
+
+    <div class="category_nav">
+
+        <div class="vertical_nav clearfix">
+            <div><a href="">分类</a></div>
+            <div><a href="">甜度</a></div>
+        </div>
+        <div class="allKinds_nav clearfix">
+            <div><a href="">全部</a></div>
+            <div><a href="">全部</a></div>
+        </div>
+        <div class="horizontal_nav">
+
+            <div class="type_nav">
+                <span class="layui-breadcrumb" lay-separator="  |  ">
+                    <a href="">面包</a>
+                    <a href="">糕点</a>
+                    <a href="">生日蛋糕</a>
+                    <a href="">烘焙</a>
+                    <a href="">西式</a>
+                    <a href="">中式</a>
+                    <a href="">热饮</a>
+                    <a href="">冷饮</a>
+                </span>
+            </div>
+            <div class="sweetness_nav">
+                <span class="layui-breadcrumb" lay-separator="  |  ">
+                    <a href="">微甜</a>
+                    <a href="">中甜</a>
+                    <a href="">特甜</a>
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
+        src=".././static/assets/layui/layui.js"></script>
+<script>
+    layui.use(['element'], function () {
+        var element = layui.element;
+
+
+    })
+
+</script>
+</body>
+</html>

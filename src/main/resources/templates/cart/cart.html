@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cart.css">
+    <title>购物车-emicake艾米蛋糕</title>
+</head>
+<body>
+<div class="main_content">
+    <!--main header-->
+    <div class="main_header">
+        <div class="main_header_content clearfix">
+            <h1>
+                <a href="../common/index.html" title="艾米甜品">Emi Cake</a>
+            </h1>
+            <ul class="header_nav_bar">
+                <li><a href="../common/index.html">首页</a></li>
+                <li><a href="#2">全部商品</a></li>
+                <li><a href="#3">甄选蛋糕</a></li>
+                <li><a href="#4">精选食材</a></li>
+                <li><a c href="#5">会员中心</a></li>
+            </ul>
+            <div class="search_box">
+                <form action="#">
+                    <input type="text" placeholder="请输入手机号或订单号查询订单" name="orderSearch">
+                    <button type="submit"></button>
+                </form>
+            </div>
+            <div class="cart_box">
+                <a href="cart.html">购物车</a>
+            </div>
+            <div class="login_box">
+                <img src="" alt="">
+                <a href="../member/login.html">登录</a>
+                <span>|</span>
+                <a href="../member/register.html">注册</a>
+            </div>
+        </div>
+    </div>
+    <!--main content-->
+    <div class="main_content_area">
+        <div class="cart_contentBox">
+            <!--购物车标题-->
+            <div class="cart_title">
+                <h1>购物车</h1>
+            </div>
+            <p class="main_line"></p>
+            <!--每个商品项-->
+            <div class="cart_item">
+                <div class="goods_info">
+                    <a href="#20">
+                        <div class="img"><img src="../img/example01.jpg" alt=""></div>
+                        <div class="desc">
+                            <h3>偏爱 | 海盐黑巧慕斯蛋糕</h3>
+                        </div>
+                    </a>
+                    <!--                    <div class="stock">-->
+                    <!--                        <span>库存:</span>-->
+                    <!--                        <span class="stock_num">5</span>-->
+                    <!--                    </div>-->
+                </div>
+                <div class="goods_price clearfix">
+                    <span>￥</span>
+                    <span class="unit_price">11111111</span>
+                    <span>/</span>
+                    <span>件</span>
+                </div>
+                <div class="goods_count clearfix">
+                    <span><button class="del_btn"><i class="layui-icon">&#xe67e;</i></button></span>
+                    <span class="count_value">1</span>
+                    <span><button class="add_btn"><i class="layui-icon">&#xe624;</i></button></span>
+                </div>
+                <div class="goods_total">
+                    <span class="item_price">11111111</span>
+                    <span>￥</span>
+                    <a class="remove_item" href="javascript:;">删除</a>
+                </div>
+            </div>
+            <div class="cart_item">
+                <div class="goods_info">
+                    <a href="#20">
+                        <div class="img"><img src="../img/example01.jpg" alt=""></div>
+                        <div class="desc">
+                            <h3>偏爱 | 海盐黑巧慕斯蛋糕</h3>
+                        </div>
+                    </a>
+                    <!--                    <div class="stock">-->
+                    <!--                        <span>库存:</span>-->
+                    <!--                        <span class="stock_num">5</span>-->
+                    <!--                    </div>-->
+                </div>
+                <div class="goods_price clearfix">
+                    <span>￥</span>
+                    <span class="unit_price">11111111</span>
+                    <span>/</span>
+                    <span>件</span>
+                </div>
+                <div class="goods_count clearfix">
+                    <span><button class="del_btn"><i class="layui-icon">&#xe67e;</i></button></span>
+                    <span class="count_value">1</span>
+                    <span><button class="add_btn"><i class="layui-icon">&#xe624;</i></button></span>
+                </div>
+                <div class="goods_total">
+                    <span class="item_price">11111111</span>
+                    <span>￥</span>
+                    <a class="remove_item" href="javascript:;">删除</a>
+                </div>
+            </div>
+            <!--结算块-->
+            <div class="summation_box">
+                <div class="sum_bar_left">
+                    <a href="../common/index.html">继续购物</a>
+                    <a id="deleteAll" href="javascript:;">清空</a>
+                </div>
+                <div class="sum_bar_right">
+                    <span class="total_num">总金额</span>
+                    <span>￥</span>
+                    <span id="cart_total_price">11111111</span>
+                </div>
+                <div class="order_btn clearfix">
+                    <form action="">
+                        <button>立即结算</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../js/cart.js"></script>
+</body>
+</html>

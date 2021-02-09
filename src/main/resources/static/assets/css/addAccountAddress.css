@@ -1,0 +1,12 @@
+.main_content{
+    width: 800px;
+    height: 360px;
+    /*background-color: mediumpurple;*/
+}
+
+.layui-form-item{
+    margin-top: 30px;
+}
+.layui-form .layui-form-item:last-child .layui-input-inline{
+    margin-left: 40%;
+}

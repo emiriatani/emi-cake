@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/goods.css">
+
+    <title>商品详细页-emicake艾米蛋糕</title>
+</head>
+<body>
+<div class="main_content">
+    <!--main header-->
+    <div class="main_header">
+        <div class="main_header_content clearfix">
+            <h1>
+                <a href="../common/index.html" title="艾米甜品">Emi Cake</a>
+            </h1>
+            <ul class="header_nav_bar">
+                <li><a href="../common/index.html">首页</a></li>
+                <li><a href="#2">全部商品</a></li>
+                <li><a href="#3">甄选蛋糕</a></li>
+                <li><a href="#4">精选食材</a></li>
+                <li><a c href="#5">会员中心</a></li>
+            </ul>
+            <div class="search_box">
+                <form action="#">
+                    <input type="text" placeholder="请输入手机号或订单号查询订单" name="orderSearch">
+                    <button type="submit"></button>
+                </form>
+            </div>
+            <div class="cart_box">
+                <a href="../cart/cart.html">购物车</a>
+            </div>
+            <div class="login_box">
+                <img src="" alt="">
+                <a href="../member/login.html">登录</a>
+                <span>|</span>
+                <a href="../member/register.html">注册</a>
+            </div>
+        </div>
+    </div>
+    <!--main content-->
+    <!--商品介绍轮播图-->
+    <div class="layui-carousel goods_carousel" id="goods_carousel">
+        <div carousel-item>
+            <div>
+                <a href="javascript:;"><img src="../img/example03.jpg" alt=""></a>
+            </div>
+            <div>
+                <a href="javascript:;"><img src="../img/example04.jpg" alt=""></a>
+            </div>
+            <div>
+                <a href="javascript:;"><img src="../img/example05.jpg" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <!--商品购买信息-->
+    <!--提交表单-->
+    <form action="" class="layui-form">
+        <div class="goods_shop_box clearfix">
+            <!--商品名称和价格-->
+            <div class="goods_title">
+                <h1>桃芝|樱桃芝士蛋糕</h1>
+                <h1>￥239</h1>
+            </div>
+            <!--商品甜度-->
+            <div class="goods_sweetness_score">
+                <span>甜度</span>
+                <span id="score"></span>
+            </div>
+            <!--文案-->
+            <div class="goods_with_words">
+                <p>
+                    有种美好本在人生际遇之处，
+                    <br>
+                    那些初次的余香，俨如口中混合着的丝缕酸甜，
+                    <br>
+                    就像樱桃和百利甜一样，成了没人遗忘的天生一对。
+                </p>
+            </div>
+            <!--规格数量-->
+            <div class="goods_standard ">
+                <div class="layui-form-item" id="size_box">
+                    <label class="layui-form-label">尺寸：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="size" value="6吋" title="6吋" checked="">
+                        <input type="radio" name="size" value="8吋" title="8吋">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="amount">
+                    <label class="layui-form-label">数量：</label>
+                    <div class="layui-input-block">
+                        <div id="amount_group">
+                            <span><a href="javascript:;" class="del_btn"><i class="layui-icon">&#xe67e;</i></a></span>
+                            <span class="count_value">1</span>
+                            <span><a href="javascript:;" class="add_btn"><i class="layui-icon">&#xe624;</i></a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--加入购物车立即购买-->
+            <div class="shopBtnGroup">
+                <button class="layui-btn layui-btn-warm">加入购物车</button>
+                <button class="layui-btn layui-btn-warm">立即购买</button>
+            </div>
+        </div>
+    </form>
+
+    <!--商品详细信息-->
+    <div class="goods_info_box">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>Introduction</legend>
+        </fieldset>
+        <img src="../img/example06.jpg" alt="">
+        <img src="../img/example08.jpg" alt="">
+        <img src="../img/example07.jpg" alt="">
+        <img src="../img/example06.jpg" alt="">
+        <img src="../img/example08.jpg" alt="">
+        <img src="../img/example07.jpg" alt="">
+        <img src="../img/example06.jpg" alt="">
+        <img src="../img/example08.jpg" alt="">
+        <img src="../img/example07.jpg" alt="">
+    </div>
+</div>
+
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../js/goods.js"></script>
+
+</body>
+</html>

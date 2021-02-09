@@ -1,0 +1,129 @@
+/*轮播图图片*/
+.goods_carousel img{
+    width: 100%;
+    height: 100%;
+}
+/*商品购买信息容器*/
+.goods_shop_box{
+    width: 400px;
+    height: 500px;
+    border: 1px solid #E7E7E7;
+    position: relative;
+    margin-top: -500px;
+    margin-left: 820px;
+
+}
+/*商品标题*/
+.goods_title{
+    margin-top: 28px;
+    margin-left: 28px;
+    font-size: 22px;
+}
+.goods_title h1 {
+    margin-bottom: 35px;
+}
+/*商品甜度*/
+.goods_sweetness_score{
+    position: relative;
+    margin-top: -12px;
+    margin-left: 28px;
+}
+.goods_sweetness_score > span:first-child{
+    float: left;
+    margin-top: 16px;
+    font-size: 12px;
+}
+#score{
+    margin-left: 20px;
+}
+/*商品文案描述*/
+p{
+    font: 12px/1.5 "Helvetica Neue",Helvetica,Arial,"PingFang SC","\5FAE\8F6F\96C5\9ED1","\5b8b\4f53",sans-serif,tahoma;
+    display: block;
+    margin-block-start: 2em;
+    margin-block-end: 2em;
+    margin-inline-start: 28px;
+    margin-inline-end: 0px;
+    letter-spacing: 1.5px;
+}
+/*商品规格和购买数量*/
+.goods_standard{
+    margin-top: 45px;
+    margin-left: 28px;
+    /*border: 1px solid #e7e7e7;*/
+}
+
+#size_box{
+    margin-bottom: 25px;
+}
+.layui-form-label{
+    float: left;
+    display: block;
+    padding: 9px 0px;
+    width: 50px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+.layui-input-block{
+    margin-left: 60px;
+}
+.layui-form-radio>i:hover, .layui-form-radioed>i {
+    color: #FFB800;
+}
+#amount_group{
+    position: absolute;  /* 使得div2相对于div1的左上角定位 */
+    top: 50%; /* div2左上角垂直居中 */
+    left: 0%; /* div2贴在div1的左边 */
+    transform: translate(0%,-50%); /* 往上移动自身的百分之50% */
+}
+.add_btn>i,.del_btn>i{
+    color: darkgrey;
+    border: 1px solid #e7e7e7;
+    border-radius: 20%;
+    font-weight: bolder;
+}
+.add_btn>i:hover,.del_btn>i:hover{
+    border: 1px solid black;
+    border-radius: 20%;
+    color: black;
+}
+.count_value{
+    padding: 0 5px;
+}
+
+/*购买块*/
+.shopBtnGroup{
+    margin-left: 28px;
+    margin-top: 34px;
+}
+.shopBtnGroup button:first-child{
+    color: white;
+}
+.shopBtnGroup button:last-child{
+    width: 106px;
+    color: black;
+    background-color: #ffb80036;
+    border: 1px solid rgba(255,198,51);
+}
+
+
+/*商品详情信息*/
+.goods_info_box{
+    width: 1162px;
+    margin: 120px auto 0;
+    padding: 0 0 38px;
+    position: relative;
+}
+.layui-field-title{
+    margin: 10px 0 45px;
+}
+.goods_info_box img{
+    margin: 0 auto;
+    border: none;
+    display: block;
+    padding: 0;
+    width: 100%;
+}
+
+

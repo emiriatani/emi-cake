@@ -1,0 +1,99 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  # 错误处理
+  error:
+    include-exception: true
+    include-message: always
+spring:
+  application:
+    name: emi-cake
+  datasource:
+    #   数据源基本配置
+    username: root
+    password: minyifeng789.
+    url: jdbc:mysql://localhost:3306/emi_cake?serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
+    type: com.alibaba.druid.pool.DruidDataSource
+    #   Druid数据源的配置
+    druid:
+      aop-patterns: com.myf.myproject.*  #监控SpringBean
+      filters: stat,wall     # 底层开启功能，stat（sql监控），wall（防火墙）
+      stat-view-servlet:   # 配置监控页功能
+        enabled: true
+        login-username: admin
+        login-password: admin
+        url-pattern: /druid/*
+        resetEnable: false
+      web-stat-filter:  # 监控web
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+      filter:
+        stat:    # 对上面filters里面的stat的详细配置
+          slow-sql-millis: 1000
+          logSlowSql: true
+          enabled: true
+        wall:
+          enabled: true
+          config:
+            drop-table-allow: false
+  # web配置
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd HH:mm:ss
+    static-path-pattern: /static/**
+  resources:
+    static-locations: classpath:/static/
+  # thymeleaf模板配置
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    check-template-location: true
+    cache: false
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    servlet:
+      content-type: text/html #文档类型
+  # redis配置
+  redis:
+    host: 192.168.170.130
+    port: 6379
+    database: 0
+    timeout: 3000
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+# mybatis配置
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #配置驼峰命名映射
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/config/mybatis/mapper/*.xml
+  type-aliases-package: com.myf.myproject.entities
+
+#日志配置
+logging:
+  level:
+    com:
+      myf: debug
+  file:
+    path: log
+#shiro配置
+shiro:
+  loginUrl: /member/login.html
+  successUrl: /

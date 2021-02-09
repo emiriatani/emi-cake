@@ -1,0 +1,26 @@
+.category_nav{
+    width: 1120px;
+    height: 96px;
+    margin: 120px auto 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e7e7e7;
+}
+.vertical_nav {
+    position: relative;
+    line-height: 48px;
+}
+.allKinds_nav{
+    position: relative;
+    line-height: 48px;
+    margin-left: 90px;
+}
+.type_nav{
+    position: relative;
+    line-height: 48px;
+    margin-left: 170px;
+}
+.sweetness_nav{
+    position: relative;
+    margin-top: 8px;
+    margin-left: 170px;
+}

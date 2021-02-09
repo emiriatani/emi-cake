@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="common/common :: common_head(~{::title})">
+    <title>会员登录-emicake艾米蛋糕</title>
+</head>
+<body>
+
+<div class="main_content">
+    <!--main header-->
+    <div th:replace="common/common :: menu_bar"></div>
+    <!--main content-->
+    <div class="layui-tab layui-tab-brief login_area_box">
+
+        <ul class="layui-tab-title">
+            <li class="layui-this">手机验证码登录</li>
+            <li>账号密码登录</li>
+        </ul>
+
+        <div class=" layui-tab-content login_infoBox">
+            <!--手机验证码登录表单-->
+            <div class="layui-tab-item layui-show">
+                <form class=" layui-form" action="">
+                    <div class="layui-form-item form_item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label form_label">手机号码：</label>
+                            <div class="layui-input-inline input_line">
+                                <input type="tel" name="phone" lay-verify="required|phone" lay-reqtext="手机号码不能为空!"
+                                       autocomplete="off"
+                                       placeholder="请输入手机号码"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item form_item">
+                        <label class="layui-form-label form_label">手机验证码：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="number" lay-verify="SMS" lay-reqtext="验证码不能为空!"
+                                   placeholder="请输入手机验证码"
+                                   autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="">
+                            <button type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="getSMS">
+                                获取短信验证码
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item " id="login_form_item">
+                        <div class="layui-input-block input_block">
+                            <button type="submit" class="layui-btn layui-btn-normal layui-btn login_btn" lay-submit=""
+                                    lay-filter="reg">登录
+                            </button>
+                        </div>
+                        <div class="toRegister_btn"><a href="register.html">还没有账号,去注册</a></div>
+                    </div>
+                </form>
+            </div>
+            <!--账号密码登录表单-->
+            <div class="layui-tab-item">
+                <form class=" layui-form" action="">
+                    <div class="layui-form-item form_item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label form_label">账号：</label>
+                            <div class="layui-input-inline input_line">
+                                <input type="text" name="username" lay-verify="required" lay-reqtext="账号不能为空!"
+                                       autocomplete="off"
+                                       placeholder="请输入用户名或手机号"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item form_item">
+                        <label class="layui-form-label form_label">密码：</label>
+                        <div class="layui-input-inline">
+                            <input type="password" name="password" lay-verify="pwd" lay-reqtext="密码不能为空!"
+                                   placeholder="请输入密码"
+                                   autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item " id="login_form_item2">
+                        <div class="layui-input-block input_block">
+                            <button type="submit" class="layui-btn layui-btn-normal layui-btn login_btn" lay-submit=""
+                                    lay-filter="login">登录
+                            </button>
+                        </div>
+                        <div class="toRegister_btn"><a href="register.html">还没有账号,去注册</a></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
+        src=".././static/assets/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'element'], function () {
+        var form = layui.form;
+        var element = layui.element;
+
+        form.verify({
+            SMS: [
+                /^\d{6}$/
+                , '短信验证码为6位纯数字,请检查格式'
+            ]
+        })
+        form.verify({
+            pwd: [
+                /\S{6,}/
+                , '密码最少为6位，请检查格式'
+            ]
+
+
+        })
+    })
+</script>
+</body>
+</html>
