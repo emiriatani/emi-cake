@@ -18,12 +18,12 @@
         <div class="register_infoBox">
             <!--注册表单-->
             <form class="layui-form" th:action="@{/member/register}" method="post">
-                <input type="hidden" name="_method" value="post">
+
                 <div class="layui-form-item form_item">
                     <div class="layui-inline">
                         <label class="layui-form-label form_label">手机号码：</label>
                         <div class="layui-input-inline input_line">
-                            <input type="tel" name="phone" lay-verify="required|phone" lay-reqtext="手机号码不能为空!"
+                            <input type="tel" name="phone" lay-verify="phone" lay-reqtext="手机号码不能为空!"
                                    autocomplete="off"
                                    placeholder="请输入手机号码"
                                    class="layui-input"
@@ -39,7 +39,9 @@
                         <input type="text" name="SmsCode" lay-verify="SMS" lay-reqtext="验证码不能为空!"
                                placeholder="请输入手机验证码"
                                autocomplete="off"
-                               class="layui-input">
+                               class="layui-input"
+                               id="SmsCodeInput"
+                               value="123456">
                     </div>
                     <div class="">
                         <input type="button" id="SendSmsCodeBtn" class="layui-btn layui-btn-normal"
@@ -50,7 +52,7 @@
                 <div class="layui-form-item " id="reg_form_item">
                     <div class="layui-input-block input_block">
                         <button type="submit" class="layui-btn layui-btn-normal layui-btn reg_btn" lay-submit
-                                lay-filter="register" th:text="注册">注册
+                                lay-filter="register" id="registerBtn" th:text="注册">注册
                         </button>
                     </div>
                     <div class="toLogin_btn"><a th:href="@{/member/login.html}" href="login.html">已有账号,去登录</a></div>
@@ -69,13 +71,57 @@
     var count = 60; //间隔函数，1秒执行
     var curCount;//当前剩余秒数
     var emptyText = "";
+    var mobile = $("#phoneInput").val(); //用户输入的手机号
+    var SmsCode = $("#SmsCodeInput").val();//用户输入的验证码
     var SendSmsCodeBtn = $("#SendSmsCodeBtn");
-    var reg = /^1[3|4|5|7|8][0-9]{9}$/;
+    var registerBtn = $("#registerBtn");
+    var phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
+    var SmsCodeReg = /^\d{6}$/;
 
     $(function () {
+        registerBtn.click(function () {
+            $.ajax({
+                type: "POST",
+                url:"/member/register",
+                async: false,
+                data: $(".layui-form").serialize(),
+                dataType: "text",
+                success: function (response) {
+                    layui.use(['layer'], function () {
+                        layer.ready(function () {
+                            var layer = layui.layer;
+                            layer.alert(response, {
+                                skin: 'layui-layer-molv' //样式类名
+                                , closeBtn: 0
+                                , title: '提示'
+                                , resize: false
+                            });
+
+                        })
+                    })
+                },
+                error: function (response) {
+                    layui.use(['layer'], function () {
+                        layer.ready(function () {
+                            var layer = layui.layer;
+                            layer.alert(response, {
+                                skin: 'layui-layer-molv' //样式类名
+                                , closeBtn: 0
+                                , title: '提示'
+                                , resize: false
+                            });
+
+                        })
+                    })
+                }
+                }
+            )
+
+        })
+
         SendSmsCodeBtn.click(function () {
-            var mobile = $("#phoneInput").val();
-            if (emptyText != $.trim(mobile) && reg.test(mobile)) {
+
+            if (emptyText != $.trim(mobile) && phoneReg.test(mobile)) {
                 curCount = count;
                 SendSmsCodeBtn.addClass("layui-btn-disabled").attr("disabled", true);
                 SendSmsCodeBtn.val(curCount + "秒后重新获取");
@@ -85,11 +131,11 @@
                     url: "/send/register/" + mobile,
                     data: {},
                     dataType: "text",
-                    success: function (data) {
+                    success: function (response) {
                         layui.use(['layer'], function () {
                             layer.ready(function () {
                                 var layer = layui.layer;
-                                layer.alert(data, {
+                                layer.alert(response, {
                                     skin: 'layui-layer-molv' //样式类名
                                     , closeBtn: 0
                                     , title: '提示'
@@ -99,11 +145,11 @@
                             })
                         })
                     },
-                    error: function (data) {
+                    error: function (response) {
                         layui.use(['layer'], function () {
                             layer.ready(function () {
                                 var layer = layui.layer;
-                                layer.alert(data, {
+                                layer.alert(response, {
                                     skin: 'layui-layer-molv' //样式类名
                                     , closeBtn: 0
                                     , title: '提示'
@@ -123,11 +169,11 @@
                         });
                     })
                 })
-            } else if (!reg.test(mobile)) {
+            } else if (!phoneReg.test(mobile)) {
                 layui.use(['layer'], function () {
                     layer.ready(function () {
                         var layer = layui.layer;
-                        layer.msg("请输入正确的手机号码", {
+                        layer.msg("请输入合法的手机号码", {
                             time: 1500
                         });
                     })
@@ -137,6 +183,7 @@
         });
 
     });
+
 
     //timer处理函数
     function SetRemainTime() {
@@ -156,16 +203,20 @@
         var form = layui.form;
         form.verify({
             SMS: [
-                /^\d{6}$/
+                SmsCodeReg
                 , '短信验证码为6位纯数字,请检查格式'
+            ],
+            phone: [
+                phoneReg
+                , '请输入合法的手机号码'
             ]
         })
+        /*监听表单提交*/
         form.on('submit(register)', function (data) {
-
             console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
             console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
             console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
-            //return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
 
     })

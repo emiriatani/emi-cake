@@ -14,4 +14,7 @@ public interface MemberMapper {
     int updateByPrimaryKeySelective(Member record);
 
     int updateByPrimaryKey(Member record);
+
+    /*通过手机号查询会员用户*/
+    Member selectByMemberPhone(String phone);
 }

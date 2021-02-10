@@ -4,11 +4,11 @@ import com.myf.myproject.dao.MemberMapper;
 import com.myf.myproject.entity.Member;
 import com.myf.myproject.service.MemberService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService{
 
     @Resource
     private MemberMapper memberMapper;
@@ -43,6 +43,15 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.updateByPrimaryKey(record);
     }
 
+
+    /*通过手机号查询会员用户,判断是否存在*/
+    @Override
+    public boolean isExistsMember(String phone) {
+        Member member = memberMapper.selectByMemberPhone(phone);
+        if (StringUtils.isEmpty(member)){
+            return false;
+        }
+        return true;
+    }
+
 }
-
-

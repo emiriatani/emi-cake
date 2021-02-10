@@ -84,7 +84,7 @@ mybatis:
     #配置驼峰命名映射
     map-underscore-to-camel-case: true
   mapper-locations: classpath:/config/mybatis/mapper/*.xml
-  type-aliases-package: com.myf.myproject.entities
+  type-aliases-package: com.myf.myproject.entity
 
 #日志配置
 logging:

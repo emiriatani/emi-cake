@@ -3,12 +3,12 @@
 <mapper namespace="com.myf.myproject.dao.MemberMapper">
   <resultMap id="BaseResultMap" type="com.myf.myproject.entity.Member">
     <!--@mbg.generated-->
-    <!--@Table member-->
+    <!--@Table member_table-->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="member_id" jdbcType="VARCHAR" property="memberId" />
     <result column="member_password" jdbcType="VARCHAR" property="memberPassword" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="status" jdbcType="BOOLEAN" property="status" />
+    <result column="member_status" jdbcType="TINYINT" property="memberStatus" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="create_ip" jdbcType="INTEGER" property="createIp" />
     <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
@@ -18,35 +18,35 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, member_id, member_password, phone, `status`, create_time, create_ip, login_time, 
+    id, member_id, member_password, phone, member_status, create_time, create_ip, login_time, 
     login_ip, update_time, salt
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
-    from member
+    from member_table
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
-    delete from member
+    delete from member_table
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.myproject.entity.Member" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into member (member_id, member_password, phone, 
-      `status`, create_time, create_ip, 
+    insert into member_table (member_id, member_password, phone, 
+      member_status, create_time, create_ip, 
       login_time, login_ip, update_time, 
       salt)
     values (#{memberId,jdbcType=VARCHAR}, #{memberPassword,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BOOLEAN}, #{createTime,jdbcType=TIMESTAMP}, #{createIp,jdbcType=INTEGER}, 
+      #{memberStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createIp,jdbcType=INTEGER}, 
       #{loginTime,jdbcType=TIMESTAMP}, #{loginIp,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{salt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.myproject.entity.Member" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into member
+    insert into member_table
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
         member_id,
@@ -57,8 +57,8 @@
       <if test="phone != null">
         phone,
       </if>
-      <if test="status != null">
-        `status`,
+      <if test="memberStatus != null">
+        member_status,
       </if>
       <if test="createTime != null">
         create_time,
@@ -89,8 +89,8 @@
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=BOOLEAN},
+      <if test="memberStatus != null">
+        #{memberStatus,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -114,7 +114,7 @@
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.myf.myproject.entity.Member">
     <!--@mbg.generated-->
-    update member
+    update member_table
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=VARCHAR},
@@ -125,8 +125,8 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=BOOLEAN},
+      <if test="memberStatus != null">
+        member_status = #{memberStatus,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -151,11 +151,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.myf.myproject.entity.Member">
     <!--@mbg.generated-->
-    update member
+    update member_table
     set member_id = #{memberId,jdbcType=VARCHAR},
       member_password = #{memberPassword,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=BOOLEAN},
+      member_status = #{memberStatus,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_ip = #{createIp,jdbcType=INTEGER},
       login_time = #{loginTime,jdbcType=TIMESTAMP},
@@ -164,4 +164,13 @@
       salt = #{salt,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByMemberPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from member_table
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+
 </mapper>
