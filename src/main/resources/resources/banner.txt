@@ -1,0 +1,12 @@
+ ${AnsiColor.CYAN}
+                                               __
+                  __                          /\ \
+   __    ___ ___ /\_\             ___     __  \ \ \/'\      __
+ /'__`\/' __` __`\/\ \  _______  /'___\ /'__`\ \ \ , <    /'__`\
+/\  __//\ \/\ \/\ \ \ \/\______\/\ \__//\ \L\.\_\ \ \\`\ /\  __/
+\ \____\ \_\ \_\ \_\ \_\/______/\ \____\ \__/.\_\\ \_\ \_\ \____\
+ \/____/\/_/\/_/\/_/\/_/         \/____/\/__/\/_/ \/_/\/_/\/____/
+
+${AnsiColor.WHITE}Application Name: ${AnsiColor.BLUE}${application.title}
+${AnsiColor.WHITE}Application Version: ${AnsiColor.BLUE}${application.formatted-version}
+${AnsiColor.WHITE}Spring Boot Version: ${AnsiColor.BLUE}${spring-boot.formatted-version}

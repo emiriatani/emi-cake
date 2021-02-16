@@ -6,6 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" th:href="@{/static/assets/img/favicon.ico}" href="../../static/assets/img/favicon.ico">
     <link rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}" href="../../static/assets/layui/css/layui.css" media="all">
     <link rel="stylesheet" th:href="@{/static/assets/css/normalize.css}" href="../../static/assets/css/normalize.css">
     <link rel="stylesheet" th:href="@{/static/assets/css/reset.css}" href="../../static/assets/css/reset.css">
@@ -29,9 +30,9 @@
                 <li><a th:href="@{/product/category.html}">全部商品</a></li>
                 <li><a href="#3">甄选蛋糕</a></li>
                 <li><a href="#4">精选食材</a></li>
-                <li><a c href="#5">会员中心</a></li>
+                <li><a href="#5">会员中心</a></li>
             </ul>
-            <div class="search_box">
+            <div th:if="${session.loginMember != null}" class="search_box">
                 <form action="#">
                     <input type="text" placeholder="请输入手机号或订单号查询订单" name="orderSearch">
                     <button type="submit"></button>
@@ -40,11 +41,14 @@
             <div class="cart_box">
                 <a  href="../cart/cart.html">购物车</a>
             </div>
-            <div class="login_box">
+            <div th:if="${session.loginMember != null}" class="login_box">
+                <a th:href="@{/page/member/memberCentre.html}" th:text="${session.loginMember.getMemberId()}" target="_self"></a>
+            </div>
+            <div th:if="${session.loginMember == null}" class="login_box">
                 <img src="" alt="">
-                <a th:href="@{/member/login.html}" target="_self">登录</a>
+                <a th:href="@{/page/member/login.html}" target="_self">登录</a>
                 <span>|</span>
-                <a th:href="@{/member/register.html}" target="_self">注册</a>
+                <a th:href="@{/page/member/register.html}" target="_self">注册</a>
             </div>
         </div>
     </div>

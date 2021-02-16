@@ -1,10 +1,15 @@
+application:
+  title: emi-cake
+  formatted-version: v1.0.0
 server:
   port: 8080
+  address: 127.0.0.1
   servlet:
     encoding:
       enabled: true
       charset: UTF-8
       force: true
+    context-path: /
   # 错误处理
   error:
     include-exception: true
@@ -12,6 +17,8 @@ server:
 spring:
   application:
     name: emi-cake
+  banner:
+    location: classpath:/resources/banner.txt
   datasource:
     #   数据源基本配置
     username: root
@@ -22,7 +29,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     #   Druid数据源的配置
     druid:
-      aop-patterns: com.myf.myproject.*  #监控SpringBean
+      aop-patterns: com.myf.emicake.*  #监控SpringBean
       filters: stat,wall     # 底层开启功能，stat（sql监控），wall（防火墙）
       stat-view-servlet:   # 配置监控页功能
         enabled: true
@@ -77,6 +84,7 @@ spring:
         max-idle: 8
         max-wait: -1
         min-idle: 0
+
 # mybatis配置
 mybatis:
   configuration:
@@ -84,7 +92,7 @@ mybatis:
     #配置驼峰命名映射
     map-underscore-to-camel-case: true
   mapper-locations: classpath:/config/mybatis/mapper/*.xml
-  type-aliases-package: com.myf.myproject.entity
+  type-aliases-package: com.myf.emicake.domain
 
 #日志配置
 logging:
@@ -95,5 +103,5 @@ logging:
     path: log
 #shiro配置
 shiro:
-  loginUrl: /member/login.html
+  loginUrl: /page/member/login.html
   successUrl: /

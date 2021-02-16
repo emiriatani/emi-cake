@@ -56,9 +56,9 @@
     color: #707070;
 }
 
-.content_area_row .row_title a:visited {
-    color: #E9967A;
-}
+/*.content_area_row .row_title a:visited {*/
+/*    color: #E9967A;*/
+/*}*/
 
 .content_area_row .row_title a:hover {
     color: #E9967A;

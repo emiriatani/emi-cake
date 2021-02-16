@@ -15,13 +15,13 @@
         <div class="layui-carousel content_area_bigImgBox" id="goods_carousel">
             <div carousel-item>
                 <div>
-                    <a href="#112"><img th:src="@{/assets/img/cake.jpg}" src="../../static/assets/img/cake.jpg" alt=""></a>
+                    <a href="#112"><img th:src="@{/static/assets/img/cake.jpg}" src="../static/assets/img/cake.jpg" alt=""></a>
                 </div>
                 <div>
-                    <a href="#113"><img th:src="@{/assets/img/cake.jpg}" src="../../static/assets/img/cake.jpg" alt=""></a>
+                    <a href="#113"><img th:src="@{/static/assets/img/cake.jpg}" src="../static/assets/img/cake.jpg" alt=""></a>
                 </div>
                 <div>
-                    <a href="#114"><img th:src="@{/assets/img/cake.jpg}" src="../../static/assets/img/cake.jpg" alt=""></a>
+                    <a href="#114"><img th:src="@{/static/assets/img/cake.jpg}" src="../static/assets/img/cake.jpg" alt=""></a>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="content_area_row clearfix">
             <h2 class="row_title clearfix">
                 <span class="row_title_span clearfix">人气推荐</span>
-                <img class="row_title_img" th:src="@{/assets/img/hotsale.png}" src="../../static/assets/img/hotsale.png" alt="">
+                <img class="row_title_img" th:src="@{/static/assets/img/hotsale.png}" src="../../static/assets/img/hotsale.png" alt="">
                 <a href="../product/category.html">更多</a>
             </h2>
             <div class="row_item_box clearfix">
@@ -38,7 +38,7 @@
                     <li>
                         <a href="../product/goods.html">
                             <div class="row_item">
-                                <img th:src="@{/assets/img/example.jpg}" src="../../static/assets/img/example.jpg" alt="">
+                                <img th:src="@{/static/assets/img/example.jpg}" src="../../static/assets/img/example.jpg" alt="">
                             </div>
                             <div class="row_item_desc">
                                 <h3>新鲜牛乳蛋糕</h3>
@@ -85,7 +85,7 @@
         </div>
         <div class="content_area_row clearfix">
             <h2 class="row_title clearfix">
-                <span class="row_title_span clearfix">人气推荐</span>
+                <span class="row_title_span clearfix">新品热卖</span>
                 <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
                 <a href="#10">更多</a>
             </h2>
@@ -141,7 +141,7 @@
         </div>
         <div class="content_area_row clearfix">
             <h2 class="row_title clearfix">
-                <span class="row_title_span clearfix">人气推荐</span>
+                <span class="row_title_span clearfix">生日蛋糕</span>
                 <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
                 <a href="#10">更多</a>
             </h2>
@@ -197,7 +197,7 @@
         </div>
         <div class="content_area_row clearfix">
             <h2 class="row_title clearfix">
-                <span class="row_title_span clearfix">人气推荐</span>
+                <span class="row_title_span clearfix">悠闲下午茶</span>
                 <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
                 <a href="#10">更多</a>
             </h2>
@@ -255,13 +255,14 @@
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/assets/layui/layui.js}" src="../../static/assets/layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}" src="../../static/assets/layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}" src="../../static/assets/js/jquery-3.4.1.min.js"></script>
 <script>
     layui.use(['carousel'], function () {
         var carousel = layui.carousel;
         carousel.render({
             elem: '#goods_carousel'
-            ,width: '1519px'
+            ,width: '100vw'
             ,height: '590px'
             , interval: 4000
         })

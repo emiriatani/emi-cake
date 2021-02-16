@@ -17,18 +17,18 @@
         </div>
         <div class="register_infoBox">
             <!--注册表单-->
-            <form class="layui-form" th:action="@{/member/register}" method="post">
-
+            <form class="layui-form" th:action="@{/member}" method="post">
+                <input type="hidden" name="_method" value="post">
                 <div class="layui-form-item form_item">
                     <div class="layui-inline">
                         <label class="layui-form-label form_label">手机号码：</label>
                         <div class="layui-input-inline input_line">
-                            <input type="tel" name="phone" lay-verify="phone" lay-reqtext="手机号码不能为空!"
+                            <input type="tel" name="phone"
                                    autocomplete="off"
                                    placeholder="请输入手机号码"
                                    class="layui-input"
                                    id="phoneInput"
-                                   value="17305814557">
+                                   >
                         </div>
                     </div>
                 </div>
@@ -36,12 +36,12 @@
                 <div class="layui-form-item form_item">
                     <label class="layui-form-label form_label">手机验证码：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="SmsCode" lay-verify="SMS" lay-reqtext="验证码不能为空!"
+                        <input type="text" name="smsCode"
                                placeholder="请输入手机验证码"
                                autocomplete="off"
                                class="layui-input"
                                id="SmsCodeInput"
-                               value="123456">
+                               >
                     </div>
                     <div class="">
                         <input type="button" id="SendSmsCodeBtn" class="layui-btn layui-btn-normal"
@@ -55,7 +55,8 @@
                                 lay-filter="register" id="registerBtn" th:text="注册">注册
                         </button>
                     </div>
-                    <div class="toLogin_btn"><a th:href="@{/member/login.html}" href="login.html">已有账号,去登录</a></div>
+                    <div class="toLogin_btn"><a th:href="@{/page/member/login.html}" href="login.html">已有账号,去登录</a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -71,71 +72,130 @@
     var count = 60; //间隔函数，1秒执行
     var curCount;//当前剩余秒数
     var emptyText = "";
-    var mobile = $("#phoneInput").val(); //用户输入的手机号
-    var SmsCode = $("#SmsCodeInput").val();//用户输入的验证码
-    var SendSmsCodeBtn = $("#SendSmsCodeBtn");
+    var sendSmsCodeBtn = $("#SendSmsCodeBtn");
     var registerBtn = $("#registerBtn");
     var phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
-    var SmsCodeReg = /^\d{6}$/;
+    var smsCodeReg = /^\d{6}$/;
+    var codekey = "code";
+    var msgKey = "msg";
+    var dataKey = "data";
+
+
 
     $(function () {
+
         registerBtn.click(function () {
-            $.ajax({
-                type: "POST",
-                url:"/member/register",
-                async: false,
-                data: $(".layui-form").serialize(),
-                dataType: "text",
-                success: function (response) {
-                    layui.use(['layer'], function () {
-                        layer.ready(function () {
-                            var layer = layui.layer;
-                            layer.alert(response, {
-                                skin: 'layui-layer-molv' //样式类名
-                                , closeBtn: 0
-                                , title: '提示'
-                                , resize: false
-                            });
+            let mobile = $("#phoneInput").val(); //用户输入的手机号
+            let smsCode = $("#SmsCodeInput").val();//用户输入的验证码
+            let jsonData = {phone:mobile,smsCode:smsCode};
 
-                        })
-                    })
-                },
-                error: function (response) {
-                    layui.use(['layer'], function () {
-                        layer.ready(function () {
-                            var layer = layui.layer;
-                            layer.alert(response, {
-                                skin: 'layui-layer-molv' //样式类名
-                                , closeBtn: 0
-                                , title: '提示'
-                                , resize: false
-                            });
+            if (emptyText != $.trim(mobile) && emptyText != $.trim(smsCode) && phoneReg.test(mobile) && smsCodeReg.test(smsCode)) {
+                $.ajax({
+                        type: 'POST',
+                        url: '/member/register',
+                        async: false,
+                        data: JSON.stringify(jsonData),
+                        contentType: 'application/json;charset=UTF-8',
+                        dataType: 'json',
+                        success: function (response) {
+                            layui.use(['layer'], function () {
+                                layer.ready(function () {
+                                    var layer = layui.layer;
+                                    layer.alert(response[msgKey], {
+                                        skin: 'layui-layer-molv' //样式类名
+                                        , closeBtn: 0
+                                        , title: '提示'
+                                        , resize: false
+                                    }, function (index) {
+                                        if (response[codekey] == 200){
+                                            window.location.href = '/page/member/setPassword.html?id='+response[dataKey].id;
+                                        }else {
+                                            layer.close(index);
+                                        }
+                                    });
 
-                        })
+                                })
+                            })
+                        },
+                        error: function (response) {
+                            layui.use(['layer'], function () {
+                                layer.ready(function () {
+                                    var layer = layui.layer;
+                                    layer.alert(response[msgKey], {
+                                        skin: 'layui-layer-molv' //样式类名
+                                        , closeBtn: 0
+                                        , title: '提示'
+                                        , resize: false
+                                    });
+
+                                })
+                            })
+                        }
+                    }
+                )
+            }else if (emptyText == $.trim(mobile)){
+                layui.use(['layer'], function () {
+                    layer.ready(function (e) {
+                        var layer = layui.layer;
+                        layer.msg('请输入手机号码', {
+                            time: 1500
+                        });
                     })
-                }
-                }
-            )
+                })
+            }else if (emptyText == $.trim(smsCode)){
+                layui.use(['layer'], function () {
+                    layer.ready(function (e) {
+                        var layer = layui.layer;
+                        layer.msg('请输入验证码', {
+                            time: 1500
+                        });
+                    })
+                })
+            }else if (!phoneReg.test(mobile)){
+                layui.use(['layer'], function () {
+                    layer.ready(function (e) {
+                        var layer = layui.layer;
+                        layer.msg('请输入合法的手机号码', {
+                            time: 1500
+                        });
+                    })
+                })
+            }else if (!smsCodeReg.test(smsCode)){
+                layui.use(['layer'], function () {
+                    layer.ready(function (e) {
+                        var layer = layui.layer;
+                        layer.msg('验证码格式为6位数字，请重新输入', {
+                            time: 1500
+                        });
+                    })
+                })
+            }
+
+
+
 
         })
 
-        SendSmsCodeBtn.click(function () {
+        sendSmsCodeBtn.click(function () {
 
+            let mobile = $("#phoneInput").val(); //用户输入的手机号
+            let jsonData = {phone:mobile};
             if (emptyText != $.trim(mobile) && phoneReg.test(mobile)) {
                 curCount = count;
-                SendSmsCodeBtn.addClass("layui-btn-disabled").attr("disabled", true);
-                SendSmsCodeBtn.val(curCount + "秒后重新获取");
+                sendSmsCodeBtn.addClass('layui-btn-disabled').attr('disabled', true);
+                sendSmsCodeBtn.val(curCount + '秒后重新获取');
                 InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
                 $.ajax({
-                    type: "GET",
-                    url: "/send/register/" + mobile,
-                    data: {},
-                    dataType: "text",
+                    type: 'POST',
+                    url: '/sms',
+                    contentType: 'application/json;charset=UTF-8',
+                    data: JSON.stringify(jsonData),
+                    dataType: 'json',
                     success: function (response) {
                         layui.use(['layer'], function () {
                             layer.ready(function () {
                                 var layer = layui.layer;
-                                layer.alert(response, {
+                                layer.alert(response[msgKey], {
                                     skin: 'layui-layer-molv' //样式类名
                                     , closeBtn: 0
                                     , title: '提示'
@@ -149,7 +209,7 @@
                         layui.use(['layer'], function () {
                             layer.ready(function () {
                                 var layer = layui.layer;
-                                layer.alert(response, {
+                                layer.alert(response[msgKey], {
                                     skin: 'layui-layer-molv' //样式类名
                                     , closeBtn: 0
                                     , title: '提示'
@@ -164,7 +224,7 @@
                 layui.use(['layer'], function () {
                     layer.ready(function (e) {
                         var layer = layui.layer;
-                        layer.msg("请输入手机号码", {
+                        layer.msg('请输入手机号码', {
                             time: 1500
                         });
                     })
@@ -173,7 +233,7 @@
                 layui.use(['layer'], function () {
                     layer.ready(function () {
                         var layer = layui.layer;
-                        layer.msg("请输入合法的手机号码", {
+                        layer.msg('请输入合法的手机号码', {
                             time: 1500
                         });
                     })
@@ -189,30 +249,31 @@
     function SetRemainTime() {
         if (curCount == 0) {
             window.clearInterval(InterValObj);//停止计时器
-            SendSmsCodeBtn.removeClass("layui-btn-disabled")
-                .addClass("layui-btn-normal")
-                .removeAttr("disabled")//启用按钮
-                .val("重新发送验证码");
+            sendSmsCodeBtn.removeClass('layui-btn-disabled')
+                .addClass('layui-btn-normal')
+                .removeAttr('disabled')//启用按钮
+                .val('重新发送验证码');
         } else {
             curCount--;
-            SendSmsCodeBtn.val(curCount + "秒后重新获取");
+            sendSmsCodeBtn.val(curCount + '秒后重新获取');
         }
     }
 
     layui.use(['form'], function () {
         var form = layui.form;
         form.verify({
-            SMS: [
-                SmsCodeReg
-                , '短信验证码为6位纯数字,请检查格式'
-            ],
-            phone: [
-                phoneReg
-                , '请输入合法的手机号码'
-            ]
+            // SMS: [
+            //     smsCodeReg
+            //     , '短信验证码为6位纯数字,请检查格式'
+            // ],
+            // phone: [
+            //     phoneReg
+            //     , '请输入合法的手机号码'
+            // ]
         })
         /*监听表单提交*/
         form.on('submit(register)', function (data) {
+
             console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
             console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
             console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}

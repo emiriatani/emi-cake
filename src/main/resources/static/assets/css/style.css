@@ -84,12 +84,11 @@ a {
 a:link {
     color: black;
     text-decoration: none;
-
 }
 
-a:visited {
-    color: darksalmon;
-}
+/*a:visited {*/
+/*    color: darksalmon;*/
+/*}*/
 
 a:hover {
     color: darksalmon;
