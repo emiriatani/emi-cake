@@ -19,6 +19,7 @@ public class ResultUtils {
      */
     public static Result error(int code, String msg) {
         Result result = new Result();
+        result.setSuccess(false);
         result.setCode(code);
         result.setMsg(msg);
         result.setData(null);
@@ -33,7 +34,11 @@ public class ResultUtils {
      * @return
      */
     public static Result<Object> success(int code, String msg, Object obj) {
-        Result<Object> result = new Result<>(code, msg, obj);
+        Result result = new Result();
+        result.setSuccess(true);
+        result.setCode(code);
+        result.setMsg(msg);
+        result.setData(obj);
         return result;
     }
 
@@ -44,7 +49,10 @@ public class ResultUtils {
      * @return
      */
     public static Result success(int code, String msg) {
-        Result result = new Result<>(code, msg);
+        Result result = new Result();
+        result.setSuccess(true);
+        result.setCode(code);
+        result.setMsg(msg);
         return result;
     }
 

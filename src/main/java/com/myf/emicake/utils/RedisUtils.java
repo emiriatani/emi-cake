@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
 
     @Autowired
+    private JSONUtils jsonUtils;
+    @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
@@ -259,7 +261,7 @@ public class RedisUtils {
         } else if (clazz == String.class) {
             return (T) value;
         } else {
-            return JSONUtils.JSON2Object(value, clazz);
+            return jsonUtils.JSON2Object(value, clazz);
         }
 
     }
@@ -289,7 +291,7 @@ public class RedisUtils {
         } else if (clazz == String.class) {
             return (String) value;
         } else {
-            return JSONUtils.Object2JSON(value);
+            return jsonUtils.Object2JSON(value);
         }
 
     }

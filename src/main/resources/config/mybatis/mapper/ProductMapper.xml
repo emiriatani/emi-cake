@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myf.emicake.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.myf.emicake.domain.Product">
+    <!--@mbg.generated-->
+    <!--@Table product-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="catagory_id" jdbcType="INTEGER" property="catagoryId" />
+    <result column="img_banner" jdbcType="VARCHAR" property="imgBanner" />
+    <result column="img_thumbnail" jdbcType="VARCHAR" property="imgThumbnail" />
+    <result column="img_display" jdbcType="VARCHAR" property="imgDisplay" />
+    <result column="img_detail" jdbcType="VARCHAR" property="imgDetail" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="spec_list" jdbcType="VARCHAR" property="specList" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="product_status" jdbcType="TINYINT" property="productStatus" />
+    <result column="sale_status" jdbcType="TINYINT" property="saleStatus" />
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
+    <result column="activity_status" jdbcType="TINYINT" property="activityStatus" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, title, catagory_id, img_banner, img_thumbnail, img_display, img_detail, 
+    description, spec_list, price, stock, product_status, sale_status, activity_name, 
+    activity_status, sort, create_time, update_time, delete_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Product" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into product (`name`, title, catagory_id, 
+      img_banner, img_thumbnail, img_display, 
+      img_detail, description, spec_list, 
+      price, stock, product_status, 
+      sale_status, activity_name, activity_status, 
+      sort, create_time, update_time, 
+      delete_time)
+    values (#{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{catagoryId,jdbcType=INTEGER}, 
+      #{imgBanner,jdbcType=VARCHAR}, #{imgThumbnail,jdbcType=VARCHAR}, #{imgDisplay,jdbcType=VARCHAR}, 
+      #{imgDetail,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{specList,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, #{productStatus,jdbcType=TINYINT}, 
+      #{saleStatus,jdbcType=TINYINT}, #{activityName,jdbcType=VARCHAR}, #{activityStatus,jdbcType=TINYINT}, 
+      #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Product" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="catagoryId != null">
+        catagory_id,
+      </if>
+      <if test="imgBanner != null">
+        img_banner,
+      </if>
+      <if test="imgThumbnail != null">
+        img_thumbnail,
+      </if>
+      <if test="imgDisplay != null">
+        img_display,
+      </if>
+      <if test="imgDetail != null">
+        img_detail,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="specList != null">
+        spec_list,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="stock != null">
+        stock,
+      </if>
+      <if test="productStatus != null">
+        product_status,
+      </if>
+      <if test="saleStatus != null">
+        sale_status,
+      </if>
+      <if test="activityName != null">
+        activity_name,
+      </if>
+      <if test="activityStatus != null">
+        activity_status,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="catagoryId != null">
+        #{catagoryId,jdbcType=INTEGER},
+      </if>
+      <if test="imgBanner != null">
+        #{imgBanner,jdbcType=VARCHAR},
+      </if>
+      <if test="imgThumbnail != null">
+        #{imgThumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="imgDisplay != null">
+        #{imgDisplay,jdbcType=VARCHAR},
+      </if>
+      <if test="imgDetail != null">
+        #{imgDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="specList != null">
+        #{specList,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="productStatus != null">
+        #{productStatus,jdbcType=TINYINT},
+      </if>
+      <if test="saleStatus != null">
+        #{saleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="activityName != null">
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStatus != null">
+        #{activityStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.Product">
+    <!--@mbg.generated-->
+    update product
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="catagoryId != null">
+        catagory_id = #{catagoryId,jdbcType=INTEGER},
+      </if>
+      <if test="imgBanner != null">
+        img_banner = #{imgBanner,jdbcType=VARCHAR},
+      </if>
+      <if test="imgThumbnail != null">
+        img_thumbnail = #{imgThumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="imgDisplay != null">
+        img_display = #{imgDisplay,jdbcType=VARCHAR},
+      </if>
+      <if test="imgDetail != null">
+        img_detail = #{imgDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="specList != null">
+        spec_list = #{specList,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="productStatus != null">
+        product_status = #{productStatus,jdbcType=TINYINT},
+      </if>
+      <if test="saleStatus != null">
+        sale_status = #{saleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="activityName != null">
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStatus != null">
+        activity_status = #{activityStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.Product">
+    <!--@mbg.generated-->
+    update product
+    set `name` = #{name,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      catagory_id = #{catagoryId,jdbcType=INTEGER},
+      img_banner = #{imgBanner,jdbcType=VARCHAR},
+      img_thumbnail = #{imgThumbnail,jdbcType=VARCHAR},
+      img_display = #{imgDisplay,jdbcType=VARCHAR},
+      img_detail = #{imgDetail,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      spec_list = #{specList,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      stock = #{stock,jdbcType=INTEGER},
+      product_status = #{productStatus,jdbcType=TINYINT},
+      sale_status = #{saleStatus,jdbcType=TINYINT},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      activity_status = #{activityStatus,jdbcType=TINYINT},
+      sort = #{sort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

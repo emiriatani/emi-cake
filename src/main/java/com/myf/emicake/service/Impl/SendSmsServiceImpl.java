@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.myf.emicake.service.SendSmsService;
 import com.myf.emicake.utils.JSONUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -26,6 +27,9 @@ import java.util.Map;
 @Slf4j
 public class SendSmsServiceImpl implements SendSmsService {
 
+    @Autowired
+    private JSONUtils jsonUtils;
+
 
     /***
      * @ClassName com.myf.emicake.service.Impl SendSmsServiceImpl
@@ -39,6 +43,7 @@ public class SendSmsServiceImpl implements SendSmsService {
      **/
     @Override
     public boolean send(String phoneNum, String templateCode, Map<String, Object> code) throws JsonProcessingException, ClientException {
+
         //设置超时时间-可自行调整
         System.setProperty("sun.net.client.defaultConnectTimeout", "3000");
         System.setProperty("sun.net.client.defaultReadTimeout", "2000");
@@ -64,7 +69,7 @@ public class SendSmsServiceImpl implements SendSmsService {
         request.putQueryParameter("PhoneNumbers", phoneNum);
         request.putQueryParameter("SignName", signName);
         request.putQueryParameter("TemplateCode", templateCode);
-        request.putQueryParameter("TemplateParam", JSONUtils.Object2JSON(code));
+        request.putQueryParameter("TemplateParam", jsonUtils.Object2JSON(code));
         CommonResponse response = DefaultAcsClient.getCommonResponse(request);
         log.info("发送短信响应数据为:" + response.getData());
         //发送验证码是否成功,成功就返回

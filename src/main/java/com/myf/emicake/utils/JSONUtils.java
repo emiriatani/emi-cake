@@ -1,17 +1,14 @@
 package com.myf.emicake.utils;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapLikeType;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.myf.emicake.common.Constants;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,24 +23,11 @@ import java.util.Map;
  * @Version V1.0
  **/
 @Slf4j
+@Component
 public class JSONUtils {
 
-
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-
-    static {
-        // 设置null时候不序列化(只针对对象属性)
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
-        // 反序列化时，属性不存在的兼容处理
-        objectMapper.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
-        // 单引号处理
-        objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-
-        //序列化时候统一日期格式
-        objectMapper.setDateFormat(new SimpleDateFormat(Constants.FORMAT_DATE_DEFAULT));
-    }
+    @Autowired
+    private ObjectMapper objectMapper;
 
     /**
      * 将Java对象转为JSON字符串
@@ -53,7 +37,7 @@ public class JSONUtils {
      * @param <T>
      * @return
      */
-    public static <T> String Object2JSON(T obj) throws JsonProcessingException {
+    public  <T> String Object2JSON(T obj) throws JsonProcessingException {
         String jsonStr;
         jsonStr = objectMapper.writeValueAsString(obj);
         return jsonStr;
@@ -69,7 +53,7 @@ public class JSONUtils {
      * @param <T>
      * @return
      */
-    public static <T> T JSON2Object(String json, Class<T> type) throws JsonProcessingException {
+    public  <T> T JSON2Object(String json, Class<T> type) throws JsonProcessingException {
         T obj;
         obj = objectMapper.readValue(json, type);
 
@@ -82,8 +66,8 @@ public class JSONUtils {
      * @param jsonStr
      * @return
      */
-    public static List JSON2List(String jsonStr) throws JsonProcessingException {
-        JavaType javaType = JSONUtils.objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, Object.class);
+    public  List JSON2List(String jsonStr) throws JsonProcessingException {
+        JavaType javaType = objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, Object.class);
         return objectMapper.readValue(jsonStr, javaType);
     }
 
@@ -93,11 +77,9 @@ public class JSONUtils {
      * @param jsonStr
      * @return
      */
-    public static Map<String, Object> JSON2Map(String jsonStr) throws JsonProcessingException {
-        MapLikeType mapLikeType = JSONUtils.objectMapper.getTypeFactory().constructMapLikeType(HashMap.class, String.class, Object.class);
+    public  Map<String, Object> JSON2Map(String jsonStr) throws JsonProcessingException {
+        MapLikeType mapLikeType = objectMapper.getTypeFactory().constructMapLikeType(HashMap.class, String.class, Object.class);
         return objectMapper.readValue(jsonStr, mapLikeType);
     }
-
-
 
 }

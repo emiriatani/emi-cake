@@ -20,6 +20,8 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = -450697549442764520L;
 
     @NonNull
+    private boolean success;
+    @NonNull
     private Integer code;
     @NonNull
     private String msg;

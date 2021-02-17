@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
  **/
 public class MyBeanUtils {
 
-
     /**
      * 自定义封装
      * @param phone 注册的手机号
