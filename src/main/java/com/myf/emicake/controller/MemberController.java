@@ -137,10 +137,9 @@ public class MemberController {
         String reqSmsCode = smsLoginDTO.getSmsCode();
         log.info("登录的手机号码：" + phone);
         log.info("登录的验证码：" + reqSmsCode);
-        UserPhoneToken userPhoneToken = new UserPhoneToken(phone, reqSmsCode);
         Subject subject = SecurityUtils.getSubject();
-        subject.login(userPhoneToken);
-        if (subject.isAuthenticated()) {
+        UserPhoneToken userPhoneToken = new UserPhoneToken(phone, reqSmsCode);
+        if (ShiroUtils.isAuthenticatedLoginUser(subject, userPhoneToken)) {
             Member member = (Member) subject.getPrincipal();
             httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, member);
             subject.getSession().setAttribute(Constants.LOGIN_MEMBER_KEY, member);
@@ -164,10 +163,9 @@ public class MemberController {
 
         log.info("登录的用户名：" + userName);
         log.info("登录的密码：" + passWord);
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, passWord);
         Subject subject = SecurityUtils.getSubject();
-        subject.login(usernamePasswordToken);
-        if (subject.isAuthenticated()) {
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, passWord);
+        if (ShiroUtils.isAuthenticatedLoginUser(subject,usernamePasswordToken)) {
             Member member = (Member) subject.getPrincipal();
             httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, member);
             subject.getSession().setAttribute(Constants.LOGIN_MEMBER_KEY, member);

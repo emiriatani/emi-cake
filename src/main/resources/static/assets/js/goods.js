@@ -1,6 +1,8 @@
 var add = document.getElementsByClassName("add_btn");
 var del = document.getElementsByClassName("del_btn");
 var val = document.getElementsByClassName("count_value");
+
+
 /*增加商品数量事件*/
 for (var i = 0, len = add.length; i < len; i++) {
     (function (i) {
@@ -35,24 +37,3 @@ for (var i = 0, len = del.length; i < len; i++) {
     })(i)
 }
 
-layui.use(['carousel', 'rate', 'form'], function () {
-    var carousel = layui.carousel;
-    var rate = layui.rate;
-    var form = layui.form;
-
-    carousel.render({
-        elem: '#goods_carousel'
-        , width: '1519px'
-        , height: '650px'
-        , autoplay: false
-        , arrow: 'always'
-        , indicator: 'none'
-        , anim: 'fade'
-
-    })
-    rate.render({
-        elem: '#score'
-        , value: 4
-        , readonly: true
-    });
-})

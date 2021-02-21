@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myf.emicake.mapper.ProductSkuMapper">
+  <resultMap id="BaseResultMap" type="com.myf.emicake.domain.ProductSku">
+    <!--@mbg.generated-->
+    <!--@Table product_spec-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="images" jdbcType="VARCHAR" property="images" />
+    <result column="product_specs" jdbcType="VARCHAR" property="productSpecs" />
+    <result column="specification_desc" jdbcType="VARCHAR" property="specificationDesc" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="product_status" jdbcType="TINYINT" property="productStatus" />
+    <result column="sale_status" jdbcType="TINYINT" property="saleStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, product_id, title, images, product_specs, specification_desc, price, product_status, 
+    sale_status, create_time, update_time, delete_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from product_spec
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from product_spec
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.ProductSku" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into product_spec (product_id, title, images, 
+      product_specs, specification_desc, price, 
+      product_status, sale_status, create_time, 
+      update_time, delete_time)
+    values (#{productId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, 
+      #{productSpecs,jdbcType=VARCHAR}, #{specificationDesc,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{productStatus,jdbcType=TINYINT}, #{saleStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.ProductSku" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into product_spec
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="images != null">
+        images,
+      </if>
+      <if test="productSpecs != null">
+        product_specs,
+      </if>
+      <if test="specificationDesc != null">
+        specification_desc,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="productStatus != null">
+        product_status,
+      </if>
+      <if test="saleStatus != null">
+        sale_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null">
+        #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="productSpecs != null">
+        #{productSpecs,jdbcType=VARCHAR},
+      </if>
+      <if test="specificationDesc != null">
+        #{specificationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="productStatus != null">
+        #{productStatus,jdbcType=TINYINT},
+      </if>
+      <if test="saleStatus != null">
+        #{saleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.ProductSku">
+    <!--@mbg.generated-->
+    update product_spec
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null">
+        images = #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="productSpecs != null">
+        product_specs = #{productSpecs,jdbcType=VARCHAR},
+      </if>
+      <if test="specificationDesc != null">
+        specification_desc = #{specificationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="productStatus != null">
+        product_status = #{productStatus,jdbcType=TINYINT},
+      </if>
+      <if test="saleStatus != null">
+        sale_status = #{saleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.ProductSku">
+    <!--@mbg.generated-->
+    update product_spec
+    set product_id = #{productId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
+      product_specs = #{productSpecs,jdbcType=VARCHAR},
+      specification_desc = #{specificationDesc,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      product_status = #{productStatus,jdbcType=TINYINT},
+      sale_status = #{saleStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByProductId" resultType="java.util.List" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from product_spec
+    where product_id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

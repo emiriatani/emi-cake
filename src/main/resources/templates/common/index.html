@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-                xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head th:replace="common/common :: common_head(~{::title})">
     <title>emicake-艾米蛋糕 甜而不腻的蛋糕,24小时为您提供最美好的就餐体验</title>
 </head>
 <body>
-<div class="main_content" >
+<div class="main_content">
     <!--main header-->
     <div th:replace="common/common :: menu_bar">
     </div>
@@ -13,260 +13,300 @@
     <div class="main_content_area">
         <!--商品轮播图-->
         <div class="layui-carousel content_area_bigImgBox" id="goods_carousel">
-            <div carousel-item>
-                <div>
-                    <a href="#112"><img th:src="@{/static/assets/img/cake.jpg}" src="../static/assets/img/cake.jpg" alt=""></a>
+            <div id="homeCarousel" carousel-item="">
+            </div>
+        </div>
+        <div>
+            <!--每个商品类别部分商品展示-->
+            <div class="content_area_row clearfix">
+                <h2 class="row_title clearfix">
+                    <span class="row_title_span clearfix">人气推荐</span>
+                    <img class="row_title_img" th:src="@{/static/assets/img/hotsale.png}"
+                         src="../../static/assets/img/hotsale.png" alt="">
+                    <a href="../product/category.html">更多</a>
+                </h2>
+                <div class="row_item_box clearfix">
+                    <ul>
+                        <li>
+                            <a th:href="@{/prod/goods.html}" href="../product/goods.html">
+                                <div class="row_item">
+                                    <img th:src="@{/static/assets/img/example.jpg}"
+                                         src="../../static/assets/img/example.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example01.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example01.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
                 </div>
-                <div>
-                    <a href="#113"><img th:src="@{/static/assets/img/cake.jpg}" src="../static/assets/img/cake.jpg" alt=""></a>
+            </div>
+            <div class="content_area_row clearfix">
+                <h2 class="row_title clearfix">
+                    <span class="row_title_span clearfix">新品热卖</span>
+                    <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
+                    <a href="#10">更多</a>
+                </h2>
+                <div class="row_item_box clearfix">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example01.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example01.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
                 </div>
-                <div>
-                    <a href="#114"><img th:src="@{/static/assets/img/cake.jpg}" src="../static/assets/img/cake.jpg" alt=""></a>
+            </div>
+            <div class="content_area_row clearfix">
+                <h2 class="row_title clearfix">
+                    <span class="row_title_span clearfix">生日蛋糕</span>
+                    <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
+                    <a href="#10">更多</a>
+                </h2>
+                <div class="row_item_box clearfix">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example01.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example01.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
-        </div>
+            <div class="content_area_row clearfix">
+                <h2 class="row_title clearfix">
+                    <span class="row_title_span clearfix">悠闲下午茶</span>
+                    <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
+                    <a href="#10">更多</a>
+                </h2>
+                <div class="row_item_box clearfix">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example01.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="row_item">
+                                    <img src="../../static/assets/img/example01.jpg" alt="">
+                                </div>
+                                <div class="row_item_desc">
+                                    <h3>新鲜牛乳蛋糕</h3>
+                                    <h4>￥ 69.8/250克</h4>
+                                </div>
+                            </a>
+                        </li>
 
-        <!--每个商品类别部分商品展示-->
-        <div class="content_area_row clearfix">
-            <h2 class="row_title clearfix">
-                <span class="row_title_span clearfix">人气推荐</span>
-                <img class="row_title_img" th:src="@{/static/assets/img/hotsale.png}" src="../../static/assets/img/hotsale.png" alt="">
-                <a href="../product/category.html">更多</a>
-            </h2>
-            <div class="row_item_box clearfix">
-                <ul>
-                    <li>
-                        <a th:href="@{/prod/goods.html}" href="../product/goods.html">
-                            <div class="row_item">
-                                <img th:src="@{/static/assets/img/example.jpg}" src="../../static/assets/img/example.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example01.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example01.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+                    </ul>
 
-            </div>
-        </div>
-        <div class="content_area_row clearfix">
-            <h2 class="row_title clearfix">
-                <span class="row_title_span clearfix">新品热卖</span>
-                <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
-                <a href="#10">更多</a>
-            </h2>
-            <div class="row_item_box clearfix">
-                <ul>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example01.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example01.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-        <div class="content_area_row clearfix">
-            <h2 class="row_title clearfix">
-                <span class="row_title_span clearfix">生日蛋糕</span>
-                <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
-                <a href="#10">更多</a>
-            </h2>
-            <div class="row_item_box clearfix">
-                <ul>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example01.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example01.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-        <div class="content_area_row clearfix">
-            <h2 class="row_title clearfix">
-                <span class="row_title_span clearfix">悠闲下午茶</span>
-                <img class="row_title_img" src="../../static/assets/img/hotsale.png" alt="">
-                <a href="#10">更多</a>
-            </h2>
-            <div class="row_item_box clearfix">
-                <ul>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example01.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <div class="row_item">
-                                <img src="../../static/assets/img/example01.jpg" alt="">
-                            </div>
-                            <div class="row_item_desc">
-                                <h3>新鲜牛乳蛋糕</h3>
-                                <h4>￥ 69.8/250克</h4>
-                            </div>
-                        </a>
-                    </li>
-
-                </ul>
-
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}" src="../../static/assets/layui/layui.js"></script>
-<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}" src="../../static/assets/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
+        src="../../static/assets/layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"
+        src="../../static/assets/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/common.js}"
+        src="../../static/assets/js/jquery-3.4.1.min.js"></script>
 <script>
-    layui.use(['carousel'], function () {
-        var carousel = layui.carousel;
-        carousel.render({
-            elem: '#goods_carousel'
-            ,width: '100vw'
-            ,height: '590px'
-            , interval: 4000
-        })
+
+    var successKey = "success";
+    var codeKey = "code";
+    var msgKey = "msg";
+    var dataKey = "data";
+
+
+    $(function () {
+        initCarousel();
     })
+
+    function initCarousel() {
+
+        let idKey = "id";
+        let nameKey = "name";
+        let imgBannerKey = "imgBanner";
+
+        layui.use(['carousel'], function () {
+            var carousel = layui.carousel;
+            $.ajax({
+                type: 'GET',
+                url: '/prod/banner/3',
+                dataType: 'json',
+                success: function (response) {
+                    if (response[successKey] == true && response[dataKey] != null) {
+                        $.each(response[dataKey], function (index, item) {
+                            var str = '<div>\n' +
+                                '<a href="/product/goods.html?id=' + item.id + '">\n' +
+                                '<img src="' + item.imgBanner + '" alt="' + item.name + '">\n' +
+                                '</a>\n' +
+                                '</div>';
+                            $("#homeCarousel").append(str);
+                        })
+                    }
+                    var init = carousel.render({
+                        elem: '#goods_carousel'
+                        , arrow: 'always'
+                        , anim: 'default'
+                        , width: '100vw'
+                        , height: '590px'
+                        , interval: 4000
+                    })
+                },
+                error: function (response) {
+                    var str = "ajax request error"
+                    alertMsg(str);
+                }
+            })
+        })
+    }
 </script>
+
 </body>
 </html>

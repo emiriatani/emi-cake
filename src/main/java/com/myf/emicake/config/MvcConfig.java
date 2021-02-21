@@ -1,6 +1,7 @@
 package com.myf.emicake.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,12 +21,16 @@ public class MvcConfig implements WebMvcConfigurer {
             registry.addViewController("/").setViewName("/common/index");
             registry.addViewController("/index.html").setViewName("/common/index");
             registry.addViewController("/member/login.html").setViewName("/member/login");
-            registry.addViewController("/member/register.html").setViewName("member/register");
+            registry.addViewController("/member/register.html").setViewName("/member/register");
             registry.addViewController("/member/setPassword.html").setViewName("/member/setPassword");
-            registry.addViewController("/prod/goods.html").setViewName("/product/goods");
-            registry.addViewController("/prod/category.html").setViewName("/product/category");
+            registry.addViewController("/product/goods.html").setViewName("/product/goods");
+            registry.addViewController("/product/category.html").setViewName("/product/category");
 
     }
 
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/upload/prod/img/**").addResourceLocations("classpath:/upload/prod/img/");
+    }
 }

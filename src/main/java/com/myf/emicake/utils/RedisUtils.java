@@ -1,6 +1,5 @@
 package com.myf.emicake.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -244,7 +243,7 @@ public class RedisUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public <T> T stringToBean(String value, Class<T> clazz) throws JsonProcessingException {
+    public <T> T stringToBean(String value, Class<T> clazz) {
         if (value == null || value.length() <= 0 || clazz == null) {
             return null;
         }
@@ -272,7 +271,7 @@ public class RedisUtils {
      * @param value 任意类型对象
      * @return 字符串/JSON字符串
      */
-    public <T> String beanToString(T value) throws JsonProcessingException {
+    public <T> String beanToString(T value) {
         if (value == null) {
             return null;
         }

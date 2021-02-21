@@ -10,17 +10,9 @@
     <!--main content-->
     <!--商品介绍轮播图-->
     <div class="layui-carousel goods_carousel" id="goods_carousel">
-        <div carousel-item>
-            <div>
-                <img src="../../static/assets/img/example03.jpg" alt="">
-            </div>
-            <div>
-               <img src="../../static/assets/img/example04.jpg" alt="">
-            </div>
-            <div>
-                <img src="../../static/assets/img/example05.jpg" alt="">
-            </div>
+        <div carousel-item="" id="display_carousel">
         </div>
+
     </div>
     <!--商品购买信息-->
     <!--提交表单-->
@@ -28,31 +20,23 @@
         <div class="goods_shop_box clearfix">
             <!--商品名称和价格-->
             <div class="goods_title">
-                <h1>桃芝|樱桃芝士蛋糕</h1>
-                <h1>￥239</h1>
+                <h1 id="title"></h1>
+                <h1 id="price"></h1>
+                <h1 id="weight"></h1>
             </div>
             <!--商品甜度-->
-            <div class="goods_sweetness_score">
-                <span>甜度</span>
-                <span id="score"></span>
+            <div class="goods_sweetness_score" id="tasteDegreeBox">
             </div>
             <!--文案-->
             <div class="goods_with_words">
-                <p>
-                    有种美好本在人生际遇之处，
-                    <br>
-                    那些初次的余香，俨如口中混合着的丝缕酸甜，
-                    <br>
-                    就像樱桃和百利甜一样，成了没人遗忘的天生一对。
+                <p id="desc">
                 </p>
             </div>
             <!--规格数量-->
             <div class="goods_standard ">
                 <div class="layui-form-item" id="size_box">
                     <label class="layui-form-label">尺寸：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="size" value="6吋" title="6吋" checked="">
-                        <input type="radio" name="size" value="8吋" title="8吋">
+                    <div class="layui-input-block" id="sizeDiv">
                     </div>
                 </div>
                 <div class="layui-form-item" id="amount">
@@ -75,24 +59,193 @@
     </form>
 
     <!--商品详细信息-->
-    <div class="goods_info_box">
+    <div class="goods_info_box" id="">
         <fieldset class="layui-elem-field layui-field-title">
             <legend>Introduction</legend>
         </fieldset>
-        <img src="../../static/assets/img/example06.jpg" alt="">
-        <img src="../../static/assets/img/example08.jpg" alt="">
-        <img src="../../static/assets/img/example07.jpg" alt="">
-        <img src="../../static/assets/img/example06.jpg" alt="">
-        <img src="../../static/assets/img/example08.jpg" alt="">
-        <img src="../../static/assets/img/example07.jpg" alt="">
-        <img src="../../static/assets/img/example06.jpg" alt="">
-        <img src="../../static/assets/img/example08.jpg" alt="">
-        <img src="../../static/assets/img/example07.jpg" alt="">
+        <div id="introduceImgBox">
+        </div>
     </div>
 </div>
 
-<script type="text/javascript" src="../../static/assets/layui/layui.js"></script>
-<script type="text/javascript" src="../../static/assets/js/goods.js"></script>
-
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
+        src="../../static/assets/layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"
+        src="../../static/assets/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/goods.js}" src="../../static/assets/js/goods.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/common.js}" src="../../static/assets/js/common.js"></script>
 </body>
+<script>
+
+    var productId = getQueryVariable("id");
+    var allProductSku = null;
+
+    $(function () {
+        queryProdData();
+        initProdData();
+
+
+    });
+
+
+    function initProdData() {
+        if (productId != null) {
+            layui.use(['carousel', 'form', 'rate'], function () {
+                var carousel = layui.carousel;
+                var form = layui.form;
+                var rate = layui.rate;
+                $.ajax({
+                    url: '/prod/' + productId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+
+                        if (response[successKey] && response[dataKey] != null) {
+
+                            /*商品标题*/
+                            $("#title").html(response[dataKey].title);
+
+                            /*商品描述*/
+                            $("#desc").html(response[dataKey].description);
+
+                            /*商品甜度、脂度、芝度规格*/
+                            let tasteJson = JSON.parse(response[dataKey].tasteSpec)
+                            let tasteJsonKeyArray = new Array();
+                            let tasteJsonValueArray = new Array();
+                            let index = 0;
+                            /*把商品甜度、脂度、芝度规格的JSON数据中的key和value分别放入两个数组中*/
+                            for (var key in tasteJson) {
+                                tasteJsonKeyArray[index] = key;
+                                tasteJsonValueArray[index] = tasteJson[key];
+                                index++;
+                            }
+                            /*遍历json数据中的key值数组*/
+                            for (var key in tasteJsonKeyArray) {
+                                let str = '<div>\n' +
+                                    '<span></span>\n' +
+                                    '<span></span>\n' +
+                                    '</div>'
+                                $("#tasteDegreeBox").append(str);
+                                if (tasteJsonKeyArray[key] === "sweetness") {
+                                    $("#tasteDegreeBox :last-child :first-child").html("甜度");
+                                    $("#tasteDegreeBox :last-child :last-child").attr("class", "score");
+
+                                } else if (tasteJsonKeyArray[key] === "fatness") {
+                                    $("#tasteDegreeBox :last-child :first-child").html("脂度");
+                                    $("#tasteDegreeBox :last-child :last-child").attr("class", "score");
+
+                                } else if (tasteJsonKeyArray[key] === "cheese") {
+                                    $("#tasteDegreeBox :last-child :first-child").html("芝度");
+                                    $("#tasteDegreeBox :last-child :last-child").attr("class", "score");
+                                }
+
+                            }
+                            /*给所有json数据中的key值赋相应的value值*/
+                            let scoreArray = $(".score");
+                            $.each(scoreArray, function (index, item) {
+                                rate.render({
+                                    elem: scoreArray[index]
+                                    , value: tasteJsonValueArray[index]
+                                    , readonly: true
+                                });
+                            })
+
+                            let displayImgArray = splitParam(response[dataKey].imgDisplay, '&');
+                            let detailImgArray = splitParam(response[dataKey].imgDetail, '&');
+                            /*商品展示图片*/
+                            $.each(displayImgArray, function (index, item) {
+                                let str = '<div>\n' +
+                                    '<img src="' + item + '"' +
+                                    '</div>';
+                                $("#display_carousel").append(str);
+                            })
+                            carousel.render({
+                                elem: '#goods_carousel'
+                                , width: '1519px'
+                                , height: '650px'
+                                , autoplay: true
+                                , interval: 4000
+                                , arrow: 'hover'
+                                , indicator: 'none'
+                                , anim: 'fade'
+                            })
+                            /*商品详情介绍图片*/
+                            $.each(detailImgArray, function (index, item) {
+                                let str = '<div>\n' +
+                                    '<img src="' + item + '"' +
+                                    '</div>';
+                                $("#introduceImgBox").append(str);
+                            })
+
+                            /*商品规格参数*/
+                            let parse = JSON.parse(response[dataKey].specList);
+                            let sizeArray = parse.size;
+                            $.each(sizeArray, function (index, item) {
+                                let str = '<input type="radio" class="sizeRadio"  lay-filter="change" name="size"  value="' + item + '" title="' + item + '">';
+                                $("#sizeDiv").append(str);
+
+                            })
+                            /*尺寸默认选中第一个*/
+                            $(".sizeRadio:first").attr({checked: "true"})
+
+                            form.render();
+                            /*radio监听事件*/
+                            form.on('radio(change)', function (data) {
+                                for (let i = 0; i < allProductSku.length; i++) {
+                                    let skuSize = JSON.parse(allProductSku[i].productSpecs).size;
+                                    let skuWeight = JSON.parse(allProductSku[i].productSpecs).weight;
+
+                                    if (data.value == skuSize){
+                                        $("#price").html("￥" + allProductSku[i].price)
+                                        $("#weight").html(skuWeight);
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    error: function () {
+                        alertMsg(ajaxReqErrorStr);
+                        initProdData();
+                    }
+                })
+
+
+            })
+        }
+    }
+
+
+    function queryProdData() {
+        $.ajax({
+            url: '/prod/sku/' + productId,
+            type: 'GET',
+            //data:JSON.stringify(jsonData),
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            success: function (response) {
+                if (response[successKey] == true && response[dataKey] != null) {
+                    allProductSku = response[dataKey];
+
+                }
+            },
+            error: function () {
+                alertMsg(ajaxReqErrorStr);
+                queryProdData();
+            }
+        })
+    }
+
+    /**
+     * 分隔数据库中查出来的图片url字符串
+     * @param originObj 需要分割的对象
+     * @param delimiter 分隔符
+     * @returns {*|string[]}
+     */
+    function splitParam(originObj, delimiter) {
+        let str = originObj;
+        let splitArray = str.split(delimiter);
+        return splitArray;
+    }
+</script>
 </html>

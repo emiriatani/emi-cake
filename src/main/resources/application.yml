@@ -103,5 +103,6 @@ logging:
     path: log
 #shiro配置
 shiro:
-  loginUrl: /page/member/login.html
+  loginUrl: /member/login.html
   successUrl: /
+  unauthorizedUrl: /

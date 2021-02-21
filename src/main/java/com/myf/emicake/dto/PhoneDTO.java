@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * @ClassName com.myf.emicake.dto SmsDTO
+ * @ClassName com.myf.emicake.dto PhoneDTO
  * @Description
  * @Author Afengis
  * @Date 2021/2/14 13:51
@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SmsDTO  implements Serializable {
+public class PhoneDTO implements Serializable {
 
     private static final long serialVersionUID = -8526311189522229411L;
 

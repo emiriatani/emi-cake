@@ -1,16 +1,23 @@
 package com.myf.emicake;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.myf.emicake.domain.Member;
+import cn.hutool.json.JSONUtil;
 import com.myf.emicake.domain.Product;
+import com.myf.emicake.dto.BannerDTO;
+import com.myf.emicake.dto.ProductDTO;
+import com.myf.emicake.mapper.ProductMapper;
 import com.myf.emicake.service.MemberService;
 import com.myf.emicake.service.ProductService;
 import com.myf.emicake.utils.JSONUtils;
 import com.myf.emicake.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 @Slf4j
@@ -28,25 +35,38 @@ class MyprojectApplicationTests {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ProductMapper productMapper;
+
     @Test
     void contextLoads() {
-        Member member = memberService.selectByPrimaryKey(36);
-        boolean member1 = redisUtils.set("member1", member);
-        if (member1){
-            Member member2 = redisUtils.get("member1");
-            log.info(member2.toString());
-        }
+
+        List<Product> list = productMapper.selectInBanner(2);
+        List<BannerDTO> bannerDTOList = new ArrayList<>();
+
+        System.out.println(list);
+
+        String s = JSONUtil.toJsonStr(list);
+        System.out.println(s);
+
+        List<BannerDTO> bannerDTOList1 = JSONUtil.toList(s, BannerDTO.class);
+
+        System.out.println(bannerDTOList1);
+
     }
 
     @Test
-    void productServiceTest() throws JsonProcessingException {
+    public void test01() throws InvocationTargetException, IllegalAccessException {
         Product product = productService.selectByPrimaryKey(1);
-        String s = jsonUtils.Object2JSON(product);
-        redisUtils.set("prod", product);
-        log.info(s);
+        ProductDTO productDTO = new ProductDTO();
 
+        BeanUtils.copyProperties(productDTO, product);
 
-
+        System.out.println(productDTO);
     }
+    
+    
+    
+
 
 }

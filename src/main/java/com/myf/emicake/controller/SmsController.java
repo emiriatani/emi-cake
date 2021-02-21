@@ -5,19 +5,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.myf.emicake.common.Constants;
 import com.myf.emicake.common.Result;
 import com.myf.emicake.common.StatusCode;
-import com.myf.emicake.dto.SmsDTO;
+import com.myf.emicake.dto.PhoneDTO;
 import com.myf.emicake.exception.GlobalException;
-import com.myf.emicake.service.SendSmsService;
-import com.myf.emicake.utils.JSONUtils;
-import com.myf.emicake.utils.RandomStrUtils;
+import com.myf.emicake.service.SmsService;
 import com.myf.emicake.utils.RedisUtils;
 import com.myf.emicake.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName com.myf.emicake.controller SendSMSController
@@ -31,7 +31,7 @@ import java.util.HashMap;
 public class SmsController {
 
     @Autowired
-    private SendSmsService sendSmsService;
+    private SmsService smsService;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -40,34 +40,31 @@ public class SmsController {
 
     /**
      * 获取短信验证码
-     * @param smsDTO 短信DTO
+     * @param phoneDTO 短信DTO
      * @return
      * @throws ClientException
      * @throws JsonProcessingException
      */
     @PostMapping("/sms")
     //@RequestMapping(value = "/sms",method = RequestMethod.POST)
-    public Result getSmsCode(@RequestBody @Valid SmsDTO smsDTO) throws ClientException, JsonProcessingException {
+    public Result getSmsCode(@RequestBody @Valid PhoneDTO phoneDTO) throws ClientException, JsonProcessingException {
 
-        String phone = smsDTO.getPhone();
+        String phone = phoneDTO.getPhone();
 
         //获取redis中该手机号是否存在已经发送的验证码
         if (redisUtils.exists(phone)){
             throw new GlobalException(StatusCode.SMS_ALREADY_SEND.getCode(), StatusCode.SMS_ALREADY_SEND.getMsg());
         }
-
         //生成6位随机验证码
-        String smsCode = RandomStrUtils.getSmsCode(6);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("code", smsCode);
+        Map<String, Object> map = smsService.generateRandomSmsCode(6);
         //发送短信
         boolean isSend = false;
 
-        isSend = sendSmsService.send(phone, Constants.COMMON_TEMPLATE_CODE, map);
+        isSend = smsService.send(phone, Constants.COMMON_TEMPLATE_CODE, map);
 
         if (isSend) {
             //如果短信发送成功就放入到redis中，设置3分钟之后过期
-            redisUtils.set(phone, smsCode, 3);
+            redisUtils.set(phone, map.get("code"), 3);
             return ResultUtils.success(StatusCode.SMS_SEND_SUCCESS.getCode(), StatusCode.SMS_SEND_SUCCESS.getMsg());
         } else {
             log.error("异常信息", new Exception("短信验证码发送失败,请重新获取"));

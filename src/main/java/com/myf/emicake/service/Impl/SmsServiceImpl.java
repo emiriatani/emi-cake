@@ -7,13 +7,14 @@ import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.myf.emicake.service.SendSmsService;
+import com.myf.emicake.service.SmsService;
 import com.myf.emicake.utils.JSONUtils;
+import com.myf.emicake.utils.RandomStrUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Map;
  **/
 @Service
 @Slf4j
-public class SendSmsServiceImpl implements SendSmsService {
+public class SmsServiceImpl implements SmsService {
 
     @Autowired
     private JSONUtils jsonUtils;
@@ -42,7 +43,7 @@ public class SendSmsServiceImpl implements SendSmsService {
      * @Date 2021/2/7 18:45
      **/
     @Override
-    public boolean send(String phoneNum, String templateCode, Map<String, Object> code) throws JsonProcessingException, ClientException {
+    public boolean send(String phoneNum, String templateCode, Map<String, Object> code) throws ClientException {
 
         //设置超时时间-可自行调整
         System.setProperty("sun.net.client.defaultConnectTimeout", "3000");
@@ -75,4 +76,14 @@ public class SendSmsServiceImpl implements SendSmsService {
         //发送验证码是否成功,成功就返回
         return response.getHttpResponse().isSuccess();
     }
+
+    @Override
+    public Map<String, Object> generateRandomSmsCode(int number) {
+        String smsCode = RandomStrUtils.getSmsCode(number);
+        HashMap<String, Object>  map = new HashMap<>();
+        map.put("code", smsCode);
+        return map;
+    }
+
+
 }

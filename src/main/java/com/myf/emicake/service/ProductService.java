@@ -1,6 +1,10 @@
 package com.myf.emicake.service;
 
 import com.myf.emicake.domain.Product;
+import com.myf.emicake.dto.BannerDTO;
+
+import java.util.List;
+
 public interface ProductService{
 
 
@@ -16,4 +20,7 @@ public interface ProductService{
 
     int updateByPrimaryKey(Product record);
 
+    List<BannerDTO> selectInBanner(int total);
+
+    int selectInBannerTotal();
 }

@@ -31,7 +31,4 @@ public class RegisterDTO implements Serializable {
     @Pattern(regexp = Constants.SMS_CODE_REG,message = "验证码格式不符")
     private String smsCode;
 
-
-
-
 }

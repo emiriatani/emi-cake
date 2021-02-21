@@ -37,9 +37,13 @@ public class JSONUtils {
      * @param <T>
      * @return
      */
-    public  <T> String Object2JSON(T obj) throws JsonProcessingException {
-        String jsonStr;
-        jsonStr = objectMapper.writeValueAsString(obj);
+    public <T> String Object2JSON(T obj) {
+        String jsonStr = null;
+        try {
+            jsonStr = objectMapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            log.error("Java对象转JSON字符串异常", e);
+        }
         return jsonStr;
     }
 
@@ -53,10 +57,13 @@ public class JSONUtils {
      * @param <T>
      * @return
      */
-    public  <T> T JSON2Object(String json, Class<T> type) throws JsonProcessingException {
-        T obj;
-        obj = objectMapper.readValue(json, type);
-
+    public <T> T JSON2Object(String json, Class<T> type) {
+        T obj = null;
+        try {
+            obj = objectMapper.readValue(json, type);
+        } catch (JsonProcessingException e) {
+            log.error("JSON字符串转Java对象异常", e);
+        }
         return obj;
     }
 
@@ -66,9 +73,15 @@ public class JSONUtils {
      * @param jsonStr
      * @return
      */
-    public  List JSON2List(String jsonStr) throws JsonProcessingException {
+    public List JSON2List(String jsonStr) {
         JavaType javaType = objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, Object.class);
-        return objectMapper.readValue(jsonStr, javaType);
+        List list = null;
+        try {
+            list = objectMapper.readValue(jsonStr, javaType);
+        } catch (JsonProcessingException e) {
+            log.error("JSON字符串转List异常", e);
+        }
+        return list;
     }
 
     /**
@@ -77,9 +90,15 @@ public class JSONUtils {
      * @param jsonStr
      * @return
      */
-    public  Map<String, Object> JSON2Map(String jsonStr) throws JsonProcessingException {
+    public Map<String, Object> JSON2Map(String jsonStr) {
         MapLikeType mapLikeType = objectMapper.getTypeFactory().constructMapLikeType(HashMap.class, String.class, Object.class);
-        return objectMapper.readValue(jsonStr, mapLikeType);
+        Map map = null;
+        try {
+            map = objectMapper.readValue(jsonStr, mapLikeType);
+        } catch (JsonProcessingException e) {
+            log.error("JSON字符串转Map异常", e);
+        }
+        return map;
     }
 
 }

@@ -44,11 +44,14 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/api/**", "anon");
         chainDefinition.addPathDefinition("/","anon");
         // all other paths require a logged in user
-        chainDefinition.addPathDefinition("//member/**.html","anon");
         chainDefinition.addPathDefinition("/static/**","anon");
+        //chainDefinition.addPathDefinition("/upload/prod/img/banner/**","anon");
         chainDefinition.addPathDefinition("/sms","anon");
+        chainDefinition.addPathDefinition("//member/**.html","anon");
         chainDefinition.addPathDefinition("/member/**","anon");
-        chainDefinition.addPathDefinition("/prod/**.html", "anon");
+        chainDefinition.addPathDefinition("/product/**.html", "anon");
+        chainDefinition.addPathDefinition("/prod/**","anon");
+        chainDefinition.addPathDefinition("/upload/**","anon");
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
     }

@@ -6,7 +6,7 @@
 /*商品购买信息容器*/
 .goods_shop_box{
     width: 400px;
-    height: 500px;
+    height: 600px;
     border: 1px solid #E7E7E7;
     position: relative;
     margin-top: -500px;
@@ -28,12 +28,12 @@
     margin-top: -12px;
     margin-left: 28px;
 }
-.goods_sweetness_score > span:first-child{
+.goods_sweetness_score > div span:first-child{
     float: left;
-    margin-top: 16px;
+    margin-top: 17px;
     font-size: 12px;
 }
-#score{
+.score{
     margin-left: 20px;
 }
 /*商品文案描述*/

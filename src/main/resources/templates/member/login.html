@@ -110,7 +110,7 @@
 <script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
         src=".././static/assets/layui/layui.js"></script>
 <script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"></script>
-
+<script type="text/javascript" th:src="@{/static/assets/js/common.js}"></script>
 <script>
 
 
@@ -124,12 +124,13 @@
     var phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
     var smsCodeReg = /^\d{6}$/;
     var passwordReg = /\S{6,}/;
-    var codekey = "code";
-    var msgKey = "msg";
-    var dataKey = "data";
+
 
 
     $(function () {
+
+
+
 
         sendSmsCodeBtn.click(function () {
 
@@ -176,25 +177,12 @@
                     }
                 });
             } else if (emptyText == $.trim(mobile)) {
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('请输入手机号码', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "请输入手机号码";
+                alertMsg(str);
             } else if (!phoneReg.test(mobile)) {
-                layui.use(['layer'], function () {
-                    layer.ready(function () {
-                        var layer = layui.layer;
-                        layer.msg('请输入合法的手机号码', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "请输入合法的手机号码";
+                alertMsg(str);
             }
-
         });
 
         //timer处理函数
@@ -261,41 +249,17 @@
                 )
 
             }else if (emptyText == $.trim(userPhone)){
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('请输入手机号码', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "请输入手机号码";
+                alertMsg(str);
             }else if (emptyText == $.trim(smsCode)){
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('请输入验证码', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "请输入验证码";
+                alertMsg(str);
             }else if (!phoneReg.test(userPhone)){
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('请输入合法的手机号码', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "请输入合法的手机号码";
+                alertMsg(str);
             }else if (!smsCodeReg.test(smsCode)){
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('验证码格式为6位数字，请重新输入', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "验证码格式为6位数字，请重新输入";
+                alertMsg(str);
             }
         })
 
@@ -350,47 +314,22 @@
                 )
 
             }else if (emptyText == $.trim(userName)){
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('用户名不能为空', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "用户名不能为空";
+                alertMsg(str);
             }else if (emptyText == $.trim(passWord)){
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('密码不能为空', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "密码不能为空";
+                alertMsg(str);
             }else if (!phoneReg.test(userName)){
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('请输入合法的用户名(手机号)', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "请输入合法的用户名(手机号)";
+                alertMsg(str);
             }else if (!passwordReg.test(passWord)){
-                layui.use(['layer'], function () {
-                    layer.ready(function (e) {
-                        var layer = layui.layer;
-                        layer.msg('密码最少为6位,请重新输入', {
-                            time: 1500
-                        });
-                    })
-                })
+                let str = "密码最少为6位,请重新输入";
+                alertMsg(str);
             }
 
 
         })
     })
-
 
     layui.use(['form', 'element'], function () {
         var form = layui.form;

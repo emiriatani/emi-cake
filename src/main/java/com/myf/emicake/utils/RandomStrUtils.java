@@ -16,30 +16,41 @@ public class RandomStrUtils {
 
     /**
      * 随机生成n位字符串
+     *
      * @param n 长度
      * @return
      */
-    public static String getSalt(int n){
+    public static String getSalt(int n) {
         char[] chars = Constants.VERIFY_SALT_STR.toCharArray();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            char aChar = chars[new Random().nextInt(chars.length)];
-            sb.append(aChar);
+        if (n >= 8) {
+            for (int i = 0; i < n; i++) {
+                char aChar = chars[new Random().nextInt(chars.length)];
+                sb.append(aChar);
+            }
+        }else {
+            getSmsCode(8);
         }
+
         return sb.toString();
     }
 
     /**
      * 随机生成n位短信验证码
+     *
      * @param n
      * @return
      */
-    public static String getSmsCode(int n){
+    public static String getSmsCode(int n) {
         char[] chars = Constants.VERIFY_SMS_CODE_STR.toCharArray();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            char aChar = chars[new Random().nextInt(chars.length)];
-            sb.append(aChar);
+        if (n >= 4) {
+            for (int i = 0; i < n; i++) {
+                char aChar = chars[new Random().nextInt(chars.length)];
+                sb.append(aChar);
+            }
+        } else {
+            getSmsCode(6);
         }
         return sb.toString();
     }
