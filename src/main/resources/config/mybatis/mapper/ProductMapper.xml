@@ -13,6 +13,7 @@
     <result column="img_thumbnail" jdbcType="VARCHAR" property="imgThumbnail" />
     <result column="img_display" jdbcType="VARCHAR" property="imgDisplay" />
     <result column="img_detail" jdbcType="VARCHAR" property="imgDetail" />
+    <result column="video" jdbcType="VARCHAR" property="video" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="spec_list" jdbcType="VARCHAR" property="specList" />
     <result column="taste_spec" jdbcType="VARCHAR" property="tasteSpec" />
@@ -28,8 +29,8 @@
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, `name`, title, catagory_id, img_banner, banner_status, img_thumbnail, img_display, 
-    img_detail, description, spec_list, taste_spec, price, stock, product_status, sale_status, 
-    sort, create_time, update_time, delete_time
+    img_detail, video, description, spec_list, taste_spec, price, stock, product_status, 
+    sale_status, sort, create_time, update_time, delete_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -47,18 +48,18 @@
     <!--@mbg.generated-->
     insert into product (`name`, title, catagory_id, 
       img_banner, banner_status, img_thumbnail, 
-      img_display, img_detail, description, 
-      spec_list, taste_spec, price, 
-      stock, product_status, sale_status, 
-      sort, create_time, update_time, 
-      delete_time)
+      img_display, img_detail, video, 
+      description, spec_list, taste_spec, 
+      price, stock, product_status, 
+      sale_status, sort, create_time, 
+      update_time, delete_time)
     values (#{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{catagoryId,jdbcType=INTEGER}, 
       #{imgBanner,jdbcType=VARCHAR}, #{bannerStatus,jdbcType=TINYINT}, #{imgThumbnail,jdbcType=VARCHAR}, 
-      #{imgDisplay,jdbcType=VARCHAR}, #{imgDetail,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{specList,jdbcType=VARCHAR}, #{tasteSpec,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{stock,jdbcType=INTEGER}, #{productStatus,jdbcType=TINYINT}, #{saleStatus,jdbcType=TINYINT}, 
-      #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{deleteTime,jdbcType=TIMESTAMP})
+      #{imgDisplay,jdbcType=VARCHAR}, #{imgDetail,jdbcType=VARCHAR}, #{video,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{specList,jdbcType=VARCHAR}, #{tasteSpec,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, #{productStatus,jdbcType=TINYINT}, 
+      #{saleStatus,jdbcType=TINYINT}, #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Product" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -87,6 +88,9 @@
       </if>
       <if test="imgDetail != null">
         img_detail,
+      </if>
+      <if test="video != null">
+        video,
       </if>
       <if test="description != null">
         description,
@@ -146,6 +150,9 @@
       </if>
       <if test="imgDetail != null">
         #{imgDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null">
+        #{video,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -210,6 +217,9 @@
       <if test="imgDetail != null">
         img_detail = #{imgDetail,jdbcType=VARCHAR},
       </if>
+      <if test="video != null">
+        video = #{video,jdbcType=VARCHAR},
+      </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
@@ -257,6 +267,7 @@
       img_thumbnail = #{imgThumbnail,jdbcType=VARCHAR},
       img_display = #{imgDisplay,jdbcType=VARCHAR},
       img_detail = #{imgDetail,jdbcType=VARCHAR},
+      video = #{video,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       spec_list = #{specList,jdbcType=VARCHAR},
       taste_spec = #{tasteSpec,jdbcType=VARCHAR},
@@ -278,6 +289,4 @@
   <select id="selectInBannerTotal" resultType="int">
         select COUNT(*) from product where banner_status = 1;
     </select>
-
-
 </mapper>

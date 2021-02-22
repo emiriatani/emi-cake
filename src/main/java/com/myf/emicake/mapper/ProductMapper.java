@@ -29,6 +29,4 @@ public interface ProductMapper {
      * @return
      */
     int selectInBannerTotal();
-
-
 }

@@ -38,6 +38,11 @@ public class ProductDTO  implements Serializable {
     private String imgDisplay;
 
     /**
+     * 商品介绍视频
+     */
+    private  String video;
+
+    /**
      * 商品详情页介绍图
      */
     private String imgDetail;

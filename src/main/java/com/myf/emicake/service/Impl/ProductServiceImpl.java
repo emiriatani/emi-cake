@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService{
 
     @Resource
     private ProductMapper productMapper;
@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
             return list;
         }
         List<Product> prodList = productMapper.selectInBanner(total);
-        /*忽略null字段，List<Product>转Json*/
+        /*忽略null字段，List<Product1>转Json*/
         String prodJsonStr = JSONUtil.toJsonStr(prodList);
         /*Json转List<BannerDTO>*/
         List<BannerDTO> bannerDTOList = JSONUtil.toList(prodJsonStr, BannerDTO.class);

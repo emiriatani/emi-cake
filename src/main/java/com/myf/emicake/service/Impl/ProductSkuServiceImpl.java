@@ -61,7 +61,7 @@ public class ProductSkuServiceImpl implements ProductSkuService{
         List<ProductSkuDTO> list = new ArrayList<>();
         List<ProductSku> prodSkuList = productSkuMapper.selectByProductId(id);
 
-        /*忽略null字段，List<Product>转Json*/
+        /*忽略null字段，List<Product1>转Json*/
         String prodJsonStr = JSONUtil.toJsonStr(prodSkuList);
         /*Json转List<ProductSkuDTO>*/
         List<ProductSkuDTO> prodSkuDTOList = JSONUtil.toList(prodJsonStr, ProductSkuDTO.class);
