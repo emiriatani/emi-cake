@@ -16,6 +16,7 @@
     <link rel="stylesheet" th:href="@{/static/assets/css/register.css}" href="../../static/assets/css/register.css">
     <link rel="stylesheet" th:href="@{/static/assets/css/category.css}" href="../../static/assets/css/category.css">
     <link rel="stylesheet" th:href="@{/static/assets/css/goods.css}" href="../../static/assets/css/goods.css">
+    <link rel="stylesheet" th:href="@{/static/assets/css/cart.css}" href="../../static/assets/css/cart.css">
     <title th:replace="${title}"></title>
 </head>
 <body>
@@ -39,7 +40,7 @@
                 </form>
             </div>
             <div class="cart_box">
-                <a  href="../cart/cart.html">购物车</a>
+                <a  th:href="@{/shop/cart.html}" target="_self">购物车</a>
             </div>
             <div th:if="${session.loginMember != null}" class="login_box">
                 <a th:href="@{/member/memberCentre.html}" th:text="${session.loginMember.getMemberId()}" target="_self"></a>

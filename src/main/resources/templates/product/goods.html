@@ -8,15 +8,13 @@
     <!--main header-->
     <div th:replace="common/common :: menu_bar"></div>
     <!--main content-->
-    <!--商品介绍轮播图-->
+    <!--商品展示轮播图-->
     <div class="layui-carousel goods_carousel" id="goods_carousel">
         <div carousel-item="" id="display_carousel">
         </div>
-
     </div>
     <!--商品购买信息-->
-    <!--提交表单-->
-    <form action="" class="layui-form">
+    <form action="" class="layui-form" method="post">
         <div class="goods_shop_box clearfix">
             <!--商品名称和价格-->
             <div class="goods_title">
@@ -54,7 +52,7 @@
                     <div class="layui-input-block">
                         <div id="amount_group">
                             <span><a href="javascript:;" class="del_btn"><i class="layui-icon">&#xe67e;</i></a></span>
-                            <span class="count_value">1</span>
+                            <span class="count_value"></span>
                             <span><a href="javascript:;" class="add_btn"><i class="layui-icon">&#xe624;</i></a></span>
                         </div>
                     </div>
@@ -63,26 +61,24 @@
             <!--加入购物车立即购买-->
             <div class="shopBtnGroup">
                 <div id="itemId" value=""></div>
-                <button class="layui-btn layui-btn-warm">加入购物车</button>
-                <button class="layui-btn layui-btn-warm">立即购买</button>
+                <button type="button" lay-filter="purchase" id="addToCartBtn" class="layui-btn layui-btn-warm">加入购物车</button>
+                <button type="button" lay-filter="purchase" class="layui-btn layui-btn-warm">立即购买</button>
             </div>
         </div>
     </form>
 
     <!--商品详细信息-->
     <div class="goods_info_box" id="">
-        <fieldset class="layui-elem-field layui-field-title">
-            <legend>Introduction</legend>
-        </fieldset>
         <!--商品介绍视频-->
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>视频介绍</legend>
+        </fieldset>
         <div class="videoBox">
-            <video width="1162" controls>
-                <source id="oggVideo" src="/upload/prod/video/vone.ogg" type="video/ogg">
-                <source id="mp4Video" src="" type="video/mp4">
-                <source id="webmVideo" src="/upload/prod/video/vone.webm" type="video/webm">
-                您的浏览器不支持Video标签
-            </video>
         </div>
+        <!--商品图片介绍-->
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>图文介绍</legend>
+        </fieldset>
         <div id="introduceImgBox">
         </div>
     </div>
@@ -96,17 +92,38 @@
 <script type="text/javascript" th:src="@{/static/assets/js/common.js}" src="../../static/assets/js/common.js"></script>
 </body>
 <script>
-
     var productId = getQueryVariable("id");
     var allProductSku = null;
 
+
     $(function () {
+
         queryProdData();
         initProdData();
+        $("#addToCartBtn").click(function () {
+            var productSkuId = $("#itemId").val();
+            var productNumber = val[0].innerHTML;
+            var productPrice = $("#price").val();
+            var productSize = $("#size").val();
+            var productWeight = $("#weight").val();
+
+            alert("商品id:" + productId);
+            alert("sku id:" + productSkuId);
+            alert("购买的商品数量:" + productNumber);
+            alert("购买的商品单价:" + productPrice);
+            alert("选中的商品尺寸:" +  productSize);
+            alert("选中的商品重量:" + productWeight);
+
+            
+
+
+        })
     });
 
-
+    /*初始化商品信息*/
     function initProdData() {
+        /*初始化购买数量*/
+        val[0].innerHTML = 1;
         if (productId != null) {
             layui.use(['carousel', 'form', 'rate'], function () {
                 var carousel = layui.carousel;
@@ -125,8 +142,6 @@
 
                             /*商品描述*/
                             $("#desc").html(response[dataKey].description);
-
-
 
                             /*商品甜度、脂度、芝度规格*/
                             let tasteJson = JSON.parse(response[dataKey].tasteSpec)
@@ -158,7 +173,6 @@
                                     $("#tasteDegreeBox :last-child :first-child").html("芝度");
                                     $("#tasteDegreeBox :last-child :last-child").attr("class", "score");
                                 }
-
                             }
                             /*给所有json数据中的key值赋相应的value值*/
                             let scoreArray = $(".score");
@@ -198,6 +212,21 @@
                                 $("#introduceImgBox").append(str);
                             });
 
+                            /*商品介绍视频*/
+                            let videoData = response[dataKey].video;
+                            videoData = null;
+                            if (videoData != null){
+                                if (videoData.toString().endsWith("mp4")||
+                                    videoData.toString().endsWith("mP4")||
+                                    videoData.toString().endsWith("MP4")||
+                                    videoData.toString().endsWith("Mp4")){
+                                    let str = '<video id="video" width="1162" controls><source src="'+videoData+'" type="video/mp4">您的浏览器不支持Video标签</video>';
+                                    $(".videoBox").append(str);
+                                }
+                            }else{
+                                $(".videoBox").html("该商品无介绍视频");
+                            }
+
                             /*商品规格参数*/
                             let parse = JSON.parse(response[dataKey].specList);
                             let sizeArray = parse.size;
@@ -208,49 +237,41 @@
                                     let skuId = allProductSku[index].id;
                                     let skuSize = JSON.parse(allProductSku[index].productSpecs).size;
                                     let skuWeight = JSON.parse(allProductSku[index].productSpecs).weight;
+                                    let price = allProductSku[i].price;
                                     if (item === skuSize){
                                         $("#size_img").attr("src",allProductSku[index].images);
                                         $("#weight").html(skuWeight);
-                                        $("#price").html("￥" + allProductSku[index].price + "/")
+                                        $("#weight").val(skuWeight);
+                                        $("#price").html("￥" + price + "/");
+                                        $("#price").val(price);
                                         $("#size").html(skuSize);
-                                        $("#itemId").attr("value",skuId);
+                                        $("#size").val(skuSize);
+                                        $("#itemId").val(skuId);
                                     }
 
                                 }
-
                             });
                             /*尺寸默认选中第一个*/
                             $(".sizeRadio:first").attr({checked: "true"});
-
-                            /*商品介绍视频*/
-                            let videoData = response[dataKey].video;
-                            if (videoData != null){
-                                if (videoData.toString().endsWith("mp4")||
-                                    videoData.toString().endsWith("mP4")||
-                                    videoData.toString().endsWith("MP4")||
-                                    videoData.toString().endsWith("Mp4")){
-                                    $("#mp4Video").attr("src",videoData);
-                                    document.getElementById("mp4Video").load();
-                                }
-                            }else{
-                                $(".videoBox").attr();
-                            }
-
-
                             /*手动渲染*/
                             form.render();
+
                             /*radio监听事件*/
                             form.on('radio(change)', function (data) {
                                 for (let i = 0; i < allProductSku.length; i++) {
                                     let skuId = allProductSku[i].id;
                                     let skuSize = JSON.parse(allProductSku[i].productSpecs).size;
                                     let skuWeight = JSON.parse(allProductSku[i].productSpecs).weight;
+                                    let price = allProductSku[i].price;
                                     if (data.value == skuSize){
                                         $("#size_img").attr("src",allProductSku[i].images);
                                         $("#weight").html(skuWeight);
-                                        $("#price").html("￥" + allProductSku[i].price + "/")
+                                        $("#weight").val(skuWeight);
+                                        $("#price").html("￥" + price + "/")
+                                        $("#price").val(price);
                                         $("#size").html(skuSize);
-                                        $("#itemId").attr("value",skuId);
+                                        $("#size").val(skuSize);
+                                        $("#itemId").val(skuId);
                                     }
                                 }
                             });
@@ -266,8 +287,7 @@
             })
         }
     }
-
-
+    /*查询该商品id下的所有sku信息*/
     function queryProdData() {
         $.ajax({
             url: '/prod/sku/' + productId,
@@ -279,7 +299,6 @@
             success: function (response) {
                 if (response[successKey] == true && response[dataKey] != null) {
                     allProductSku = response[dataKey];
-
                 }
             },
             error: function () {
@@ -289,16 +308,25 @@
         })
     }
 
-    /**
-     * 分隔数据库中查出来的图片url字符串
-     * @param originObj 需要分割的对象
-     * @param delimiter 分隔符
-     * @returns {*|string[]}
-     */
-    function splitParam(originObj, delimiter) {
-        let str = originObj;
-        let splitArray = str.split(delimiter);
-        return splitArray;
-    }
+
+
+
+    // function addToCart() {
+    //
+    //     $.ajax({
+    //         url:'',
+    //         type:'post',
+    //         data:,
+    //         contentType: 'application/json',
+    //         dataType:"json",
+    //         success: function () {
+    //         },
+    //         error: function () {
+    //
+    //         }
+    //     })
+    // }
+
+
 </script>
 </html>

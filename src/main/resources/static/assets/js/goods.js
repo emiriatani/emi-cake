@@ -10,6 +10,7 @@ for (var i = 0, len = add.length; i < len; i++) {
             var value = parseInt(val[i].innerHTML);
             ++value;
             val[i].innerHTML = value;
+
         }
     })(i)
 }

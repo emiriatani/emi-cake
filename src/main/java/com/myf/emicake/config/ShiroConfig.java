@@ -51,11 +51,12 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/member/**","anon");
         chainDefinition.addPathDefinition("/product/**.html", "anon");
         chainDefinition.addPathDefinition("/prod/**","anon");
+        chainDefinition.addPathDefinition("/shop/**.html","anon");
+        chainDefinition.addPathDefinition("/cart/**.html","anon");
         chainDefinition.addPathDefinition("/upload/**","anon");
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
     }
-
     /**
      * 密码匹配器
      * @return

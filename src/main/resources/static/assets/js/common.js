@@ -27,3 +27,15 @@ function getQueryVariable(variable)
     }
     return(false);
 }
+
+/**
+ * 分隔数据库中查出来的图片url字符串
+ * @param originObj 需要分割的对象
+ * @param delimiter 分隔符
+ * @returns {*|string[]}
+ */
+function splitParam(originObj, delimiter) {
+    let str = originObj;
+    let splitArray = str.split(delimiter);
+    return splitArray;
+}
