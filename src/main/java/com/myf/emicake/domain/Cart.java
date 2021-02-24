@@ -3,7 +3,6 @@ package com.myf.emicake.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cart<T> implements Serializable {
+public class Cart<CartItem> implements Serializable {
     private static final long serialVersionUID = 1460098552474758700L;
 
     /*会员用户id*/
@@ -27,7 +26,7 @@ public class Cart<T> implements Serializable {
     private int productCount;
 
     /*商品项*/
-    private List<T> cartItemList;
+    private List<CartItem> cartItemList;
 
     public void setProductCount() {
         this.productCount = cartItemList.size();
