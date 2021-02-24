@@ -22,7 +22,6 @@ public class CartItem implements Serializable {
 
     private static final long serialVersionUID = 3308643599501684456L;
 
-
     /*商品id*/
     private Integer id;
 
@@ -41,10 +40,13 @@ public class CartItem implements Serializable {
     /*商品单价*/
     private BigDecimal price;
 
+    /*库存状态，是否有货*/
+    private boolean stockState;
+
     /*购买数量*/
     private int count;
 
-    /*总价*/
+    /*单项商品总价*/
     private BigDecimal totalPrice;
 
     public void setTotalPrice(BigDecimal totalPrice) {

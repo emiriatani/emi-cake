@@ -29,7 +29,7 @@ public class RandomStrUtils {
                 sb.append(aChar);
             }
         }else {
-            getSmsCode(8);
+            getSalt(8);
         }
 
         return sb.toString();

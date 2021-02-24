@@ -23,7 +23,7 @@ public class Cart<T> implements Serializable {
     /*会员用户id*/
     private Integer memberId;
 
-    /*商品数量*/
+    /*商品项数量*/
     private int productCount;
 
     /*商品项*/
