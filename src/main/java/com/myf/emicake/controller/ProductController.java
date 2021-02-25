@@ -67,7 +67,6 @@ public class ProductController {
         Product product = productService.selectByPrimaryKey(productId);
         ProductDTO productDTO = new ProductDTO();
         BeanUtils.copyProperties(productDTO, product);
-
         System.out.println(product);
 
         return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg(), productDTO);

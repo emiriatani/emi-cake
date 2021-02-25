@@ -1,7 +1,11 @@
 package com.myf.emicake.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,12 +24,13 @@ public class CartDTO implements Serializable {
 
     private static final long serialVersionUID = -8546019102121921418L;
 
-    private Integer id;
 
     /*会员id*/
+    @NotNull(message = "会员id不能为空")
     private Integer memberId;
 
     /*购物车商品项数量*/
+    @Max(value = 50,message = "购物车中最多加购50件商品")
     private int size;
     
     /*购物车商品项*/

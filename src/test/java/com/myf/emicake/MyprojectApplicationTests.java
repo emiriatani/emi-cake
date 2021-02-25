@@ -64,7 +64,12 @@ class MyprojectApplicationTests {
 
         System.out.println(productDTO);
     }
-    
+
+
+    @Test
+    public void test02() throws InvocationTargetException, IllegalAccessException {
+
+    }
     
     
 

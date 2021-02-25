@@ -5,6 +5,7 @@ import com.myf.emicake.common.Result;
 import com.myf.emicake.common.StatusCode;
 import com.myf.emicake.config.shiro.token.UserPhoneToken;
 import com.myf.emicake.domain.Member;
+import com.myf.emicake.dto.MemberDTO;
 import com.myf.emicake.dto.PasswordLoginDTO;
 import com.myf.emicake.dto.RegisterDTO;
 import com.myf.emicake.dto.SmsLoginDTO;
@@ -15,6 +16,7 @@ import com.myf.emicake.utils.RedisUtils;
 import com.myf.emicake.utils.ResultUtils;
 import com.myf.emicake.utils.ShiroUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @ClassName com.myf.emicake.controller MemberController
@@ -57,7 +60,7 @@ public class MemberController {
     @ResponseBody
     @PostMapping(value = "/register")
     public Result<Object> register(@RequestBody @Valid RegisterDTO registerDTO,
-                                   HttpServletRequest request) {
+                                   HttpServletRequest request) throws InvocationTargetException, IllegalAccessException {
         String phone = registerDTO.getPhone();
         log.info("注册的手机号码:" + phone);
         if (memberService.isExistsMember(phone)) {
@@ -78,7 +81,9 @@ public class MemberController {
                     log.info("该会员id为:" + member.getId().toString());
                     /*查询出该用户的完整信息*/
                     member = memberService.selectByPrimaryKey(member.getId());
-                    return ResultUtils.success(StatusCode.REGISTER_SUCCESS.getCode(), StatusCode.REGISTER_SUCCESS.getMsg(), member);
+                    MemberDTO memberDTO = new MemberDTO();
+                    BeanUtils.copyProperties(memberDTO, member);
+                    return ResultUtils.success(StatusCode.REGISTER_SUCCESS.getCode(), StatusCode.REGISTER_SUCCESS.getMsg(), memberDTO);
                 } else {
                     log.error("异常信息", new Exception("验证码错误"));
                     throw new GlobalException(StatusCode.SMS_CODE_ERROR.getCode(), StatusCode.SMS_CODE_ERROR.getMsg());
@@ -102,6 +107,7 @@ public class MemberController {
     public String setMemberPassword(@RequestParam("id") Integer id,
                                     Member member,
                                     Model model) {
+
         Member selectMember = memberService.selectByPrimaryKey(id);
 
         if (StringUtils.isEmpty(selectMember)) {
@@ -118,7 +124,7 @@ public class MemberController {
             memberService.updateByPrimaryKeySelective(member);
             member = memberService.selectByPrimaryKey(id);
             System.out.println("查询出的member信息:" + member);
-            model.addAttribute("member", member);
+            //model.addAttribute("member", member);
         }
         return "redirect:/page/member/login.html";
     }
@@ -132,18 +138,20 @@ public class MemberController {
      */
     @ResponseBody
     @PostMapping("/smsLogin")
-    public Result<Object> smsLogin(@RequestBody @Valid SmsLoginDTO smsLoginDTO, HttpSession httpSession) {
+    public Result<Object> smsLogin(@RequestBody @Valid SmsLoginDTO smsLoginDTO, HttpSession httpSession) throws InvocationTargetException, IllegalAccessException {
         String phone = smsLoginDTO.getPhone();
         String reqSmsCode = smsLoginDTO.getSmsCode();
         log.info("登录的手机号码：" + phone);
         log.info("登录的验证码：" + reqSmsCode);
+        MemberDTO memberDTO = new MemberDTO();
         Subject subject = SecurityUtils.getSubject();
         UserPhoneToken userPhoneToken = new UserPhoneToken(phone, reqSmsCode);
         if (ShiroUtils.isAuthenticatedLoginUser(subject, userPhoneToken)) {
             Member member = (Member) subject.getPrincipal();
-            httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, member);
-            subject.getSession().setAttribute(Constants.LOGIN_MEMBER_KEY, member);
-            return ResultUtils.success(StatusCode.LOGIN_SUCCESS.getCode(), StatusCode.LOGIN_SUCCESS.getMsg(), member);
+            BeanUtils.copyProperties(memberDTO, member);
+            httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);
+            subject.getSession().setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);
+            return ResultUtils.success(StatusCode.LOGIN_SUCCESS.getCode(), StatusCode.LOGIN_SUCCESS.getMsg(), memberDTO);
         }
         return ResultUtils.error(StatusCode.LOGIN_FAILED.getCode(), StatusCode.LOGIN_FAILED.getMsg());
     }
@@ -156,20 +164,22 @@ public class MemberController {
      */
     @ResponseBody
     @PostMapping("/passwordLogin")
-    public Result<Object> passwordLogin(@RequestBody @Valid PasswordLoginDTO passwordLoginDTO, HttpSession httpSession) {
+    public Result<Object> passwordLogin(@RequestBody @Valid PasswordLoginDTO passwordLoginDTO, HttpSession httpSession) throws InvocationTargetException, IllegalAccessException {
 
         String userName = passwordLoginDTO.getUserName();
         String passWord = passwordLoginDTO.getPassWord();
 
         log.info("登录的用户名：" + userName);
         log.info("登录的密码：" + passWord);
+        MemberDTO memberDTO = new MemberDTO();
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, passWord);
         if (ShiroUtils.isAuthenticatedLoginUser(subject,usernamePasswordToken)) {
             Member member = (Member) subject.getPrincipal();
-            httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, member);
-            subject.getSession().setAttribute(Constants.LOGIN_MEMBER_KEY, member);
-            return ResultUtils.success(StatusCode.LOGIN_SUCCESS.getCode(), StatusCode.LOGIN_SUCCESS.getMsg(), member);
+            BeanUtils.copyProperties(memberDTO, member);
+            httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);
+            subject.getSession().setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);
+            return ResultUtils.success(StatusCode.LOGIN_SUCCESS.getCode(), StatusCode.LOGIN_SUCCESS.getMsg(), memberDTO);
         }
         return ResultUtils.error(StatusCode.LOGIN_FAILED.getCode(), StatusCode.LOGIN_FAILED.getMsg());
     }
