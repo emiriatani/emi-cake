@@ -32,6 +32,8 @@ public class ProductDTO  implements Serializable {
     */
     private String title;
 
+
+
     /**
      * 商品详情页展示图
      */

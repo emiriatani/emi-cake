@@ -14,6 +14,8 @@ public class MemberServiceImpl implements MemberService{
     @Resource
     private MemberMapper memberMapper;
 
+
+
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return memberMapper.deleteByPrimaryKey(id);
