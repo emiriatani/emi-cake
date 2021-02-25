@@ -21,7 +21,6 @@ public enum StatusCode implements Serializable {
     REQUEST_SUCCESS(Constants.SUCCESS,"请求成功"),
 
 
-
     /*短信*/
     SMS_SEND_SUCCESS(Constants.SUCCESS,"短信验证码发送成功"),
     SMS_SEND_ERROR(Constants.FAIL,"短信验证码发送失败"),
@@ -40,12 +39,14 @@ public enum StatusCode implements Serializable {
     LOGIN_FAILED(Constants.FAIL,"登录失败，请重新尝试"),
     NOT_REGISTER(Constants.FAIL,"该手机号码未注册，请先注册"),
     PASSWORD_ERROR(Constants.FAIL,"密码错误，请重新输入"),
-    ACCOUNT_LOCKED(Constants.FAIL,"该账号已被锁定，请联系管理员");
+    ACCOUNT_LOCKED(Constants.FAIL,"该账号已被锁定，请联系管理员"),
 
 
     /*商品模块*/
 
 
+    /*购物车*/
+    NOT_LOGIN_ACCESS(Constants.FAIL,"请先登录");
 
     private Integer code;
     private String msg;

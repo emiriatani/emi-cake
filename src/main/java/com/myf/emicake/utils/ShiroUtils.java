@@ -52,6 +52,12 @@ public class ShiroUtils {
         return hash.toBase64();
     }
 
+    /**
+     * 登录是否通过验证
+     * @param subject
+     * @param token
+     * @return
+     */
     public static boolean isAuthenticatedLoginUser(Subject subject,AuthenticationToken token) {
         boolean loginFlag = false;
         subject.login(token);
@@ -61,4 +67,6 @@ public class ShiroUtils {
         }
         return loginFlag;
     }
+
+
 }

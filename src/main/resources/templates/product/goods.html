@@ -60,8 +60,12 @@
             </div>
             <!--加入购物车立即购买-->
             <div class="shopBtnGroup">
-                <div id="itemId" value=""></div>
-                <button type="button" lay-filter="purchase" id="addToCartBtn" class="layui-btn layui-btn-warm">加入购物车</button>
+                <div id="productId"></div>
+                <div id="itemId"></div>
+                <div id="itemThumbnail"></div>
+                <div id="productSkuSpec"></div>
+                <button type="button" lay-filter="purchase" id="addToCartBtn" class="layui-btn layui-btn-warm">加入购物车
+                </button>
                 <button type="button" lay-filter="purchase" class="layui-btn layui-btn-warm">立即购买</button>
             </div>
         </div>
@@ -95,28 +99,50 @@
     var productId = getQueryVariable("id");
     var allProductSku = null;
 
-
     $(function () {
-
         queryProdData();
         initProdData();
         $("#addToCartBtn").click(function () {
+
+            var productId = $("#productId").val();
             var productSkuId = $("#itemId").val();
-            var productNumber = val[0].innerHTML;
+            var productTitle = $("#title").val();
+            var productSpec = $("#productSkuSpec").val();
             var productPrice = $("#price").val();
-            var productSize = $("#size").val();
-            var productWeight = $("#weight").val();
+            var thumbnail = $("#itemThumbnail").val();
+            var productNumber = val[0].innerHTML;
+            var memberId = $("#loginFlagDiv").attr("value");
 
-            alert("商品id:" + productId);
-            alert("sku id:" + productSkuId);
-            alert("购买的商品数量:" + productNumber);
-            alert("购买的商品单价:" + productPrice);
-            alert("选中的商品尺寸:" +  productSize);
-            alert("选中的商品重量:" + productWeight);
-
-            
+            if (memberId === undefined){
+                memberId = -1;
+            }
 
 
+            alert(productSpec);
+            alert(memberId);
+            var reqData = {
+                productId:productId,
+                productSkuId: productSkuId,
+                title: productTitle,
+                spec: productSpec,
+                price: productPrice,
+                thumbnail: thumbnail,
+                number: productNumber
+            };
+
+            $.ajax({
+                url:'/cart/' + memberId,
+                type: 'post',
+                data:JSON.stringify(reqData),
+                contentType: 'application/json',
+                dataType:'json',
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+
+                }
+            })
         })
     });
 
@@ -137,11 +163,17 @@
 
                         if (response[successKey] && response[dataKey] != null) {
 
+
+                            $("#productId").val(response[dataKey].id)
                             /*商品标题*/
+                            $("#title").val(response[dataKey].title);
                             $("#title").html(response[dataKey].title);
 
                             /*商品描述*/
                             $("#desc").html(response[dataKey].description);
+
+                            /*商品缩略图*/
+                            $("#itemThumbnail").val(response[dataKey].imgThumbnail);
 
                             /*商品甜度、脂度、芝度规格*/
                             let tasteJson = JSON.parse(response[dataKey].tasteSpec)
@@ -214,16 +246,15 @@
 
                             /*商品介绍视频*/
                             let videoData = response[dataKey].video;
-                            videoData = null;
-                            if (videoData != null){
-                                if (videoData.toString().endsWith("mp4")||
-                                    videoData.toString().endsWith("mP4")||
-                                    videoData.toString().endsWith("MP4")||
-                                    videoData.toString().endsWith("Mp4")){
-                                    let str = '<video id="video" width="1162" controls><source src="'+videoData+'" type="video/mp4">您的浏览器不支持Video标签</video>';
+                            if (videoData != null) {
+                                if (videoData.toString().endsWith("mp4") ||
+                                    videoData.toString().endsWith("mP4") ||
+                                    videoData.toString().endsWith("MP4") ||
+                                    videoData.toString().endsWith("Mp4")) {
+                                    let str = '<video id="video" width="1162" controls><source src="' + videoData + '" type="video/mp4">您的浏览器不支持Video标签</video>';
                                     $(".videoBox").append(str);
                                 }
-                            }else{
+                            } else {
                                 $(".videoBox").html("该商品无介绍视频");
                             }
 
@@ -233,13 +264,13 @@
                             $.each(sizeArray, function (index, item) {
                                 let str = '<input type="radio" class="sizeRadio"  lay-filter="change" name="size"  value="' + item + '" title="' + item + '">';
                                 $("#sizeDiv").append(str);
-                                if (index == 0){
+                                if (index == 0) {
                                     let skuId = allProductSku[index].id;
                                     let skuSize = JSON.parse(allProductSku[index].productSpecs).size;
                                     let skuWeight = JSON.parse(allProductSku[index].productSpecs).weight;
                                     let price = allProductSku[i].price;
-                                    if (item === skuSize){
-                                        $("#size_img").attr("src",allProductSku[index].images);
+                                    if (item === skuSize) {
+                                        $("#size_img").attr("src", allProductSku[index].images);
                                         $("#weight").html(skuWeight);
                                         $("#weight").val(skuWeight);
                                         $("#price").html("￥" + price + "/");
@@ -247,6 +278,7 @@
                                         $("#size").html(skuSize);
                                         $("#size").val(skuSize);
                                         $("#itemId").val(skuId);
+                                        $("#productSkuSpec").val(allProductSku[index].productSpecs);
                                     }
 
                                 }
@@ -263,8 +295,8 @@
                                     let skuSize = JSON.parse(allProductSku[i].productSpecs).size;
                                     let skuWeight = JSON.parse(allProductSku[i].productSpecs).weight;
                                     let price = allProductSku[i].price;
-                                    if (data.value == skuSize){
-                                        $("#size_img").attr("src",allProductSku[i].images);
+                                    if (data.value == skuSize) {
+                                        $("#size_img").attr("src", allProductSku[i].images);
                                         $("#weight").html(skuWeight);
                                         $("#weight").val(skuWeight);
                                         $("#price").html("￥" + price + "/")
@@ -272,6 +304,7 @@
                                         $("#size").html(skuSize);
                                         $("#size").val(skuSize);
                                         $("#itemId").val(skuId);
+                                        $("#productSkuSpec").val(allProductSku[i].productSpecs);
                                     }
                                 }
                             });
@@ -282,11 +315,10 @@
                         initProdData();
                     }
                 })
-
-
             })
         }
     }
+
     /*查询该商品id下的所有sku信息*/
     function queryProdData() {
         $.ajax({
@@ -308,24 +340,6 @@
         })
     }
 
-
-
-
-    // function addToCart() {
-    //
-    //     $.ajax({
-    //         url:'',
-    //         type:'post',
-    //         data:,
-    //         contentType: 'application/json',
-    //         dataType:"json",
-    //         success: function () {
-    //         },
-    //         error: function () {
-    //
-    //         }
-    //     })
-    // }
 
 
 </script>

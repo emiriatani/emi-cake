@@ -42,7 +42,7 @@
             <div class="cart_box">
                 <a  th:href="@{/shop/cart.html}" target="_self">购物车</a>
             </div>
-            <div th:if="${session.loginMember != null}" class="login_box">
+            <div th:if="${session.loginMember != null}" class="login_box" id="loginFlagDiv" th:value="${session.loginMember.getId()}">
                 <a th:href="@{/member/memberCentre.html}" th:text="${session.loginMember.getMemberId()}" target="_self"></a>
             </div>
             <div th:if="${session.loginMember == null}" class="login_box">

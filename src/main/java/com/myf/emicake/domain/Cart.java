@@ -3,32 +3,48 @@ package com.myf.emicake.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDateTime;
 
-/**
- * @ClassName com.myf.emicake.domain Cart
- * @Description
- * @Author Afengis
- * @Date 2021/2/23 22:04
- * @Version V1.0
- **/
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Cart<CartItem> implements Serializable {
-    private static final long serialVersionUID = 1460098552474758700L;
+@NoArgsConstructor
+public class Cart implements Serializable {
+    /**
+     * 主键
+     */
+    private Integer id;
 
-    /*会员用户id*/
+    /**
+     * 会员id
+     */
     private Integer memberId;
 
-    /*商品数量*/
-    private int productCount;
+    /**
+     * sku-id
+     */
+    private Integer itemId;
 
-    /*商品项*/
-    private List<CartItem> cartItemList;
+    /**
+     * 购买数量
+     */
+    private Integer quantity;
 
-    public void setProductCount() {
-        this.productCount = cartItemList.size();
-    }
+    /**
+     * 结算状态，0未结算 1已结算
+     */
+    private Byte settlementStatus;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
+
+    private static final long serialVersionUID = 1L;
 }
