@@ -4,6 +4,11 @@ var codekey = "code";
 var msgKey = "msg";
 var dataKey = "data";
 
+
+
+
+
+
 /*弹窗*/
 function alertMsg(str) {
     layui.use(['layer'], function () {

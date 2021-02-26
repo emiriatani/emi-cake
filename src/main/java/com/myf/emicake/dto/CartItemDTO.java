@@ -2,6 +2,7 @@ package com.myf.emicake.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,9 +14,7 @@ import java.math.BigDecimal;
  * @Date 2021/2/25 12:41
  * @Version V1.0
  **/
-@Getter
-@ToString
-@EqualsAndHashCode
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItemDTO implements Serializable {
@@ -43,38 +42,15 @@ public class CartItemDTO implements Serializable {
     private String thumbnail;
 
     /*商品数量*/
+    @Max(value = 100,message = "一次性加购最多为100件")
     private int number;
 
     /*商品单项总价*/
     private BigDecimal totalPrice;
 
 
-    public void setProductSkuId(Integer productSkuId) {
-        this.productSkuId = productSkuId;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setSpec(String spec) {
-        this.spec = spec;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public void setTotalPrice() {
-        this.totalPrice = getPrice().multiply(BigDecimal.valueOf(getNumber()));
+    public void setTotalPrice(BigDecimal unitPrice,int number) {
+        this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(number));
     }
 
 

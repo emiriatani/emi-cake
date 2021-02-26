@@ -233,6 +233,10 @@ public class RedisUtils {
 
 
 
+
+    // ============================ Hash =============================
+
+
     /**
      * 判断 redis 中指定 key 对应的 hash 表中是否有 hashKey
      *
@@ -241,8 +245,10 @@ public class RedisUtils {
      * @return true表示存在，false表示不存在
      */
     public boolean hexists(String key, String hashKey) {
+
         return hashOperations.hasKey(key, hashKey);
     }
+
 
     /**
      * 从 redis 中获取指定 key 对应的 hash 表中的指定 hashKey 所对应的值

@@ -4,6 +4,8 @@ import com.myf.emicake.domain.Cart;
 import com.myf.emicake.dto.CartDTO;
 import com.myf.emicake.dto.CartItemDTO;
 
+import java.lang.reflect.InvocationTargetException;
+
 public interface CartService {
 
 
@@ -24,7 +26,7 @@ public interface CartService {
 
     CartDTO getCart(String memberId);
 
-    void updateCartItemNumber(String memberId,CartItemDTO cartItemDTO);
+    boolean updateCartItemNumber(String memberId,CartItemDTO cartItemDTO) throws InvocationTargetException, IllegalAccessException;
 
     boolean deleteCartItem(String memberId,CartItemDTO cartItemDTO);
 
