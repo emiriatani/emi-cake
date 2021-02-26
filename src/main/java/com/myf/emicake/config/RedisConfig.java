@@ -1,7 +1,6 @@
 package com.myf.emicake.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -20,12 +19,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
 
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private Jackson2JsonRedisSerializer jackson2JsonRedisSerializer;
-    @Autowired
-    private StringRedisSerializer stringRedisSerializer;
+
 
 
     /**
@@ -33,7 +27,7 @@ public class RedisConfig {
      * @MethodName redisTemplate
      * @Description redisTemplate的存储对象配置
      * @Param connectionFactory:连接的工厂
-     * @return: org.springframework.data.redis.core.RedisTemplate<java.lang.String,java.lang.Object>
+     * @return: org.springframework.data.redis.core.RedisTemplate<java.lang.String, java.lang.Object>
      * @Exception
      * @Author Afengis
      * @Date 2021/2/6 19:33
@@ -42,12 +36,11 @@ public class RedisConfig {
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory,
                                                        ObjectMapper objectMapper,
                                                        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer,
-                                                       StringRedisSerializer stringRedisSerializer
-                                                       ) {
+                                                       StringRedisSerializer stringRedisSerializer) {
+
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         //配置连接工厂
         redisTemplate.setConnectionFactory(connectionFactory);
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
         //key
         //使用StringRedisSerializer来序列化和反序列化redis的key值
@@ -59,33 +52,38 @@ public class RedisConfig {
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
 
+
         redisTemplate.afterPropertiesSet();
+
         return redisTemplate;
     }
 
 
     /**
      * 字符串类型数据操作
+     *
      * @param redisTemplate
      * @return
      */
     @Bean
-    public ValueOperations<String,Object> valueOperations(RedisTemplate<String,Object> redisTemplate) {
+    public ValueOperations<String, Object> valueOperations(RedisTemplate<String, Object> redisTemplate) {
         return redisTemplate.opsForValue();
     }
 
     /**
      * 列表类型数据操作
+     *
      * @param redisTemplate
      * @return
      */
     @Bean
-    public ListOperations<String,Object> listOperations(RedisTemplate<String,Object> redisTemplate) {
+    public ListOperations<String, Object> listOperations(RedisTemplate<String, Object> redisTemplate) {
         return redisTemplate.opsForList();
     }
 
     /**
      * hash类型数据操作
+     *
      * @param redisTemplate
      * @return
      */
@@ -96,6 +94,7 @@ public class RedisConfig {
 
     /**
      * 无序集合类型数据操作
+     *
      * @param redisTemplate
      * @return
      */
@@ -106,6 +105,7 @@ public class RedisConfig {
 
     /**
      * 有序集合类型数据操作
+     *
      * @param redisTemplate
      * @return
      */

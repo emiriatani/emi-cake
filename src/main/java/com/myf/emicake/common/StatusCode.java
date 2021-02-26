@@ -46,7 +46,12 @@ public enum StatusCode implements Serializable {
 
 
     /*购物车*/
-    NOT_LOGIN_ACCESS(Constants.FAIL,"请先登录");
+    NOT_LOGIN_ACCESS(Constants.FAIL,"请先登录"),
+    EMPTY_PRODUCT_INFO(Constants.FAIL,"加购的商品信息不能为空"),
+    EMPTY_MEMBER_ID(Constants.FAIL,"会员ID不能为空"),
+    ADD_CART_SUCCESS(Constants.SUCCESS,"加入购物车成功"),
+    ADD_CART_FAIL(Constants.SUCCESS,"加入购物车失败"),
+    NOT_EXIST_IN_CART(Constants.FAIL,"请先添加商品再修改数量");
 
     private Integer code;
     private String msg;

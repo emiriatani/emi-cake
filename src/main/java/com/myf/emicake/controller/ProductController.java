@@ -1,5 +1,6 @@
 package com.myf.emicake.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myf.emicake.common.Constants;
 import com.myf.emicake.common.Result;
 import com.myf.emicake.common.StatusCode;
@@ -35,6 +36,8 @@ import java.util.List;
 @RequestMapping("/prod")
 public class ProductController {
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -51,6 +54,7 @@ public class ProductController {
         System.out.println(total);
         List<BannerDTO> list = null;
         if (redisUtils.exists(Constants.BANNER_LIST_KEY)) {
+            //list = objectMapper.convertValue(redisUtils.get(Constants.BANNER_LIST_KEY), new TypeReference<List<BannerDTO>>(){});
             list = redisUtils.get(Constants.BANNER_LIST_KEY);
             log.info("从redis中取出的banner数据" + list);
         } else {

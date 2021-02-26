@@ -117,9 +117,6 @@
                 memberId = -1;
             }
 
-
-            alert(productSpec);
-            alert(memberId);
             var reqData = {
                 productId:productId,
                 productSkuId: productSkuId,
@@ -129,9 +126,9 @@
                 thumbnail: thumbnail,
                 number: productNumber
             };
-
+            alert(JSON.stringify(reqData));
             $.ajax({
-                url:'/cart/' + memberId,
+                url:'/cart/add/' + memberId,
                 type: 'post',
                 data:JSON.stringify(reqData),
                 contentType: 'application/json',
@@ -143,6 +140,27 @@
 
                 }
             })
+        })
+
+        $("#cartBtn").click(function () {
+            var memberId = $("#loginFlagDiv").attr("value");
+
+            if (memberId === undefined){
+                memberId = -1;
+            }
+            
+            $.ajax({
+                url:'/cart/get/' + memberId,
+                type: 'get',
+                dataType:'json',
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function () {
+                    console.log(response)
+                }
+            })
+
         })
     });
 
@@ -268,7 +286,7 @@
                                     let skuId = allProductSku[index].id;
                                     let skuSize = JSON.parse(allProductSku[index].productSpecs).size;
                                     let skuWeight = JSON.parse(allProductSku[index].productSpecs).weight;
-                                    let price = allProductSku[i].price;
+                                    let price = allProductSku[index].price;
                                     if (item === skuSize) {
                                         $("#size_img").attr("src", allProductSku[index].images);
                                         $("#weight").html(skuWeight);

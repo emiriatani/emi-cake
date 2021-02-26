@@ -2,6 +2,7 @@ package com.myf.emicake.utils;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapLikeType;
@@ -86,7 +87,6 @@ public class JSONUtils {
 
     /**
      * 将JSON转成相应的Map
-     *
      * @param jsonStr
      * @return
      */
@@ -99,6 +99,20 @@ public class JSONUtils {
             log.error("JSON字符串转Map异常", e);
         }
         return map;
+    }
+
+
+    /**
+     *
+     * @param fromValue 需要转换的对象
+     * @param toValueTypeRef 需要转换成的类型引用
+     * @param <T>
+     * @return
+     */
+    public  <T> T myValueTypeConvert(Object fromValue, TypeReference<T> toValueTypeRef){
+
+        T t = objectMapper.convertValue(fromValue, toValueTypeRef);
+        return t;
     }
 
 }

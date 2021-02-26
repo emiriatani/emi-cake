@@ -44,10 +44,9 @@ public class CartDTO implements Serializable {
     }
 
     public void setTotalPrice() {
-        List<CartItemDTO> cartItemDTOList = getCartItemDTOList();
         BigDecimal price = new BigDecimal("0");
         for (CartItemDTO item :
-                cartItemDTOList) {
+                getCartItemDTOList()) {
             price= price.add(item.getTotalPrice());
         }
         this.totalPrice = price;
