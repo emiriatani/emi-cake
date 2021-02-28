@@ -20,8 +20,6 @@ public class RedisConfig {
 
 
 
-
-
     /**
      * @ClassName myf.myf.emicake.config RedisConfig
      * @MethodName redisTemplate

@@ -3,7 +3,10 @@ package com.myf.emicake.service.Impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.myf.emicake.common.Constants;
 import com.myf.emicake.common.StatusCode;
+import com.myf.emicake.component.Producter;
+import com.myf.emicake.component.properties.RabbitMqMsgProperties;
 import com.myf.emicake.domain.Cart;
+import com.myf.emicake.domain.ProductSku;
 import com.myf.emicake.dto.CartDTO;
 import com.myf.emicake.dto.CartItemDTO;
 import com.myf.emicake.exception.GlobalException;
@@ -19,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +39,11 @@ public class CartServiceImpl implements CartService {
     private JSONUtils jsonUtils;
     @Resource
     private ProductSkuService productSkuService;
+    @Resource
+    private RabbitMqMsgProperties rabbitMqMsgProperties;
+    @Resource
+    private Producter producter;
+
 
 
     @Override
@@ -96,7 +105,6 @@ public class CartServiceImpl implements CartService {
         } else {
             /*判断该商品项在redis中是否存在*/
             boolean hasItem = redisUtils.hexists(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
-
             if (hasItem) {
                 /*查询出已经存在的商品项*/
                 Object existedCartItemObj = redisUtils.hget(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
@@ -110,6 +118,16 @@ public class CartServiceImpl implements CartService {
                 addFlag = redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), existedCartItem);
             } else {
                 addFlag = redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), cartItemDTO);
+                if (addFlag){
+                    /*同步到数据库中*/
+                    Cart cart = new Cart();
+                    cart.setMemberId(Integer.valueOf(memberId));
+                    cart.setItemId(cartItemDTO.getProductSkuId());
+                    cart.setQuantity(cartItemDTO.getNumber());
+                    cart.setSettlementStatus((byte) 0);
+                    cart.setCreateTime(LocalDateTime.now());
+                    producter.sendMessage(rabbitMqMsgProperties.getTopicExchangeName(), rabbitMqMsgProperties.getDaoRoutekey(), cart);
+                }
             }
         }
         return addFlag;
@@ -144,8 +162,13 @@ public class CartServiceImpl implements CartService {
                     System.out.println("value:" + cartItem.getValue());
                     System.out.println("value:" + cartItem.getValue().getClass().getName());
                     System.out.println("----------");
-                    CartItemDTO cartItemDTO = jsonUtils.myValueTypeConvert(cartItem.getValue(), new TypeReference<CartItemDTO>() {
-                    });
+                    CartItemDTO cartItemDTO = jsonUtils.myValueTypeConvert(cartItem.getValue(), new TypeReference<CartItemDTO>() {});
+                    ProductSku productSku = productSkuService.selectByPrimaryKey(cartItemDTO.getProductSkuId());
+                    if (cartItemDTO.getPrice() != productSku.getPrice()){
+                        cartItemDTO.setPrice(productSku.getPrice());
+                        cartItemDTO.setTotalPrice(cartItemDTO.getPrice(), cartItemDTO.getNumber());
+                    }
+                    redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), cartItemDTO);
                     cartItemDTOList.add(cartItemDTO);
                 }
                 cartDTO.setCartItemDTOList(cartItemDTOList);
@@ -166,7 +189,6 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     public boolean updateCartItemNumber(String memberId, CartItemDTO cartItemDTO) throws InvocationTargetException, IllegalAccessException {
-
         boolean updateFlag = false;
 
         if (StringUtils.isEmpty(memberId)) {
@@ -184,6 +206,7 @@ public class CartServiceImpl implements CartService {
                 Object getObject = redisUtils.hget(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
                 CartItemDTO needUpdateCartItem = jsonUtils.myValueTypeConvert(getObject, new TypeReference<CartItemDTO>() {});
                 BeanUtils.copyProperties(needUpdateCartItem, cartItemDTO);
+                needUpdateCartItem.setTotalPrice(needUpdateCartItem.getPrice(), needUpdateCartItem.getNumber());
                 System.out.println("更新后的购物项" + needUpdateCartItem);
                 updateFlag = redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), needUpdateCartItem);
             }else {

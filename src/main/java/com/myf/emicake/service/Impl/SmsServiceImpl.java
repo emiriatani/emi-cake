@@ -7,6 +7,7 @@ import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.myf.emicake.component.properties.AliyunSmsProperties;
 import com.myf.emicake.service.SmsService;
 import com.myf.emicake.utils.JSONUtils;
 import com.myf.emicake.utils.RandomStrUtils;
@@ -31,6 +32,9 @@ public class SmsServiceImpl implements SmsService {
     @Autowired
     private JSONUtils jsonUtils;
 
+    @Autowired
+    private AliyunSmsProperties aliyunSmsProperties;
+
 
     /***
      * @ClassName com.myf.emicake.service.Impl SendSmsServiceImpl
@@ -46,17 +50,17 @@ public class SmsServiceImpl implements SmsService {
     public boolean send(String phoneNum, String templateCode, Map<String, Object> code) throws ClientException {
 
         //设置超时时间-可自行调整
-        System.setProperty("sun.net.client.defaultConnectTimeout", "3000");
-        System.setProperty("sun.net.client.defaultReadTimeout", "2000");
+        System.setProperty(aliyunSmsProperties.getConnectTimeout(), "3000");
+        System.setProperty(aliyunSmsProperties.getReadTimeout(), "2000");
         //初始化acsClient需要的几个参数
-        final String product = "Dysmsapi";//短信API产品名称（短信产品名固定，无需修改）
-        final String domain = "dysmsapi.aliyuncs.com";//短信API产品域名（接口地址固定，无需修改）
-        final String regionId = "cn-hangzhou";
-        final String sysVersion = "2017-05-25";
-        final String sysAction = "SendSms";
-        final String accessKeyId = "LTAI4GD4zszMZV2dBT87cUJm";//你的accessKeyId
-        final String accessKeySecret = "QKs6wjrsJkbpTYOpekzyrudaBC3bYm";//你的accessKeySecret
-        final String signName = "打工人的技术沉淀屋";
+        final String product = aliyunSmsProperties.getProduct();//短信API产品名称（短信产品名固定，无需修改）
+        final String domain = aliyunSmsProperties.getDomain();//短信API产品域名（接口地址固定，无需修改）
+        final String regionId = aliyunSmsProperties.getRegionId();
+        final String sysVersion = aliyunSmsProperties.getSysVersion();
+        final String sysAction = aliyunSmsProperties.getSysAction();
+        final String accessKeyId = aliyunSmsProperties.getAccessKeyId();//你的accessKeyId
+        final String accessKeySecret = aliyunSmsProperties.getAccessKeySecret();//你的accessKeySecret
+        final String signName = aliyunSmsProperties.getSignName();
         //初始化DefaultAcsClient,暂时不支持多region（请勿修改）
         DefaultProfile profile = DefaultProfile.getProfile(regionId, accessKeyId, accessKeySecret);
         IAcsClient DefaultAcsClient = new DefaultAcsClient(profile);

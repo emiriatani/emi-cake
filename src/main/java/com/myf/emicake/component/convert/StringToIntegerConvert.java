@@ -1,4 +1,4 @@
-package com.myf.emicake.component;
+package com.myf.emicake.component.convert;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;

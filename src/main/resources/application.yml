@@ -33,8 +33,8 @@ spring:
       filters: stat,wall     # 底层开启功能，stat（sql监控），wall（防火墙）
       stat-view-servlet:   # 配置监控页功能
         enabled: true
-        login-username: admin
-        login-password: admin
+        login-username: emicake
+        login-password: 123456
         url-pattern: /druid/*
         resetEnable: false
       web-stat-filter:  # 监控web
@@ -85,6 +85,72 @@ spring:
         max-wait: -1
         min-idle: 0
 
+  rabbitmq:
+    host: 192.168.170.130
+    port: 5672
+    virtual-host: /emicake
+    username: emicake
+    password: 123456
+
+    # 生产者
+    # 新版的开启 confirm 确认模式
+    publisher-confirm-type: correlated
+    # 开启 return 退回模式
+    publisher-returns: true
+    # 配合return机制使用，表示接收路由不可达的消息
+    template:
+      mandatory: true
+
+    # 消费者
+    listener:
+      # RabbitMQ模式使用simple  simple支持事务的
+      simple:
+        # Consumer ACK机制：设置为手动签收
+        acknowledge-mode: manual
+        prefetch: 1 # 限流,配置1 表示消费端每次向MQ拉取最大一条消息
+        retry:
+          enabled: true
+          max-attempts: 5
+        concurrency: 1
+        max-concurrency: 1
+#rabbitmq自定义配置
+rabbit:
+  msg:
+    exchange:
+      topic:
+        name: msg_topic_exchange
+      dead:
+        name: msg_dead_exchange
+    queue:
+      dao:
+        name: msg.dao.update
+        dead:
+          name: msg.dao.dead.update
+      sms:
+        name: msg.sms.send
+        dead:
+          name: msg.sms.dead.send
+      order:
+        name: msg.order.deal
+        dead:
+          name: msg.order.dead.deal
+    route:
+      dao: msg.dao.update
+      sms: msg.sms.send
+      order: msg.order.deal
+#aliyun服务自定义配置
+aliyun:
+  sms:
+    connectTimeout: sun.net.client.defaultConnectTimeout
+    readTimeout: sun.net.client.defaultReadTimeout
+    product: Dysmsapi
+    domain: dysmsapi.aliyuncs.com
+    regionId: cn-hangzhou
+    sysVersion: 2017-05-25
+    sysAction: SendSms
+    accessKeyId: LTAI4GD4zszMZV2dBT87cUJm
+    accessKeySecret: QKs6wjrsJkbpTYOpekzyrudaBC3bYm
+    signName: 打工人的技术沉淀屋
 # mybatis配置
 mybatis:
   configuration:
@@ -93,7 +159,6 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:/config/mybatis/mapper/*.xml
   type-aliases-package: com.myf.emicake.domain
-
 #日志配置
 logging:
   level:
@@ -101,6 +166,7 @@ logging:
       myf: debug
   file:
     path: log
+
 #shiro配置
 shiro:
   loginUrl: /member/login.html
