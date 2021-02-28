@@ -3,6 +3,8 @@ package com.myf.emicake.service.Impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.myf.emicake.common.Constants;
 import com.myf.emicake.common.StatusCode;
+import com.myf.emicake.component.Producter;
+import com.myf.emicake.component.properties.RabbitMqMsgProperties;
 import com.myf.emicake.domain.Cart;
 import com.myf.emicake.dto.CartDTO;
 import com.myf.emicake.dto.CartItemDTO;
@@ -35,6 +37,10 @@ public class CartServiceImpl implements CartService {
     private JSONUtils jsonUtils;
     @Resource
     private ProductSkuService productSkuService;
+    @Resource
+    private RabbitMqMsgProperties rabbitMqMsgProperties;
+    @Resource
+    private Producter producter;
 
 
     @Override
@@ -110,6 +116,9 @@ public class CartServiceImpl implements CartService {
                 addFlag = redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), existedCartItem);
             } else {
                 addFlag = redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), cartItemDTO);
+                if (addFlag){
+                    producter.sendMessage(rabbitMqMsgProperties.getTopicExchangeName(), rabbitMqMsgProperties.getDaoRoutekey(), cartItemDTO);
+                }
             }
         }
         return addFlag;

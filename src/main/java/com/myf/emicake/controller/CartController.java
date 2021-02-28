@@ -37,7 +37,6 @@ public class CartController {
         if (result){
             return ResultUtils.success(StatusCode.ADD_CART_SUCCESS.getCode(), StatusCode.ADD_CART_SUCCESS.getMsg());
         }
-
         return ResultUtils.error(StatusCode.ADD_CART_FAIL.getCode(), StatusCode.ADD_CART_FAIL.getMsg());
 
     }

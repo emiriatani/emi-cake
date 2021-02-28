@@ -22,29 +22,7 @@ public class MyModularRealmAuthenticator extends ModularRealmAuthenticator {
 
     @Override
     protected AuthenticationInfo doMultiRealmAuthentication(Collection<Realm> realms, AuthenticationToken token) {
-//
-//
-//        AuthenticationStrategy strategy = this.getAuthenticationStrategy();
-//        AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
-//
-//        Iterator iterator = realms.iterator();
-//
-//        while (iterator.hasNext()) {
-//            Realm realm = (Realm) iterator.next();
-//            aggregate = strategy.beforeAttempt(realm, token, aggregate);
-//            if (realm.supports(token)) {
-//
-//                AuthenticationInfo info = null;
-//                Throwable t = null;
-//
-//                info = realm.getAuthenticationInfo(token);
-//
-//                aggregate = strategy.afterAttempt(realm, token, info, aggregate, t);
-//            }
-//        }
-//        aggregate = strategy.afterAllAttempts(token, aggregate);
-//        return aggregate;
-//    }
+
         AuthenticationStrategy strategy = getAuthenticationStrategy();
 
         AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
