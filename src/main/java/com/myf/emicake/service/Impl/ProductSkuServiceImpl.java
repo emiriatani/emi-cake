@@ -48,7 +48,6 @@ public class ProductSkuServiceImpl implements ProductSkuService{
         return productSkuMapper.updateByPrimaryKey(record);
     }
 
-
     /**
      * 根据商品(SPU)id查询该商品id下所有规格的商品(SKU),
      * 并封装为List<ProductSkuDTO>

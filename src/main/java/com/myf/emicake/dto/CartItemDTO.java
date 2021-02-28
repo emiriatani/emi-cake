@@ -48,7 +48,6 @@ public class CartItemDTO implements Serializable {
     /*商品单项总价*/
     private BigDecimal totalPrice;
 
-
     public void setTotalPrice(BigDecimal unitPrice,int number) {
         this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(number));
     }
