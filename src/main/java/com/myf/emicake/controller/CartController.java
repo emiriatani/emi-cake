@@ -27,14 +27,12 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-
     @PostMapping("/add/{memberId}")
     public Result addItemToCart(@PathVariable("memberId") String memberId,
                                 @RequestBody CartItemDTO cartItemDTO
                                ){
-        boolean result = cartService.addToCart(memberId, cartItemDTO);
-
-        if (result){
+        boolean addResult = cartService.addToCart(memberId, cartItemDTO);
+        if (addResult){
             return ResultUtils.success(StatusCode.ADD_CART_SUCCESS.getCode(), StatusCode.ADD_CART_SUCCESS.getMsg());
         }
         return ResultUtils.error(StatusCode.ADD_CART_FAIL.getCode(), StatusCode.ADD_CART_FAIL.getMsg());
@@ -44,7 +42,6 @@ public class CartController {
 
     @GetMapping("/get/{memberId}")
     public Result getCart(@PathVariable("memberId") String memberId){
-
         CartDTO cart = cartService.getCart(memberId);
         return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg(), cart);
 
@@ -59,9 +56,29 @@ public class CartController {
         if (updateResult) {
             return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
         }else {
-
+            return ResultUtils.error(StatusCode.UPDATE_NUMBER_ERROR.getCode(), StatusCode.UPDATE_NUMBER_ERROR.getMsg());
         }
-        return null;
+    }
+
+    @PostMapping("/delete/{memberId}")
+    public Result deleteCartItem(@PathVariable("memberId") String memberId,
+                             @RequestBody CartItemDTO cartItemDTO){
+        boolean deleteResult = cartService.deleteCartItem(memberId, cartItemDTO);
+        if (deleteResult){
+            return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+        }else {
+            return ResultUtils.error(StatusCode.DELETE_ERROR.getCode(), StatusCode.DELETE_ERROR.getMsg());
+        }
+    }
+
+    @PostMapping("/deleteAll/{memberId}")
+    public Result deleteCart(@PathVariable("memberId") String memberId){
+        boolean deleteResult = cartService.deleteAllCartItem(memberId);
+        if (deleteResult){
+            return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+        }else {
+            return ResultUtils.error(StatusCode.DELETE_ALL_ERROR.getCode(), StatusCode.DELETE_ALL_ERROR.getMsg());
+        }
     }
 
 

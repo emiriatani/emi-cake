@@ -18,10 +18,12 @@ import com.myf.emicake.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,6 @@ public class CartServiceImpl implements CartService {
     private RabbitMqMsgProperties rabbitMqMsgProperties;
     @Resource
     private Producter producter;
-
 
 
     @Override
@@ -93,7 +94,7 @@ public class CartServiceImpl implements CartService {
         if (StringUtils.isEmpty(memberId)) {
             throw new GlobalException(StatusCode.EMPTY_MEMBER_ID.getCode(), StatusCode.EMPTY_MEMBER_ID.getMsg());
         }
-        if (!StringUtils.isEmpty(cartItemDTO)) {
+        if (!ObjectUtils.isEmpty(cartItemDTO)) {
             cartItemDTO.setTotalPrice(cartItemDTO.getPrice(), cartItemDTO.getNumber());
         } else {
             throw new GlobalException(StatusCode.EMPTY_PRODUCT_INFO.getCode(), StatusCode.EMPTY_PRODUCT_INFO.getMsg());
@@ -118,15 +119,9 @@ public class CartServiceImpl implements CartService {
                 addFlag = redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), existedCartItem);
             } else {
                 addFlag = redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), cartItemDTO);
-                if (addFlag){
+                if (addFlag) {
                     /*同步到数据库中*/
-                    Cart cart = new Cart();
-                    cart.setMemberId(Integer.valueOf(memberId));
-                    cart.setItemId(cartItemDTO.getProductSkuId());
-                    cart.setQuantity(cartItemDTO.getNumber());
-                    cart.setSettlementStatus((byte) 0);
-                    cart.setCreateTime(LocalDateTime.now());
-                    producter.sendMessage(rabbitMqMsgProperties.getTopicExchangeName(), rabbitMqMsgProperties.getDaoRoutekey(), cart);
+                    producter.sendMessage(rabbitMqMsgProperties.getTopicExchangeName(), rabbitMqMsgProperties.getDaoRoutekey(), DTOToCart(memberId,cartItemDTO));
                 }
             }
         }
@@ -148,7 +143,6 @@ public class CartServiceImpl implements CartService {
         if (Integer.parseInt(memberId) == Constants.NO_LOGIN_MEMBER_FLAG) {
             throw new GlobalException(StatusCode.NOT_LOGIN_ACCESS.getCode(), StatusCode.NOT_LOGIN_ACCESS.getMsg());
         } else {
-
             CartDTO cartDTO = new CartDTO();
             List<CartItemDTO> cartItemDTOList = new ArrayList<>();
             cartDTO.setMemberId(Integer.parseInt(memberId));
@@ -158,15 +152,39 @@ public class CartServiceImpl implements CartService {
                 Map<?, ?> cartMap = redisUtils.hmget(Constants.CART_KEY_PREFIX + memberId);
                 for (Map.Entry<?, ?> cartItem :
                         cartMap.entrySet()) {
+                    System.out.println("----------");
                     System.out.println("key:" + cartItem.getKey());
                     System.out.println("value:" + cartItem.getValue());
-                    System.out.println("value:" + cartItem.getValue().getClass().getName());
                     System.out.println("----------");
-                    CartItemDTO cartItemDTO = jsonUtils.myValueTypeConvert(cartItem.getValue(), new TypeReference<CartItemDTO>() {});
+                    CartItemDTO cartItemDTO = jsonUtils.myValueTypeConvert(cartItem.getValue(), new TypeReference<CartItemDTO>() {
+                    });
                     ProductSku productSku = productSkuService.selectByPrimaryKey(cartItemDTO.getProductSkuId());
-                    if (cartItemDTO.getPrice() != productSku.getPrice()){
-                        cartItemDTO.setPrice(productSku.getPrice());
-                        cartItemDTO.setTotalPrice(cartItemDTO.getPrice(), cartItemDTO.getNumber());
+                    if (cartItemDTO.getPrice() != productSku.getPrice()) {
+                        if (cartItemDTO.getPrice().compareTo(productSku.getPrice()) == 1) {
+                            /*商品价格比加入购物车时下降了*/
+                            cartItemDTO.setPriceChangeFlag(1);
+                            log.info("商品加入购物车时的价格:" + cartItemDTO.getPrice());
+                            log.info("商品现在的价格:" + productSku.getPrice());
+                            BigDecimal subtract = cartItemDTO.getPrice().subtract(productSku.getPrice());
+                            log.info("商品下降了:" + subtract.toString());
+                            cartItemDTO.setPriceChangeNumber(subtract);
+                            cartItemDTO.setPrice(productSku.getPrice());
+                            cartItemDTO.setTotalPrice(cartItemDTO.getPrice(), cartItemDTO.getNumber());
+                        } else {
+                            /*商品价格比加入购物车时上涨了*/
+                            cartItemDTO.setPriceChangeFlag(2);
+                            /*差价*/
+                            log.info("商品加入购物车时的价格:" + cartItemDTO.getPrice());
+                            log.info("商品现在的价格:" + productSku.getPrice());
+                            BigDecimal subtract = productSku.getPrice().subtract(cartItemDTO.getPrice());
+                            log.info("商品上涨了" + subtract.toString());
+                            cartItemDTO.setPriceChangeNumber(subtract);
+                            cartItemDTO.setPrice(productSku.getPrice());
+                            cartItemDTO.setTotalPrice(cartItemDTO.getPrice(), cartItemDTO.getNumber());
+                        }
+                    } else {
+                        /*价格没有发生变化*/
+                        cartItemDTO.setPriceChangeFlag(0);
                     }
                     redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), cartItemDTO);
                     cartItemDTOList.add(cartItemDTO);
@@ -190,11 +208,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean updateCartItemNumber(String memberId, CartItemDTO cartItemDTO) throws InvocationTargetException, IllegalAccessException {
         boolean updateFlag = false;
-
         if (StringUtils.isEmpty(memberId)) {
             throw new GlobalException(StatusCode.EMPTY_MEMBER_ID.getCode(), StatusCode.EMPTY_MEMBER_ID.getMsg());
         }
-        if (StringUtils.isEmpty(cartItemDTO)) {
+        if (ObjectUtils.isEmpty(cartItemDTO)) {
             throw new GlobalException(StatusCode.EMPTY_PRODUCT_INFO.getCode(), StatusCode.EMPTY_PRODUCT_INFO.getMsg());
         }
 
@@ -204,16 +221,17 @@ public class CartServiceImpl implements CartService {
             boolean hexists = redisUtils.hexists(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
             if (hexists) {
                 Object getObject = redisUtils.hget(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
-                CartItemDTO needUpdateCartItem = jsonUtils.myValueTypeConvert(getObject, new TypeReference<CartItemDTO>() {});
+                CartItemDTO needUpdateCartItem = jsonUtils.myValueTypeConvert(getObject, new TypeReference<CartItemDTO>() {
+                });
                 BeanUtils.copyProperties(needUpdateCartItem, cartItemDTO);
                 needUpdateCartItem.setTotalPrice(needUpdateCartItem.getPrice(), needUpdateCartItem.getNumber());
                 System.out.println("更新后的购物项" + needUpdateCartItem);
                 updateFlag = redisUtils.hset(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), needUpdateCartItem);
-            }else {
+            } else {
                 throw new GlobalException(StatusCode.NOT_EXIST_IN_CART.getCode(), StatusCode.NOT_EXIST_IN_CART.getMsg());
             }
         }
-        return  updateFlag;
+        return updateFlag;
     }
 
     /**
@@ -225,7 +243,25 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     public boolean deleteCartItem(String memberId, CartItemDTO cartItemDTO) {
-        return false;
+        boolean flag = false;
+        if (StringUtils.isEmpty(memberId)) {
+            throw new GlobalException(StatusCode.EMPTY_MEMBER_ID.getCode(), StatusCode.EMPTY_MEMBER_ID.getMsg());
+        }
+        if (ObjectUtils.isEmpty(cartItemDTO)) {
+            throw new GlobalException(StatusCode.EMPTY_PRODUCT_INFO.getCode(), StatusCode.EMPTY_PRODUCT_INFO.getMsg());
+        }
+        if (Integer.parseInt(memberId) == Constants.NO_LOGIN_MEMBER_FLAG) {
+            throw new GlobalException(StatusCode.NOT_LOGIN_ACCESS.getCode(), StatusCode.NOT_LOGIN_ACCESS.getMsg());
+        } else {
+            boolean hexists = redisUtils.hexists(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
+            if (hexists) {
+                redisUtils.hdel(Constants.CART_KEY_PREFIX + memberId, cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
+                flag = true;
+            } else {
+                throw new GlobalException(StatusCode.NOT_EXIST_IN_CART.getCode(), StatusCode.NOT_EXIST_IN_CART.getMsg());
+            }
+        }
+        return flag;
     }
 
     /**
@@ -236,19 +272,43 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     public boolean deleteAllCartItem(String memberId) {
-        return false;
+
+        boolean flag = false;
+        if (StringUtils.isEmpty(memberId)) {
+            throw new GlobalException(StatusCode.EMPTY_MEMBER_ID.getCode(), StatusCode.EMPTY_MEMBER_ID.getMsg());
+        }
+        if (Integer.parseInt(memberId) == Constants.NO_LOGIN_MEMBER_FLAG) {
+            throw new GlobalException(StatusCode.NOT_LOGIN_ACCESS.getCode(), StatusCode.NOT_LOGIN_ACCESS.getMsg());
+        } else {
+            boolean exists = redisUtils.exists(Constants.CART_KEY_PREFIX + memberId);
+            if (exists){
+                long remove = redisUtils.remove(Constants.CART_KEY_PREFIX + memberId);
+                if (remove != 0){
+                    flag = true;
+                }
+            }else {
+                throw new GlobalException(StatusCode.NOT_EXIST_IN_CART.getCode(), StatusCode.NOT_EXIST_IN_CART.getMsg());
+            }
+        }
+
+        return flag;
     }
 
     /**
-     * 把购物车及其商品信息封装为Cart,以方便存入数据库表中
      *
-     * @param cartDTO
+     * @param memberId
      * @param cartItemDTO
      * @return
      */
     @Override
-    public Cart DTOToCart(CartDTO cartDTO, CartItemDTO cartItemDTO) {
-        return null;
+    public Cart DTOToCart(String memberId,CartItemDTO cartItemDTO) {
+        Cart cart = new Cart();
+        cart.setMemberId(Integer.valueOf(memberId));
+        cart.setItemId(cartItemDTO.getProductSkuId());
+        cart.setQuantity(cartItemDTO.getNumber());
+        cart.setSettlementStatus((byte) 0);
+        cart.setCreateTime(LocalDateTime.now());
+        return cart;
     }
 
 }

@@ -63,7 +63,6 @@ public class ShiroUtils {
         subject.login(token);
         if (subject.isAuthenticated()) {
             loginFlag = true;
-            return loginFlag;
         }
         return loginFlag;
     }

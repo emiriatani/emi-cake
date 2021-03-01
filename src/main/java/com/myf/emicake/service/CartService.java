@@ -32,7 +32,7 @@ public interface CartService {
 
     boolean deleteAllCartItem(String memberId);
 
-    Cart DTOToCart(CartDTO cartDTO,CartItemDTO cartItemDTO);
+    Cart DTOToCart(String memberId,CartItemDTO cartItemDTO);
 
 }
 

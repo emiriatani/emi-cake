@@ -64,17 +64,4 @@ class MyprojectApplicationTests {
 
         System.out.println(productDTO);
     }
-
-    @Test
-    public void test02(){
-        redisUtils.hset("cart:17305814557", "1:1", 4);
-        Integer result = redisUtils.hget("cart:17305814557","1:1");
-        System.out.println(result);
-
-    }
-
-    
-    
-
-
 }
