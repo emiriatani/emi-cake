@@ -51,7 +51,10 @@ public enum StatusCode implements Serializable {
     EMPTY_MEMBER_ID(Constants.FAIL,"会员ID不能为空"),
     ADD_CART_SUCCESS(Constants.SUCCESS,"加入购物车成功"),
     ADD_CART_FAIL(Constants.SUCCESS,"加入购物车失败"),
-    NOT_EXIST_IN_CART(Constants.FAIL,"请先添加商品再修改数量");
+    NOT_EXIST_IN_CART(Constants.FAIL,"请先添加商品再操作"),
+    UPDATE_NUMBER_ERROR(Constants.FAIL, "修改商品数量失败，请重试"),
+    DELETE_ERROR(Constants.FAIL,"删除商品失败，请重试"),
+    DELETE_ALL_ERROR(Constants.FAIL,"清空购物车失败，请重试");
 
     private Integer code;
     private String msg;

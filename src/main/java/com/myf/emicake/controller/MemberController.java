@@ -24,7 +24,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -110,7 +110,7 @@ public class MemberController {
 
         Member selectMember = memberService.selectByPrimaryKey(id);
 
-        if (StringUtils.isEmpty(selectMember)) {
+        if (ObjectUtils.isEmpty(selectMember)) {
             throw new GlobalException(StatusCode.ID_NOT_EXISTS.getCode(), StatusCode.ID_NOT_EXISTS.getMsg());
         } else {
             log.info("会员id:" + id.toString());
@@ -122,9 +122,6 @@ public class MemberController {
             log.info("加密后的密码:" + encryptedPassword);
             member = MyBeanUtils.param2bean(id, encryptedPassword, salt);
             memberService.updateByPrimaryKeySelective(member);
-            member = memberService.selectByPrimaryKey(id);
-            System.out.println("查询出的member信息:" + member);
-            //model.addAttribute("member", member);
         }
         return "redirect:/page/member/login.html";
     }
@@ -138,7 +135,7 @@ public class MemberController {
      */
     @ResponseBody
     @PostMapping("/smsLogin")
-    public Result<Object> smsLogin(@RequestBody @Valid SmsLoginDTO smsLoginDTO, HttpSession httpSession) throws InvocationTargetException, IllegalAccessException {
+    public Result<Object> smsLogin(@RequestBody @Valid SmsLoginDTO smsLoginDTO, HttpSession httpSession,HttpServletRequest request) throws InvocationTargetException, IllegalAccessException {
         String phone = smsLoginDTO.getPhone();
         String reqSmsCode = smsLoginDTO.getSmsCode();
         log.info("登录的手机号码：" + phone);
@@ -148,6 +145,7 @@ public class MemberController {
         UserPhoneToken userPhoneToken = new UserPhoneToken(phone, reqSmsCode);
         if (ShiroUtils.isAuthenticatedLoginUser(subject, userPhoneToken)) {
             Member member = (Member) subject.getPrincipal();
+            memberService.updateByPrimaryKeySelective(MyBeanUtils.param2bean(member, request));
             BeanUtils.copyProperties(memberDTO, member);
             httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);
             subject.getSession().setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);
@@ -164,7 +162,7 @@ public class MemberController {
      */
     @ResponseBody
     @PostMapping("/passwordLogin")
-    public Result<Object> passwordLogin(@RequestBody @Valid PasswordLoginDTO passwordLoginDTO, HttpSession httpSession) throws InvocationTargetException, IllegalAccessException {
+    public Result<Object> passwordLogin(@RequestBody @Valid PasswordLoginDTO passwordLoginDTO, HttpSession httpSession, HttpServletRequest request) throws InvocationTargetException, IllegalAccessException {
 
         String userName = passwordLoginDTO.getUserName();
         String passWord = passwordLoginDTO.getPassWord();
@@ -176,6 +174,7 @@ public class MemberController {
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, passWord);
         if (ShiroUtils.isAuthenticatedLoginUser(subject,usernamePasswordToken)) {
             Member member = (Member) subject.getPrincipal();
+            memberService.updateByPrimaryKeySelective(MyBeanUtils.param2bean(member, request));
             BeanUtils.copyProperties(memberDTO, member);
             httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);
             subject.getSession().setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);

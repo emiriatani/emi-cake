@@ -29,6 +29,12 @@ public class MyBeanUtils {
                 return member;
     }
 
+    public static Member param2bean(Member member,HttpServletRequest request){
+        member.setLoginIp(NetUtils.ipToInt(NetUtils.getClientIpAddress(request)));
+        member.setLoginTime(LocalDateTime.now());
+        return member;
+    }
+
 
     /**
      *

@@ -49,18 +49,20 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public boolean send(String phoneNum, String templateCode, Map<String, Object> code) throws ClientException {
 
+        System.out.println(aliyunSmsProperties);
+
         //设置超时时间-可自行调整
         System.setProperty(aliyunSmsProperties.getConnectTimeout(), "3000");
         System.setProperty(aliyunSmsProperties.getReadTimeout(), "2000");
         //初始化acsClient需要的几个参数
-        final String product = aliyunSmsProperties.getProduct();//短信API产品名称（短信产品名固定，无需修改）
-        final String domain = aliyunSmsProperties.getDomain();//短信API产品域名（接口地址固定，无需修改）
-        final String regionId = aliyunSmsProperties.getRegionId();
-        final String sysVersion = aliyunSmsProperties.getSysVersion();
-        final String sysAction = aliyunSmsProperties.getSysAction();
-        final String accessKeyId = aliyunSmsProperties.getAccessKeyId();//你的accessKeyId
-        final String accessKeySecret = aliyunSmsProperties.getAccessKeySecret();//你的accessKeySecret
-        final String signName = aliyunSmsProperties.getSignName();
+        String product = aliyunSmsProperties.getProduct();//短信API产品名称（短信产品名固定，无需修改）
+        String domain = aliyunSmsProperties.getDomain();//短信API产品域名（接口地址固定，无需修改）
+        String regionId = aliyunSmsProperties.getRegionId();
+        String sysVersion = aliyunSmsProperties.getSysVersion();
+        String sysAction = aliyunSmsProperties.getSysAction();
+        String accessKeyId = aliyunSmsProperties.getAccessKeyId();//你的accessKeyId
+        String accessKeySecret = aliyunSmsProperties.getAccessKeySecret();//你的accessKeySecret
+        String signName = aliyunSmsProperties.getSignName();
         //初始化DefaultAcsClient,暂时不支持多region（请勿修改）
         DefaultProfile profile = DefaultProfile.getProfile(regionId, accessKeyId, accessKeySecret);
         IAcsClient DefaultAcsClient = new DefaultAcsClient(profile);
@@ -84,7 +86,7 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public Map<String, Object> generateRandomSmsCode(int number) {
         String smsCode = RandomStrUtils.getSmsCode(number);
-        HashMap<String, Object>  map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("code", smsCode);
         return map;
     }
