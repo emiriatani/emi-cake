@@ -1,15 +1,22 @@
 package com.myf.emicake.controller;
 
+import com.myf.emicake.common.Constants;
 import com.myf.emicake.common.Result;
 import com.myf.emicake.common.StatusCode;
 import com.myf.emicake.dto.CartDTO;
 import com.myf.emicake.dto.CartItemDTO;
+import com.myf.emicake.dto.MemberDTO;
+import com.myf.emicake.exception.GlobalException;
 import com.myf.emicake.service.CartService;
 import com.myf.emicake.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -45,6 +52,18 @@ public class CartController {
         CartDTO cart = cartService.getCart(memberId);
         return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg(), cart);
 
+    }
+    @GetMapping("/toCartPage")
+    public Result toCartPage(HttpSession httpSession){
+
+        Subject subject = SecurityUtils.getSubject();
+        MemberDTO memberDTO = (MemberDTO) subject.getSession().getAttribute(Constants.LOGIN_MEMBER_KEY);
+        System.out.println(memberDTO);
+        if (ObjectUtils.isEmpty(memberDTO)){
+            throw  new GlobalException(StatusCode.NOT_LOGIN_ACCESS.getCode(), StatusCode.NOT_LOGIN_ACCESS.getMsg());
+        }else {
+            return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+        }
     }
 
     @PostMapping("/update/{memberId}")

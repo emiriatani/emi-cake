@@ -40,7 +40,7 @@
                 </form>
             </div>
             <div class="cart_box">
-                <a href="javascript:;" target="_self" id="cartBtn">购物车</a>
+                <a href="" target="_self" id="cartBtn">购物车</a>
             </div>
             <div th:if="${session.loginMember != null}" class="login_box" id="loginFlagDiv" th:value="${session.loginMember.getId()}">
                 <a th:href="@{/member/memberCentre.html}" th:text="${session.loginMember.getMemberId()}" target="_self"></a>
@@ -53,8 +53,5 @@
             </div>
         </div>
     </div>
-
-
-
 </body>
 </html>
