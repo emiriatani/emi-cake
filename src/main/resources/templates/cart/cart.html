@@ -22,19 +22,26 @@
             <div class="cart_item">
                 <div class="goods_info">
                     <a href="#20">
-                        <div class="img"><img src="../img/example01.jpg" alt=""></div>
+                        <div class="img"><img id="cartItemThumbnail" src="../../static/assets/img/example01.jpg" alt=""></div>
                         <div class="desc">
-                            <h3>偏爱 | 海盐黑巧慕斯蛋糕</h3>
+                            <h3 id="cartItemTitle">偏爱 | 海盐黑巧慕斯蛋糕</h3>
+                        </div>
+                        <div class="spec">
+                            <span>16厘米</span>
+                            <span>|</span>
+                            <span>950克</span>
+                        </div>
+                        <div class="priceChangeBox">
+                            比加入时
+                            <span id="changeState">下降</span>
+                            <span id="changeNumber">10</span>
+                            元
                         </div>
                     </a>
-                    <!--<div class="stock">-->
-                    <!--<span>库存:</span>-->
-                    <!--<span class="stock_num">5</span>-->
-                    <!--</div>-->
                 </div>
                 <div class="goods_price clearfix">
                     <span>￥</span>
-                    <span class="unit_price">11111111</span>
+                    <span class="unit_price" id="unit_price">11111111</span>
                     <span>/</span>
                     <span>件</span>
                 </div>
@@ -44,37 +51,7 @@
                     <span><button class="add_btn"><i class="layui-icon">&#xe624;</i></button></span>
                 </div>
                 <div class="goods_total">
-                    <span class="item_price">11111111</span>
-                    <span>￥</span>
-                    <a class="remove_item" href="javascript:;">删除</a>
-                </div>
-            </div>
-            <div class="cart_item">
-                <div class="goods_info">
-                    <a href="#20">
-                        <div class="img"><img src="../img/example01.jpg" alt=""></div>
-                        <div class="desc">
-                            <h3>偏爱 | 海盐黑巧慕斯蛋糕</h3>
-                        </div>
-                    </a>
-                    <!--                    <div class="stock">-->
-                    <!--                        <span>库存:</span>-->
-                    <!--                        <span class="stock_num">5</span>-->
-                    <!--                    </div>-->
-                </div>
-                <div class="goods_price clearfix">
-                    <span>￥</span>
-                    <span class="unit_price">11111111</span>
-                    <span>/</span>
-                    <span>件</span>
-                </div>
-                <div class="goods_count clearfix">
-                    <span><button class="del_btn"><i class="layui-icon">&#xe67e;</i></button></span>
-                    <span class="count_value">1</span>
-                    <span><button class="add_btn"><i class="layui-icon">&#xe624;</i></button></span>
-                </div>
-                <div class="goods_total">
-                    <span class="item_price">11111111</span>
+                    <span class="item_price" >11111111</span>
                     <span>￥</span>
                     <a class="remove_item" href="javascript:;">删除</a>
                 </div>
@@ -86,9 +63,16 @@
                     <a id="deleteAll" href="javascript:;">清空</a>
                 </div>
                 <div class="sum_bar_right">
+
+                    <span>共</span>
+                    <span id="cartItemTotal">10</span>
+                    <span>件商品</span>
+
                     <span class="total_num">总金额</span>
                     <span>￥</span>
                     <span id="cart_total_price">11111111</span>
+
+
                 </div>
                 <div class="order_btn clearfix">
                     <form action="">
@@ -102,11 +86,25 @@
 </div>
 
 
-<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}" src="../../static/assets/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}" src="../../static/assets/layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"
+        src="../../static/assets/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
+        src="../../static/assets/layui/layui.js"></script>
 <script type="text/javascript" th:src="@{/static/assets/js/cart.js}" src="../../static/assets/js/cart.js"></script>
 <script>
 
+
+
+
+    $(function () {
+
+    })
+
+    function initCart() {
+
+
+
+    }
 
 </script>
 </body>

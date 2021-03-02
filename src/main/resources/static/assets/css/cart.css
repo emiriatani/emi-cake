@@ -41,6 +41,12 @@
 .desc {
     float: left;
 }
+.spec > span{
+    margin-right: 6px;
+}
+.priceChangeBox{
+    margin-top: 45px;
+}
 .stock{
     margin-top: 40px;
     font-size: 10px;
@@ -55,6 +61,7 @@
 .goods_info a div h3 {
     font-size: 18px;
     margin-top: 10px;
+    margin-bottom: 10px;
     color: black
 }
 
@@ -126,6 +133,7 @@ span.count_value {
 
 .total_num {
     margin-right: 40px;
+    margin-left: 20px;
 }
 
 /*结算按钮*/
