@@ -102,6 +102,8 @@
     $(function () {
         queryProdData();
         initProdData();
+        toCart();
+
         $("#addToCartBtn").click(function () {
 
             var productId = $("#productId").val();
@@ -126,41 +128,24 @@
                 thumbnail: thumbnail,
                 number: productNumber
             };
-            alert(JSON.stringify(reqData));
+            //alert(JSON.stringify(reqData));
             $.ajax({
-                url:'/cart/add/' + memberId,
+                url:'/cart/add',
                 type: 'post',
                 data:JSON.stringify(reqData),
                 contentType: 'application/json',
                 dataType:'json',
                 success: function (response) {
-                    console.log(response);
+                    if (response[successKey]==true){
+                        alertMsg("加入购物车成功");
+                    }else {
+                        alertMsg("加入购物车失败，请重试");
+                    }
                 },
                 error: function (response) {
-
+                    alert(response);
                 }
             })
-        })
-
-        $("#cartBtn").click(function () {
-            var memberId = $("#loginFlagDiv").attr("value");
-
-            if (memberId === undefined){
-                memberId = -1;
-            }
-            
-            $.ajax({
-                url:'/cart/get/' + memberId,
-                type: 'get',
-                dataType:'json',
-                success: function (response) {
-                    console.log(response)
-                },
-                error: function () {
-                    console.log(response)
-                }
-            })
-
         })
     });
 
