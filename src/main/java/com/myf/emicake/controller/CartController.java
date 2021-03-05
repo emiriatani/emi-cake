@@ -34,11 +34,9 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/add/{memberId}")
-    public Result addItemToCart(@PathVariable("memberId") String memberId,
-                                @RequestBody CartItemDTO cartItemDTO
-                               ){
-        boolean addResult = cartService.addToCart(memberId, cartItemDTO);
+    @PostMapping("/add")
+    public Result addItemToCart(@RequestBody CartItemDTO cartItemDTO){
+        boolean addResult = cartService.addToCart(cartItemDTO);
         if (addResult){
             return ResultUtils.success(StatusCode.ADD_CART_SUCCESS.getCode(), StatusCode.ADD_CART_SUCCESS.getMsg());
         }
@@ -47,9 +45,9 @@ public class CartController {
     }
 
 
-    @GetMapping("/get/{memberId}")
-    public Result getCart(@PathVariable("memberId") String memberId){
-        CartDTO cart = cartService.getCart(memberId);
+    @GetMapping("/get")
+    public Result getCart(){
+        CartDTO cart = cartService.getCart();
         return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg(), cart);
 
     }
@@ -57,20 +55,20 @@ public class CartController {
     public Result toCartPage(HttpSession httpSession){
 
         Subject subject = SecurityUtils.getSubject();
+        MemberDTO sessionMemberDTO = (MemberDTO) httpSession.getAttribute(Constants.LOGIN_MEMBER_KEY);
         MemberDTO memberDTO = (MemberDTO) subject.getSession().getAttribute(Constants.LOGIN_MEMBER_KEY);
         System.out.println(memberDTO);
-        if (ObjectUtils.isEmpty(memberDTO)){
-            throw  new GlobalException(StatusCode.NOT_LOGIN_ACCESS.getCode(), StatusCode.NOT_LOGIN_ACCESS.getMsg());
-        }else {
+        if (!(ObjectUtils.isEmpty(memberDTO)|| ObjectUtils.isEmpty(sessionMemberDTO)) && memberDTO.equals(sessionMemberDTO)){
             return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+        }else {
+            throw  new GlobalException(StatusCode.NOT_LOGIN_ACCESS.getCode(), StatusCode.NOT_LOGIN_ACCESS.getMsg());
         }
     }
 
-    @PostMapping("/update/{memberId}")
-    public Result updateCart(@PathVariable("memberId") String memberId,
-                             @RequestBody CartItemDTO cartItemDTO) throws InvocationTargetException, IllegalAccessException {
+    @PostMapping("/update")
+    public Result updateCart(@RequestBody CartItemDTO cartItemDTO) throws InvocationTargetException, IllegalAccessException {
 
-        boolean updateResult = cartService.updateCartItemNumber(memberId, cartItemDTO);
+        boolean updateResult = cartService.updateCartItemNumber(cartItemDTO);
 
         if (updateResult) {
             return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
@@ -79,10 +77,9 @@ public class CartController {
         }
     }
 
-    @PostMapping("/delete/{memberId}")
-    public Result deleteCartItem(@PathVariable("memberId") String memberId,
-                             @RequestBody CartItemDTO cartItemDTO){
-        boolean deleteResult = cartService.deleteCartItem(memberId, cartItemDTO);
+    @PostMapping("/delete")
+    public Result deleteCartItem(@RequestBody CartItemDTO cartItemDTO){
+        boolean deleteResult = cartService.deleteCartItem(cartItemDTO);
         if (deleteResult){
             return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
         }else {
@@ -90,9 +87,9 @@ public class CartController {
         }
     }
 
-    @PostMapping("/deleteAll/{memberId}")
-    public Result deleteCart(@PathVariable("memberId") String memberId){
-        boolean deleteResult = cartService.deleteAllCartItem(memberId);
+    @PostMapping("/deleteAll")
+    public Result deleteCart(){
+        boolean deleteResult = cartService.deleteAllCartItem();
         if (deleteResult){
             return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
         }else {

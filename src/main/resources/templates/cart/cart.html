@@ -91,17 +91,27 @@
 <script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
         src="../../static/assets/layui/layui.js"></script>
 <script type="text/javascript" th:src="@{/static/assets/js/cart.js}" src="../../static/assets/js/cart.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/common.js}"
+        src="../../static/assets/js/common.js"></script>
 <script>
 
 
-
-
     $(function () {
-
+        initCart();
     })
 
     function initCart() {
-
+        $.ajax({
+            url:'/cart/get/',
+            type:'GET',
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+            },
+            error: function () {
+                console.log(response);
+            }
+        })
 
 
     }

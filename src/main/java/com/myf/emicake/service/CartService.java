@@ -22,17 +22,17 @@ public interface CartService {
 
     int updateByPrimaryKey(Cart record);
 
-    boolean addToCart(String memberId, CartItemDTO cartItemDTO);
+    boolean addToCart(CartItemDTO cartItemDTO);
 
-    CartDTO getCart(String memberId);
+    CartDTO getCart();
 
-    boolean updateCartItemNumber(String memberId,CartItemDTO cartItemDTO) throws InvocationTargetException, IllegalAccessException;
+    boolean updateCartItemNumber(CartItemDTO cartItemDTO) throws InvocationTargetException, IllegalAccessException;
 
-    boolean deleteCartItem(String memberId,CartItemDTO cartItemDTO);
+    boolean deleteCartItem(CartItemDTO cartItemDTO);
 
-    boolean deleteAllCartItem(String memberId);
+    boolean deleteAllCartItem();
 
-    Cart DTOToCart(String memberId,CartItemDTO cartItemDTO);
+    Cart DTOToCart(Integer memberId,CartItemDTO cartItemDTO);
 
 }
 

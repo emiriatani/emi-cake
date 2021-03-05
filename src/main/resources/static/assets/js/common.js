@@ -6,25 +6,28 @@ var dataKey = "data";
 
 
 
-$("#cartBtn").click(function () {
-    $.ajax({
-        url:'/cart/get/',
-        type:'GET',
-        dataType:'json',
-        success: function (response) {
-            if (response[codekey] == 400){
-                alertMsg(response[msgKey]);
-            }else {
-                window.location.href = '/shop/cart.html';
+
+/*查看购物车*/
+function toCart(){
+    $("#cartBtn").click(function () {
+        $.ajax({
+            url:'/cart/toCartPage',
+            type:'GET',
+            dataType:'json',
+            success: function (response) {
+                if (response[codekey] == 400){
+                    console.log(response);
+                    alertMsg(response[msgKey]);
+                }else {
+                    window.location.href = '/shop/cart.html';
+                }
+            },
+            error: function () {
+                console.log(response);
             }
-        },
-        error: function () {
-            console.log(response);
-        }
+        })
     })
-})
-
-
+}
 
 /*弹窗*/
 function alertMsg(str) {
