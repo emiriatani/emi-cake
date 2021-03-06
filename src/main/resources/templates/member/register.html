@@ -65,6 +65,8 @@
 <script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
         src=".././static/assets/layui/layui.js"></script>
 <script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/common.js}"
+        src="../../static/assets/js/common.js"></script>
 <script type="text/javascript">
 
     var messcode;
@@ -76,9 +78,6 @@
     var registerBtn = $("#registerBtn");
     var phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
     var smsCodeReg = /^\d{6}$/;
-    var codekey = "code";
-    var msgKey = "msg";
-    var dataKey = "data";
 
 
 
@@ -107,7 +106,7 @@
                                         , title: '提示'
                                         , resize: false
                                     }, function (index) {
-                                        if (response[codekey] == 200){
+                                        if (response[codeKey] == 200){
                                             window.location.href = '/member/setPassword.html?id='+response[dataKey].id;
                                         }else {
                                             layer.close(index);

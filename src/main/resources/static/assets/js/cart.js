@@ -12,15 +12,18 @@ var removeItem = document.getElementsByClassName("remove_item");
 
 /*增加商品数量事件*/
 for (var i = 0, len = add.length; i < len; i++) {
+    alert("111");
     (function (i) {
+        alert("222");
         add[i].onclick = function () {
+            alert(add[i]);
             var value = parseInt(val[i].innerHTML);
             ++value;
             val[i].innerHTML = value;
             itemPrice[i].innerHTML = parseInt(unitPrice[i].innerText) * value;
             sum();
         }
-    })(i)
+    })(i);
 }
 /*减少商品数量事件*/
 for (var i = 0, len = del.length; i < len; i++) {

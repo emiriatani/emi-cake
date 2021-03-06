@@ -26,8 +26,6 @@ public class MvcConfig implements WebMvcConfigurer {
             registry.addViewController("/product/goods.html").setViewName("/product/goods");
             registry.addViewController("/product/category.html").setViewName("/product/category");
             registry.addViewController("/shop/cart.html").setViewName("/cart/cart");
-
-
     }
 
 
@@ -37,4 +35,6 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/upload/prod/video/**").addResourceLocations("classpath:/upload/prod/video/");
 
     }
+
+
 }
