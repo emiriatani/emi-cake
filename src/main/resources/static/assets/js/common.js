@@ -1,6 +1,6 @@
 var ajaxReqErrorStr = "ajax request error";
 var successKey = "success";
-var codekey = "code";
+var codeKey = "code";
 var msgKey = "msg";
 var dataKey = "data";
 
@@ -8,14 +8,15 @@ var dataKey = "data";
 
 
 /*查看购物车*/
-function toCart(){
+// function toCart(){
     $("#cartBtn").click(function () {
         $.ajax({
             url:'/cart/toCartPage',
             type:'GET',
+            async:false,
             dataType:'json',
             success: function (response) {
-                if (response[codekey] == 400){
+                if (response[codeKey] == 400){
                     console.log(response);
                     alertMsg(response[msgKey]);
                 }else {
@@ -27,7 +28,7 @@ function toCart(){
             }
         })
     })
-}
+// }
 
 /*弹窗*/
 function alertMsg(str) {

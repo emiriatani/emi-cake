@@ -160,7 +160,12 @@ public class CartServiceImpl implements CartService {
                     CartItemDTO cartItemDTO = jsonUtils.myValueTypeConvert(cartItem.getValue(), new TypeReference<CartItemDTO>() {
                     });
                     ProductSku productSku = productSkuService.selectByPrimaryKey(cartItemDTO.getProductSkuId());
-                    if (cartItemDTO.getPrice() != productSku.getPrice()) {
+                    cartItemDTO.setCurrentPrice(productSku.getPrice());
+                    log.info(cartItemDTO.getPrice().toString());
+                    log.info(productSku.getPrice().toString());
+                    if (cartItemDTO.getPrice().compareTo(productSku.getPrice()) != 0) {
+
+                        log.info("商品价格发生变化");
                         if (cartItemDTO.getPrice().compareTo(productSku.getPrice()) == 1) {
                             /*商品价格比加入购物车时下降了*/
                             cartItemDTO.setPriceChangeFlag(1);
@@ -169,8 +174,7 @@ public class CartServiceImpl implements CartService {
                             BigDecimal subtract = cartItemDTO.getPrice().subtract(productSku.getPrice());
                             log.info("商品下降了:" + subtract.toString());
                             cartItemDTO.setPriceChangeNumber(subtract);
-                            cartItemDTO.setPrice(productSku.getPrice());
-                            cartItemDTO.setTotalPrice(cartItemDTO.getPrice(), cartItemDTO.getNumber());
+                            cartItemDTO.setTotalPrice(cartItemDTO.getCurrentPrice(), cartItemDTO.getNumber());
                         } else {
                             /*商品价格比加入购物车时上涨了*/
                             cartItemDTO.setPriceChangeFlag(2);
@@ -180,11 +184,11 @@ public class CartServiceImpl implements CartService {
                             BigDecimal subtract = productSku.getPrice().subtract(cartItemDTO.getPrice());
                             log.info("商品上涨了" + subtract.toString());
                             cartItemDTO.setPriceChangeNumber(subtract);
-                            cartItemDTO.setPrice(productSku.getPrice());
-                            cartItemDTO.setTotalPrice(cartItemDTO.getPrice(), cartItemDTO.getNumber());
+                            cartItemDTO.setTotalPrice(cartItemDTO.getCurrentPrice(), cartItemDTO.getNumber());
                         }
                     } else {
                         /*价格没有发生变化*/
+                        log.info("商品价格没有发生变化");
                         cartItemDTO.setPriceChangeFlag(0);
                     }
                     redisUtils.hset(Constants.CART_KEY_PREFIX + member.getId(), cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId(), cartItemDTO);
@@ -198,7 +202,6 @@ public class CartServiceImpl implements CartService {
             return cartDTO;
         }
     }
-
 
     /**
      * 更新购物车中商品的购买数量
@@ -217,7 +220,7 @@ public class CartServiceImpl implements CartService {
             throw new GlobalException(StatusCode.EMPTY_PRODUCT_INFO.getCode(), StatusCode.EMPTY_PRODUCT_INFO.getMsg());
         }
 
-        if (ObjectUtils.isEmpty(member)){
+        if (ObjectUtils.isEmpty(member)) {
             throw new GlobalException(StatusCode.EMPTY_MEMBER_INFO.getCode(), StatusCode.EMPTY_MEMBER_INFO.getMsg());
         } else {
             boolean hexists = redisUtils.hexists(Constants.CART_KEY_PREFIX + member.getId(), cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
@@ -281,7 +284,7 @@ public class CartServiceImpl implements CartService {
 
         if (ObjectUtils.isEmpty(member)) {
             throw new GlobalException(StatusCode.EMPTY_MEMBER_INFO.getCode(), StatusCode.EMPTY_MEMBER_INFO.getMsg());
-        }else {
+        } else {
             boolean exists = redisUtils.exists(Constants.CART_KEY_PREFIX + member.getId());
             if (exists) {
                 long remove = redisUtils.remove(Constants.CART_KEY_PREFIX + member.getId());
