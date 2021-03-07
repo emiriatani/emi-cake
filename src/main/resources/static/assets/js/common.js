@@ -8,7 +8,7 @@ var dataKey = "data";
 
 
 /*查看购物车*/
-function toCart(){
+// function toCart(){
     $("#cartBtn").click(function () {
         $.ajax({
             url:'/cart/toCartPage',
@@ -28,7 +28,7 @@ function toCart(){
             }
         })
     })
-}
+// }
 
 /*弹窗*/
 function alertMsg(str) {

@@ -38,6 +38,9 @@ public class CartItemDTO implements Serializable {
     /*加入购物车时的价格*/
     private BigDecimal price;
 
+    /*目前的价格*/
+    private BigDecimal currentPrice;
+
     /*价格变化flag,
     * 0 未变化
     * 1 下降
@@ -46,7 +49,7 @@ public class CartItemDTO implements Serializable {
     private int priceChangeFlag;
 
     /*价格变化的数量*/
-    private BigDecimal priceChangeNumber;
+    private BigDecimal priceChangeNumber = new BigDecimal(0);
 
 
     /*商品缩略图*/
