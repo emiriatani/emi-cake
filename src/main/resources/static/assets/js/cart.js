@@ -97,9 +97,17 @@ function initCart() {
                 var cartItemPriceChangeBox = $(".priceChangeBox");
                 var cartItemChangeState = $(".changeState");
                 var cartItemChangeNumber = $(".changeNumber");
-                
+
+
                 for (let i = 0; i <cartItemChangeState.length; i++) {
-                    alert(cartItemChangeState[i]);
+                    if (memberCart.cartItemDTOList[i].priceChangeFlag == 0){
+                        cartItemChangeState[i].hide();
+                    }else if (memberCart.cartItemDTOList[i].priceChangeFlag == 1){
+                        cartItemChangeState[i].html("下降了");
+                        cartItemChangeNumber[i].html(memberCart.cartItemDTOList[i].number);
+                    }
+                    alert(memberCart.cartItemDTOList[i].productSkuId);
+
                 }
             }
 
