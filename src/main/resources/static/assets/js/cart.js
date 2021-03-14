@@ -1,8 +1,9 @@
 var memberCart = null;
+var removeItemList = null;
 
 $(function () {
     initCart();
-
+    countEvent();
     submitCart();
 })
 
@@ -31,8 +32,11 @@ function initCart() {
                 var cartItemList = response[dataKey].cartItemDTOList;
 
                 $.each(cartItemList, function (index, item) {
+
                     /*商品项id*/
                     var cartItemId = item.productId;
+                    /*商品项SKU id*/
+                    var cartItemSkuId = item.productSkuId;
                     /*商品项标题*/
                     var cartItemTitle = item.title;
                     /*商品项缩略图*/
@@ -73,7 +77,7 @@ function initCart() {
                         '                    </div>\n' +
                         '                    <div class="goods_price clearfix">\n' +
                         '                        <span>￥</span>\n' +
-                        '                        <span class="unit_price" >' +cartItemUnitPrice + '</span>\n' +
+                        '                        <span class="unit_price" >' + cartItemUnitPrice + '</span>\n' +
                         '                        <span>/</span>\n' +
                         '                        <span>件</span>\n' +
                         '                    </div>\n' +
@@ -85,54 +89,46 @@ function initCart() {
                         '                    <div class="goods_total">\n' +
                         '                        <span class="item_price" >' + cartItemTotalPrice + '</span>\n' +
                         '                        <span>￥</span>\n' +
-                        '                        <a class="remove_item" href="javascript:;">删除</a>\n' +
+                        '                        <a class="remove_item" data-index="' + index + '" href="javascript:;">删除</a>\n' +
                         '                    </div>\n' +
                         '                </div>';
 
                     $("#cart_item_area").append(cartItemStr);
-                    countEvent();
+
+
+
+
                 })
 
-                var cartItemSpecDiv = $(".spec");
-                var cartItemPriceChangeBox = $(".priceChangeBox");
-                var cartItemChangeState = $(".changeState");
-                var cartItemChangeNumber = $(".changeNumber");
-
-
-                for (let i = 0; i <cartItemChangeState.length; i++) {
-                    if (memberCart.cartItemDTOList[i].priceChangeFlag == 0){
-                        cartItemChangeState[i].hide();
-                    }else if (memberCart.cartItemDTOList[i].priceChangeFlag == 1){
-                        cartItemChangeState[i].html("下降了");
-                        cartItemChangeNumber[i].html(memberCart.cartItemDTOList[i].number);
-                    }
-                    alert(memberCart.cartItemDTOList[i].productSkuId);
-
-                }
             }
-
-
-
-
-
-            /*判断每个商品目前价格和加购时的商品变化*/
-            // if (cartItemPriceChangeFlag == 0){
-            //     cartItemPriceChangeBox.hide();
-            //     alert(cartItemPriceChangeBox);
-            // } else if (cartItemPriceChangeFlag == 1){
-            //     //cartItemChangeState.text("下降了");
-            //     //cartItemChangeNumber.text(cartItemPriceChangeNumber);
-            // }else if (cartItemPriceChangeFlag == 2){
-            //     //cartItemChangeState.text("上涨了");
-            //     //cartItemChangeNumber.html(cartItemPriceChangeNumber);
-            // }
-
         },
         error: function () {
 
         }
     })
 }
+
+
+// function priceChangeEvent() {
+//
+//     var cartItemSpecDiv = $(".spec");
+//     var $cartItemPriceChangeBox = $(".priceChangeBox");
+//     var cartItemChangeState = $(".changeState");
+//     var cartItemChangeNumber = $(".changeNumber");
+//
+//     for (var i = 0; i < $(".priceChangeBox").length; i++) {
+//         if (memberCart.cartItemDTOList[i].priceChangeFlag === 0) {
+//             $cartItemPriceChangeBox[i].hide();
+//         } else if (memberCart.cartItemDTOList[i].priceChangeFlag === 1) {
+//             cartItemChangeState[i].html("下降了");
+//             cartItemChangeNumber[i].html(memberCart.cartItemDTOList[i].number);
+//         } else if (memberCart.cartItemDTOList[i].priceChangeFlag === 2) {
+//             cartItemChangeState[i].html("上涨了");
+//             cartItemChangeNumber[i].html(memberCart.cartItemDTOList[i].number);
+//         }
+//
+//     }
+// }
 
 function countEvent() {
 
@@ -215,15 +211,17 @@ function countEvent() {
 
     /*删除商品*/
     $(".remove_item").click(function (e) {
-        layui.use(['layer'], function (e) {
+        layui.use(['layer'], function () {
             var layer = layui.layer;
             var msg = "确定要删除吗？";
-            layer.ready(function (e) {
+            layer.ready(function () {
                 layer.msg(msg, {
                     btn: ['确定', '取消']
                     , time: 10 * 60 * 1000
-                    , yes: function (e) {
+                    , yes: function () {
                         /*删除确定按钮回调*/
+                        alert(memberCart);
+
                     }
                     , btn2: function () {
                         /*删除取消按钮回调*/
@@ -235,6 +233,9 @@ function countEvent() {
     })
 
 
+}
+
+function deleteItem(e) {
 }
 
 
