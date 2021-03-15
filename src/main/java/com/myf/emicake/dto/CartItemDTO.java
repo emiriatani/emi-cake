@@ -51,14 +51,12 @@ public class CartItemDTO implements Serializable {
     /*价格变化的数量*/
     private BigDecimal priceChangeNumber = new BigDecimal(0);
 
-
     /*商品缩略图*/
     private String thumbnail;
 
     /*商品数量*/
     @Max(value = 100,message = "一次性加购最多为100件")
     private int number;
-
 
     /*商品单项总价*/
     private BigDecimal totalPrice;

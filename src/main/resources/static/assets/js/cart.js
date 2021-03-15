@@ -19,7 +19,6 @@ function initCart() {
             if (response[successKey] == true && response[codeKey] == 200) {
 
                 memberCart = response[dataKey];
-
                 console.log(response);
                 /*加入购物车商品总数量*/
                 $("#cartItemTotal").html(response[dataKey].size);
@@ -67,10 +66,10 @@ function initCart() {
                         '                                <span>|</span>\n' +
                         '                                <span>950克</span>\n' +
                         '                            </div>\n' +
-                        '                            <div class="priceChangeBox">\n' +
+                        '                            <div class="priceChangeBox" data-index="'+index+'">\n' +
                         '                                比加入时\n' +
-                        '                                <span class="changeState"></span>\n' +
-                        '                                <span class="changeNumber"></span>\n' +
+                        '                                <span class="changeState" data-index="'+index+'"></span>\n' +
+                        '                                <span class="changeNumber" data-index="'+index+'"></span>\n' +
                         '                                元\n' +
                         '                            </div>\n' +
                         '                        </a>\n' +
@@ -82,9 +81,9 @@ function initCart() {
                         '                        <span>件</span>\n' +
                         '                    </div>\n' +
                         '                    <div class="goods_count clearfix">\n' +
-                        '                        <span><button class="del_btn"><i class="layui-icon">&#xe67e;</i></button></span>\n' +
-                        '                        <span class="count_value">' + cartItemCount + '</span>\n' +
-                        '                        <span><button class="add_btn"><i class="layui-icon">&#xe624;</i></button></span>\n' +
+                        '                        <span><button class="del_btn"><i class="layui-icon" data-index="'+index+'">&#xe67e;</i></button></span>\n' +
+                        '                        <span class="count_value" data-index="'+ index +'">' + cartItemCount + '</span>\n' +
+                        '                        <span><button class="add_btn"><i class="layui-icon" data-index="'+index+'" >&#xe624;</i></button></span>\n' +
                         '                    </div>\n' +
                         '                    <div class="goods_total">\n' +
                         '                        <span class="item_price" >' + cartItemTotalPrice + '</span>\n' +
@@ -94,7 +93,6 @@ function initCart() {
                         '                </div>';
 
                     $("#cart_item_area").append(cartItemStr);
-
 
 
 
@@ -109,26 +107,26 @@ function initCart() {
 }
 
 
-// function priceChangeEvent() {
-//
-//     var cartItemSpecDiv = $(".spec");
-//     var $cartItemPriceChangeBox = $(".priceChangeBox");
-//     var cartItemChangeState = $(".changeState");
-//     var cartItemChangeNumber = $(".changeNumber");
-//
-//     for (var i = 0; i < $(".priceChangeBox").length; i++) {
-//         if (memberCart.cartItemDTOList[i].priceChangeFlag === 0) {
-//             $cartItemPriceChangeBox[i].hide();
-//         } else if (memberCart.cartItemDTOList[i].priceChangeFlag === 1) {
-//             cartItemChangeState[i].html("下降了");
-//             cartItemChangeNumber[i].html(memberCart.cartItemDTOList[i].number);
-//         } else if (memberCart.cartItemDTOList[i].priceChangeFlag === 2) {
-//             cartItemChangeState[i].html("上涨了");
-//             cartItemChangeNumber[i].html(memberCart.cartItemDTOList[i].number);
-//         }
-//
-//     }
-// }
+function priceChangeEvent(e) {
+
+    var cartItemSpecDiv = $(".spec");
+    var $cartItemPriceChangeBox = $(".priceChangeBox");
+    var cartItemChangeState = $(".changeState");
+    var cartItemChangeNumber = $(".changeNumber");
+    var index = e.target.dataset.index;
+
+    if (memberCart.cartItemDTOList[index].priceChangeFlag === 0) {
+        //$(".priceChangeBox").hide();
+        $cartItemPriceChangeBox[index].hide();
+    } else if (memberCart.cartItemDTOList[index].priceChangeFlag === 1) {
+        $(".changeState")[index].html("下降了");
+        $(".changeNumber")[index].html(memberCart.cartItemDTOList[index].number);
+    } else if (memberCart.cartItemDTOList[index].priceChangeFlag === 2) {
+        $(".changeState")[index].html("上涨了");
+        $(".changeNumber")[index].html(memberCart.cartItemDTOList[index].number);
+    }
+
+}
 
 function countEvent() {
 
@@ -144,11 +142,21 @@ function countEvent() {
     /*增加商品数量事件*/
     for (var i = 0, len = add.length; i < len; i++) {
         (function (i) {
-            add[i].onclick = function () {
+            add[i].onclick = function (e) {
                 var value = parseInt(val[i].innerHTML);
                 ++value;
                 val[i].innerHTML = value;
-                itemPrice[i].innerHTML = parseInt(unitPrice[i].innerText) * value;
+                var totalPrice = parseInt(unitPrice[i].innerText) * value;
+                itemPrice[i].innerHTML = totalPrice;
+                alert(value);
+                //alert(e.target.dataset.index);
+                //alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
+                memberCart.cartItemDTOList[e.target.dataset.index].number = value;
+                memberCart.cartItemDTOList[e.target.dataset.index].totalPrice = totalPrice;
+                alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
+                alert(memberCart.cartItemDTOList[e.target.dataset.index].totalPrice);
+                updateItem(e);
+                //initCart();
                 sum();
             }
         })(i);
@@ -156,12 +164,23 @@ function countEvent() {
     /*减少商品数量事件*/
     for (var i = 0, len = del.length; i < len; i++) {
         (function (i) {
-            del[i].onclick = function () {
+            del[i].onclick = function (e) {
                 var value = parseInt(val[i].innerHTML);
                 if (value != 1) {
                     --value;
                     val[i].innerHTML = value;
-                    itemPrice[i].innerHTML = parseInt(unitPrice[i].innerText) * value;
+                    var  totalPrice = parseInt(unitPrice[i].innerText) * value
+                    itemPrice[i].innerHTML = totalPrice;
+
+                    alert(value);
+                    //alert(e.target.dataset.index);
+                    //alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
+                    memberCart.cartItemDTOList[e.target.dataset.index].number = value;
+                    memberCart.cartItemDTOList[e.target.dataset.index].totalPrice = totalPrice;
+                    alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
+                    alert(memberCart.cartItemDTOList[e.target.dataset.index].totalPrice);
+                    updateItem(e);
+                    //initCart();
                     sum();
                 } else {
                     val[i].innerHTML = 1;
@@ -199,6 +218,7 @@ function countEvent() {
                     , time: 10 * 60 * 1000
                     , yes: function (e) {
                         /*删除确定按钮回调*/
+                        deleteAllItem();
                     }
                     , btn2: function () {
                         /*删除取消按钮回调*/
@@ -220,8 +240,7 @@ function countEvent() {
                     , time: 10 * 60 * 1000
                     , yes: function () {
                         /*删除确定按钮回调*/
-                        alert(memberCart);
-
+                        deleteItem(e);
                     }
                     , btn2: function () {
                         /*删除取消按钮回调*/
@@ -236,11 +255,69 @@ function countEvent() {
 }
 
 function deleteItem(e) {
+
+    /*获取点击的商品项*/
+    var cartItemDTOListElement = memberCart.cartItemDTOList[e.target.dataset.index];
+
+    var jsonCartItemData = JSON.stringify(cartItemDTOListElement);
+
+    $.ajax({
+        url: '/cart/delete/',
+        type: 'POST',
+        data: jsonCartItemData,
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (response) {
+            if (response[successKey] == true && response[codeKey] == 200){
+                console.log(response);
+            }
+
+
+        },
+        error: function () {
+
+        }
+    })
+
+
 }
 
+function updateItem(e) {
+    /*获取点击的商品项*/
+    var cartItemDTOListElement = memberCart.cartItemDTOList[e.target.dataset.index];
+
+    var jsonCartItemData = JSON.stringify(cartItemDTOListElement);
+
+    $.ajax({
+        url: '/cart/update/',
+        type: 'POST',
+        data: jsonCartItemData,
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+        },
+        error: function () {
+
+        }
+    })
+}
+
+function deleteAllItem() {
+    $.ajax({
+        url: '/cart/deleteAll/',
+        type: 'POST',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+        },
+        error: function () {
+
+        }
+    })
+}
 
 function submitCart() {
-
 }
 
 
