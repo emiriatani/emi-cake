@@ -148,8 +148,8 @@ aliyun:
     regionId: cn-hangzhou
     sysVersion: 2017-05-25
     sysAction: SendSms
-    accessKeyId: LTAI4GD4zszMZV2dBT87cUJm
-    accessKeySecret: QKs6wjrsJkbpTYOpekzyrudaBC3bYm
+    accessKeyId:
+    accessKeySecret:
     signName: 打工人的技术沉淀屋
 # mybatis配置
 mybatis:
