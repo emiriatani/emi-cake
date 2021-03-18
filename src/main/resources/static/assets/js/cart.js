@@ -3,8 +3,9 @@ var removeItemList = null;
 
 $(function () {
     initCart();
-    countEvent();
-    submitCart();
+    deleteItemEvent();
+    updateItemEvent();
+    deleteAllItemEvent();
 })
 
 /*初始化购物车*/
@@ -95,8 +96,9 @@ function initCart() {
                     $("#cart_item_area").append(cartItemStr);
 
 
-
                 })
+
+
 
             }
         },
@@ -107,127 +109,50 @@ function initCart() {
 }
 
 
-function priceChangeEvent(e) {
+// function priceChangeEvent(e) {
+//
+//     var cartItemSpecDiv = $(".spec");
+//     var $cartItemPriceChangeBox = $(".priceChangeBox");
+//     var cartItemChangeState = $(".changeState");
+//     var cartItemChangeNumber = $(".changeNumber");
+//     var index = e.target.dataset.index;
+//
+//     if (memberCart.cartItemDTOList[index].priceChangeFlag === 0) {
+//         //$(".priceChangeBox").hide();
+//         $cartItemPriceChangeBox[index].hide();
+//     } else if (memberCart.cartItemDTOList[index].priceChangeFlag === 1) {
+//         $(".changeState")[index].html("下降了");
+//         $(".changeNumber")[index].html(memberCart.cartItemDTOList[index].number);
+//     } else if (memberCart.cartItemDTOList[index].priceChangeFlag === 2) {
+//         $(".changeState")[index].html("上涨了");
+//         $(".changeNumber")[index].html(memberCart.cartItemDTOList[index].number);
+//     }
+//
+// }
 
-    var cartItemSpecDiv = $(".spec");
-    var $cartItemPriceChangeBox = $(".priceChangeBox");
-    var cartItemChangeState = $(".changeState");
-    var cartItemChangeNumber = $(".changeNumber");
-    var index = e.target.dataset.index;
-
-    if (memberCart.cartItemDTOList[index].priceChangeFlag === 0) {
-        //$(".priceChangeBox").hide();
-        $cartItemPriceChangeBox[index].hide();
-    } else if (memberCart.cartItemDTOList[index].priceChangeFlag === 1) {
-        $(".changeState")[index].html("下降了");
-        $(".changeNumber")[index].html(memberCart.cartItemDTOList[index].number);
-    } else if (memberCart.cartItemDTOList[index].priceChangeFlag === 2) {
-        $(".changeState")[index].html("上涨了");
-        $(".changeNumber")[index].html(memberCart.cartItemDTOList[index].number);
-    }
-
+/*购物车商品数量*/
+function count() {
+    var cartItem = document.getElementsByClassName("cart_item");
+    /*购物车中商品总数*/
+    $("#cartItemTotal").html(cartItem.length);
+    $("#cartItemTotal").val(cartItem.length);
 }
+/*购物车总金额价格计算*/
+function sum() {
 
-function countEvent() {
-
-    var add = document.getElementsByClassName("add_btn");
-    var del = document.getElementsByClassName("del_btn");
-    var val = document.getElementsByClassName("count_value");
-    var unitPrice = document.getElementsByClassName("unit_price");
     var itemPrice = document.getElementsByClassName("item_price");
     var totalPrice = document.getElementById("cart_total_price");
-    var cartItem = document.getElementsByClassName("cart_item");
-    var removeItem = document.getElementsByClassName("remove_item");
 
-    /*增加商品数量事件*/
-    for (var i = 0, len = add.length; i < len; i++) {
-        (function (i) {
-            add[i].onclick = function (e) {
-                var value = parseInt(val[i].innerHTML);
-                ++value;
-                val[i].innerHTML = value;
-                var totalPrice = parseInt(unitPrice[i].innerText) * value;
-                itemPrice[i].innerHTML = totalPrice;
-                alert(value);
-                //alert(e.target.dataset.index);
-                //alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
-                memberCart.cartItemDTOList[e.target.dataset.index].number = value;
-                memberCart.cartItemDTOList[e.target.dataset.index].totalPrice = totalPrice;
-                alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
-                alert(memberCart.cartItemDTOList[e.target.dataset.index].totalPrice);
-                updateItem(e);
-                //initCart();
-                sum();
-            }
-        })(i);
+    var sum = 0;
+    for (var i = 0; i < itemPrice.length; i++) {
+        sum += parseInt(itemPrice[i].innerText)
     }
-    /*减少商品数量事件*/
-    for (var i = 0, len = del.length; i < len; i++) {
-        (function (i) {
-            del[i].onclick = function (e) {
-                var value = parseInt(val[i].innerHTML);
-                if (value != 1) {
-                    --value;
-                    val[i].innerHTML = value;
-                    var  totalPrice = parseInt(unitPrice[i].innerText) * value
-                    itemPrice[i].innerHTML = totalPrice;
-
-                    alert(value);
-                    //alert(e.target.dataset.index);
-                    //alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
-                    memberCart.cartItemDTOList[e.target.dataset.index].number = value;
-                    memberCart.cartItemDTOList[e.target.dataset.index].totalPrice = totalPrice;
-                    alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
-                    alert(memberCart.cartItemDTOList[e.target.dataset.index].totalPrice);
-                    updateItem(e);
-                    //initCart();
-                    sum();
-                } else {
-                    val[i].innerHTML = 1;
-                    layui.use(['layer'], function () {
-                        var layer = layui.layer;
-                        var msg = "不能再少啦";
-                        layer.ready(function () {
-                            layer.msg(msg, {
-                                time: 2000
-                            });
-                        });
-                    });
-                }
-            }
-        })(i)
-    }
-
-    /*购物车总金额价格计算*/
-    function sum() {
-        var sum = 0;
-        for (var i = 0; i < itemPrice.length; i++) {
-            sum += parseInt(itemPrice[i].innerText)
-        }
-        totalPrice.innerHTML = sum;
-    }
-
-    /*清空购物车*/
-    $("#deleteAll").click(function () {
-        layui.use(['layer'], function (e) {
-            var layer = layui.layer;
-            var msg = "确定要清空购物车吗？";
-            layer.ready(function (e) {
-                layer.msg(msg, {
-                    btn: ['确定', '取消']
-                    , time: 10 * 60 * 1000
-                    , yes: function (e) {
-                        /*删除确定按钮回调*/
-                        deleteAllItem();
-                    }
-                    , btn2: function () {
-                        /*删除取消按钮回调*/
-                        layer.close();
-                    }
-                });
-            });
-        });
-    })
+    /*购物车总价*/
+    totalPrice.innerHTML = sum;
+    //totalPrice.val(sum);
+}
+/*删除商品点击事件*/
+function deleteItemEvent() {
 
     /*删除商品*/
     $(".remove_item").click(function (e) {
@@ -240,7 +165,11 @@ function countEvent() {
                     , time: 10 * 60 * 1000
                     , yes: function () {
                         /*删除确定按钮回调*/
+                        alert("删除前");
                         deleteItem(e);
+                        alert("删除后");
+                        layer.close();
+
                     }
                     , btn2: function () {
                         /*删除取消按钮回调*/
@@ -250,10 +179,8 @@ function countEvent() {
             });
         });
     })
-
-
 }
-
+/*删除商品请求*/
 function deleteItem(e) {
 
     /*获取点击的商品项*/
@@ -270,9 +197,10 @@ function deleteItem(e) {
         success: function (response) {
             if (response[successKey] == true && response[codeKey] == 200){
                 console.log(response);
+                $(".remove_item")[e.target.dataset.index].parentElement.parentElement.remove();
+                count();
+                sum();
             }
-
-
         },
         error: function () {
 
@@ -281,7 +209,77 @@ function deleteItem(e) {
 
 
 }
+/*更新商品数量点击事件*/
+function updateItemEvent() {
+    /*增加商品数量事件*/
 
+    var add = document.getElementsByClassName("add_btn");
+    var del = document.getElementsByClassName("del_btn");
+    var val = document.getElementsByClassName("count_value");
+    var unitPrice = document.getElementsByClassName("unit_price");
+    var itemPrice = document.getElementsByClassName("item_price");
+    var totalPrice = document.getElementById("cart_total_price");
+
+    for (var i = 0, len = add.length; i < len; i++) {
+        (function (i) {
+            add[i].onclick = function (e) {
+                var value = parseInt(val[i].innerHTML);
+                ++value;
+                val[i].innerHTML = value;
+                var totalPrice = parseInt(unitPrice[i].innerText) * value;
+                itemPrice[i].innerHTML = totalPrice;
+                //alert(value);
+                //alert(e.target.dataset.index);
+                //alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
+                memberCart.cartItemDTOList[e.target.dataset.index].number = value;
+                memberCart.cartItemDTOList[e.target.dataset.index].totalPrice = totalPrice;
+                //alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
+                //alert(memberCart.cartItemDTOList[e.target.dataset.index].totalPrice);
+                updateItem(e);
+                //initCart();
+                sum();
+            }
+        })(i);
+    }
+    /*减少商品数量事件*/
+    for (var i = 0, len = del.length; i < len; i++) {
+        (function (i) {
+            del[i].onclick = function (e) {
+                var value = parseInt(val[i].innerHTML);
+                if (value != 1) {
+                    --value;
+                    val[i].innerHTML = value;
+                    var totalPrice = parseInt(unitPrice[i].innerText) * value
+                    itemPrice[i].innerHTML = totalPrice;
+
+                    //alert(value);
+                    //alert(e.target.dataset.index);
+                    //alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
+                    memberCart.cartItemDTOList[e.target.dataset.index].number = value;
+                    memberCart.cartItemDTOList[e.target.dataset.index].totalPrice = totalPrice;
+                    //alert(memberCart.cartItemDTOList[e.target.dataset.index].number);
+                    //alert(memberCart.cartItemDTOList[e.target.dataset.index].totalPrice);
+                    updateItem(e);
+                    //initCart();
+                    sum();
+
+                } else {
+                    val[i].innerHTML = 1;
+                    layui.use(['layer'], function () {
+                        var layer = layui.layer;
+                        var msg = "不能再少啦";
+                        layer.ready(function () {
+                            layer.msg(msg, {
+                                time: 2000
+                            });
+                        });
+                    });
+                }
+            }
+        })(i)
+    }
+}
+/*更新商品请求*/
 function updateItem(e) {
     /*获取点击的商品项*/
     var cartItemDTOListElement = memberCart.cartItemDTOList[e.target.dataset.index];
@@ -296,13 +294,40 @@ function updateItem(e) {
         dataType: 'json',
         success: function (response) {
             console.log(response);
+
         },
         error: function () {
 
         }
     })
 }
+/*清空购物车点击事件*/
+function deleteAllItemEvent() {
+    /*清空购物车*/
+    $("#deleteAll").click(function () {
+        layui.use(['layer'], function (e) {
+            var layer = layui.layer;
+            var msg = "确定要清空购物车吗？";
+            layer.ready(function (e) {
+                layer.msg(msg, {
+                    btn: ['确定', '取消']
+                    , time: 10 * 60 * 1000
+                    , yes: function (e) {
+                        /*删除确定按钮回调*/
+                        deleteAllItem();
 
+                    }
+                    , btn2: function () {
+                        /*删除取消按钮回调*/
+                        layer.close();
+                    }
+                });
+            });
+        });
+    })
+
+}
+/*清空购物车请求*/
 function deleteAllItem() {
     $.ajax({
         url: '/cart/deleteAll/',
@@ -310,12 +335,15 @@ function deleteAllItem() {
         dataType: 'json',
         success: function (response) {
             console.log(response);
+            count();
+            sum();
         },
         error: function () {
 
         }
     })
 }
+
 
 function submitCart() {
 }

@@ -18,6 +18,10 @@
     border-bottom: 1px solid #E7E7E7;
 }
 
+#cart_empty_info{
+
+}
+
 /*购物车里的每个商品项*/
 .cart_item {
     position: relative;
