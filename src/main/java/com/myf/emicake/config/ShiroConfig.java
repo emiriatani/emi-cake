@@ -54,6 +54,9 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/shop/**.html","anon");
         chainDefinition.addPathDefinition("/cart/**.html","anon");
         chainDefinition.addPathDefinition("/cart/**","anon");
+        chainDefinition.addPathDefinition("/order/**.html","anon");
+        chainDefinition.addPathDefinition("/order/**","anon");
+        chainDefinition.addPathDefinition("/shop/**","anon");
         chainDefinition.addPathDefinition("/upload/**","anon");
 
         chainDefinition.addPathDefinition("/**", "authc");

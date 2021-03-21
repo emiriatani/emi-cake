@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head th:replace="common/common :: common_head(~{::title})">
+<head th:replace="common/common :: common_head(~{::title},~{::link})">
     <title>emicake-艾米蛋糕 甜而不腻的蛋糕,24小时为您提供最美好的就餐体验</title>
+    <link rel="stylesheet" th:href="@{/static/assets/css/home.css}" href="../../static/assets/css/home.css">
 </head>
 <body>
 <div class="main_content">

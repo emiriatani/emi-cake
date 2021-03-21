@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductSkuDTO implements Serializable {
+
     private static final long serialVersionUID = 3012264245033914016L;
 
     /**

@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head th:replace="common/common :: common_head(~{::title})">
+<head th:replace="common/common :: common_head(~{::title},~{::link})">
     <title>会员注册-emicake艾米蛋糕</title>
+    <link rel="stylesheet" th:href="@{/static/assets/css/register.css}" href="../../static/assets/css/register.css">
 </head>
 <body>
 

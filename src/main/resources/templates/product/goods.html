@@ -1,7 +1,8 @@
 <!doctype html >
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/common :: common_head(~{::title})">
+<head th:replace="common/common :: common_head(~{::title},~{::link})">
     <title>商品详细页-emicake艾米蛋糕</title>
+    <link rel="stylesheet" th:href="@{/static/assets/css/goods.css}" href="../../static/assets/css/goods.css">
 </head>
 <body>
 <div class="main_content">

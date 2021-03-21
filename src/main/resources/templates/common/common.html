@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
                 xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head th:fragment="common_head(title)">
+<head th:fragment="common_head(title,links)">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -11,12 +11,7 @@
     <link rel="stylesheet" th:href="@{/static/assets/css/normalize.css}" href="../../static/assets/css/normalize.css">
     <link rel="stylesheet" th:href="@{/static/assets/css/reset.css}" href="../../static/assets/css/reset.css">
     <link rel="stylesheet" th:href="@{/static/assets/css/style.css}" href="../../static/assets/css/style.css">
-    <link rel="stylesheet" th:href="@{/static/assets/css/home.css}" href="../../static/assets/css/home.css">
-    <link rel="stylesheet" th:href="@{/static/assets/css/login.css}" href="../../static/assets/css/login.css">
-    <link rel="stylesheet" th:href="@{/static/assets/css/register.css}" href="../../static/assets/css/register.css">
-    <link rel="stylesheet" th:href="@{/static/assets/css/category.css}" href="../../static/assets/css/category.css">
-    <link rel="stylesheet" th:href="@{/static/assets/css/goods.css}" href="../../static/assets/css/goods.css">
-    <link rel="stylesheet" th:href="@{/static/assets/css/cart.css}" href="../../static/assets/css/cart.css">
+    <link th:replace="${links}">
     <title th:replace="${title}"></title>
 </head>
 <body>
@@ -28,7 +23,7 @@
             </h1>
             <ul class="header_nav_bar">
                 <li><a th:href="@{/}">首页</a></li>
-                <li><a th:href="@{/prod/category.html}">全部商品</a></li>
+                <li><a th:href="@{/product/category.html}">全部商品</a></li>
                 <li><a href="#3">甄选蛋糕</a></li>
                 <li><a href="#4">精选食材</a></li>
                 <li><a href="#5">会员中心</a></li>

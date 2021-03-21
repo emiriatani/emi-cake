@@ -6,6 +6,7 @@ $(function () {
     deleteItemEvent();
     updateItemEvent();
     deleteAllItemEvent();
+    submitCartEvent();
 })
 
 /*初始化购物车*/
@@ -51,9 +52,33 @@ function initCart() {
                     var cartItemSpec = item.spec;
                     /*商品价格变化状态*/
                     var cartItemPriceChangeFlag = item.priceChangeFlag;
+                    var cartItemPriceChangeStr = "";
                     /*商品价格变化数量*/
                     var cartItemPriceChangeNumber = item.priceChangeNumber;
 
+                    var specObj = JSON.parse(cartItemSpec);
+
+                    if (cartItemPriceChangeFlag === 1){
+                        cartItemPriceChangeStr =
+                            '<div class="priceChangeBox" data-index="'+index+'">\n' +
+                            '比加入时\n' +
+                            '<span class="changeState" data-index="'+index+'">'+'下降了'+'</span>\n' +
+                            '<span class="changeNumber" data-index="'+index+'">'+cartItemPriceChangeNumber+'</span>\n' +
+                            '元\n' +
+                            '</div>\n';
+                    }else if (cartItemPriceChangeFlag === 2){
+                        cartItemPriceChangeStr =
+                            '<div class="priceChangeBox" data-index="'+index+'">\n' +
+                            '比加入时\n' +
+                            '<span class="changeState" data-index="'+index+'">'+'上涨了'+'</span>\n' +
+                            '<span class="changeNumber" data-index="'+index+'">'+cartItemPriceChangeNumber+'</span>\n' +
+                            '元\n' +
+                            '</div>\n';
+                    }else if (cartItemPriceChangeFlag === 0) {
+                        cartItemPriceChangeStr =
+                            '<div class="priceChangeBox" data-index="'+index+'">\n' +
+                            '</div>\n';
+                    }
 
                     let cartItemStr = '<div class="cart_item">\n' +
                         '                    <div class="goods_info">\n' +
@@ -63,16 +88,11 @@ function initCart() {
                         '                                <h3 class="cartItemTitle">' + cartItemTitle + '</h3>\n' +
                         '                            </div>\n' +
                         '                            <div class="spec">\n' +
-                        '                                <span>16厘米</span>\n' +
+                        '                                <span>'+specObj.size+'</span>\n' +
                         '                                <span>|</span>\n' +
-                        '                                <span>950克</span>\n' +
+                        '                                <span>'+ specObj.weight+'</span>\n' +
                         '                            </div>\n' +
-                        '                            <div class="priceChangeBox" data-index="'+index+'">\n' +
-                        '                                比加入时\n' +
-                        '                                <span class="changeState" data-index="'+index+'"></span>\n' +
-                        '                                <span class="changeNumber" data-index="'+index+'"></span>\n' +
-                        '                                元\n' +
-                        '                            </div>\n' +
+                                                    cartItemPriceChangeStr +
                         '                        </a>\n' +
                         '                    </div>\n' +
                         '                    <div class="goods_price clearfix">\n' +
@@ -95,8 +115,9 @@ function initCart() {
 
                     $("#cart_item_area").append(cartItemStr);
 
-
                 })
+
+
 
 
 
@@ -107,28 +128,6 @@ function initCart() {
         }
     })
 }
-
-
-// function priceChangeEvent(e) {
-//
-//     var cartItemSpecDiv = $(".spec");
-//     var $cartItemPriceChangeBox = $(".priceChangeBox");
-//     var cartItemChangeState = $(".changeState");
-//     var cartItemChangeNumber = $(".changeNumber");
-//     var index = e.target.dataset.index;
-//
-//     if (memberCart.cartItemDTOList[index].priceChangeFlag === 0) {
-//         //$(".priceChangeBox").hide();
-//         $cartItemPriceChangeBox[index].hide();
-//     } else if (memberCart.cartItemDTOList[index].priceChangeFlag === 1) {
-//         $(".changeState")[index].html("下降了");
-//         $(".changeNumber")[index].html(memberCart.cartItemDTOList[index].number);
-//     } else if (memberCart.cartItemDTOList[index].priceChangeFlag === 2) {
-//         $(".changeState")[index].html("上涨了");
-//         $(".changeNumber")[index].html(memberCart.cartItemDTOList[index].number);
-//     }
-//
-// }
 
 /*购物车商品数量*/
 function count() {
@@ -153,7 +152,6 @@ function sum() {
 }
 /*删除商品点击事件*/
 function deleteItemEvent() {
-
     /*删除商品*/
     $(".remove_item").click(function (e) {
         layui.use(['layer'], function () {
@@ -163,17 +161,14 @@ function deleteItemEvent() {
                 layer.msg(msg, {
                     btn: ['确定', '取消']
                     , time: 10 * 60 * 1000
-                    , yes: function () {
+                    , yes: function (index,layero) {
                         /*删除确定按钮回调*/
-                        alert("删除前");
+                        layer.close(index);
                         deleteItem(e);
-                        alert("删除后");
-                        layer.close();
-
                     }
-                    , btn2: function () {
+                    , btn2: function (index,layero) {
                         /*删除取消按钮回调*/
-                        layer.close();
+                        layer.close(index);
                     }
                 });
             });
@@ -203,7 +198,10 @@ function deleteItem(e) {
             }
         },
         error: function () {
+            if (response[successKey] == true && response[codeKey] == 200){
+                alertMsg("删除商品失败，请重试！");
 
+            }
         }
     })
 
@@ -283,7 +281,6 @@ function updateItemEvent() {
 function updateItem(e) {
     /*获取点击的商品项*/
     var cartItemDTOListElement = memberCart.cartItemDTOList[e.target.dataset.index];
-
     var jsonCartItemData = JSON.stringify(cartItemDTOListElement);
 
     $.ajax({
@@ -293,11 +290,14 @@ function updateItem(e) {
         contentType: 'application/json',
         dataType: 'json',
         success: function (response) {
-            console.log(response);
-
+            if (response[successKey] == true && response[codeKey] == 200){
+                console.log(response);
+            }
         },
         error: function () {
-
+            if (response[successKey] == false && response[codeKey] == 400){
+                alertMsg("更新购物车失败，请重试");
+            }
         }
     })
 }
@@ -312,14 +312,14 @@ function deleteAllItemEvent() {
                 layer.msg(msg, {
                     btn: ['确定', '取消']
                     , time: 10 * 60 * 1000
-                    , yes: function (e) {
+                    , yes: function (index,layeror) {
                         /*删除确定按钮回调*/
+                        layer.close(index);
                         deleteAllItem();
-
                     }
-                    , btn2: function () {
+                    , btn2: function (index,layeror) {
                         /*删除取消按钮回调*/
-                        layer.close();
+                        layer.close(index);
                     }
                 });
             });
@@ -334,18 +334,47 @@ function deleteAllItem() {
         type: 'POST',
         dataType: 'json',
         success: function (response) {
-            console.log(response);
-            count();
-            sum();
+            if (response[successKey] == true && response[codeKey] == 200){
+                console.log(response);
+                $(".cart_item").remove();
+                count();
+                sum();
+            }
         },
         error: function () {
-
+            if (response[successKey] == false && response[codeKey] == 400){
+                alertMsg("清空购物车失败,请重试");
+            }
         }
     })
 }
 
+function submitCartEvent() {
+
+    $("#settlementBtn").click(function () {
+        submitCart();
+    })
+
+}
 
 function submitCart() {
+    $.ajax({
+        url:'/order/toDeal',
+        type:'POST',
+        contentType:'application/json',
+        data:JSON.stringify(memberCart),
+        dataType:'JSON',
+        success: function (response) {
+            if (response[successKey] == true && response[codeKey] == 200){
+                window.location.href = '/order/deal.html';
+            }
+        },
+        error: function () {
+            if (response[successKey] == false && response[codeKey] == 400){
+                alertMsg("请求失败,请重试");
+            }
+        }
+    })
 }
 
 

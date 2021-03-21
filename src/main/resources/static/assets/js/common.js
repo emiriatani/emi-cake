@@ -30,7 +30,7 @@ var dataKey = "data";
     })
 // }
 
-/*弹窗*/
+/*msg弹窗*/
 function alertMsg(str) {
     layui.use(['layer'], function () {
         layer.ready(function (e) {
@@ -41,6 +41,7 @@ function alertMsg(str) {
         })
     })
 }
+
 
 /*获取url中的参数*/
 function getQueryVariable(variable)

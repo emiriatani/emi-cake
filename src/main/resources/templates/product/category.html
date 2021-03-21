@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/common :: common_head(~{::title})">
+<head th:replace="common/common :: common_head(~{::title},~{::link})">
     <title>蛋糕名录-XXX-emicake艾米蛋糕</title>
+    <link rel="stylesheet" th:href="@{/static/assets/css/category.css}" href="../../static/assets/css/category.css">
 </head>
 <body>
 

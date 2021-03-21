@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myf.emicake.mapper.ShopMapper">
+  <resultMap id="BaseResultMap" type="com.myf.emicake.domain.Shop">
+    <!--@mbg.generated-->
+    <!--@Table shop-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="floor_space" jdbcType="DOUBLE" property="floorSpace" />
+    <result column="staff_size" jdbcType="INTEGER" property="staffSize" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="operating_state" jdbcType="TINYINT" property="operatingState" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, shop_name, address, floor_space, staff_size, `state`, operating_state, create_time, 
+    update_time, delete_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from shop
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from shop
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Shop" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into shop (shop_name, address, floor_space, 
+      staff_size, `state`, operating_state, 
+      create_time, update_time, delete_time
+      )
+    values (#{shopName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{floorSpace,jdbcType=DOUBLE}, 
+      #{staffSize,jdbcType=INTEGER}, #{state,jdbcType=TINYINT}, #{operatingState,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Shop" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="floorSpace != null">
+        floor_space,
+      </if>
+      <if test="staffSize != null">
+        staff_size,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="operatingState != null">
+        operating_state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="floorSpace != null">
+        #{floorSpace,jdbcType=DOUBLE},
+      </if>
+      <if test="staffSize != null">
+        #{staffSize,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="operatingState != null">
+        #{operatingState,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.Shop">
+    <!--@mbg.generated-->
+    update shop
+    <set>
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="floorSpace != null">
+        floor_space = #{floorSpace,jdbcType=DOUBLE},
+      </if>
+      <if test="staffSize != null">
+        staff_size = #{staffSize,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="operatingState != null">
+        operating_state = #{operatingState,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.Shop">
+    <!--@mbg.generated-->
+    update shop
+    set shop_name = #{shopName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      floor_space = #{floorSpace,jdbcType=DOUBLE},
+      staff_size = #{staffSize,jdbcType=INTEGER},
+      `state` = #{state,jdbcType=TINYINT},
+      operating_state = #{operatingState,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="getAllShop" resultMap="BaseResultMap" resultType="com.myf.emicake.domain.Shop">
+      select
+      <include refid="Base_Column_List" />
+      from shop
+    </select>
+</mapper>

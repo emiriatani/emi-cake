@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/common :: common_head(~{::title})">
+<head th:replace="common/common :: common_head(~{::title},~{::link})">
 
     <title>购物车-emicake艾米蛋糕</title>
+    <link rel="stylesheet" th:href="@{/static/assets/css/cart.css}" href="../../static/assets/css/cart.css">
 </head>
 
 
@@ -25,7 +26,7 @@
             <!--结算块-->
             <div class="summation_box">
                 <div class="sum_bar_left">
-                    <a href="../common/index.html">继续购物</a>
+                    <a th:href="@{/}" href="../common/index.html">继续购物</a>
                     <a id="deleteAll" href="javascript:;">清空</a>
                 </div>
                 <div class="sum_bar_right">
@@ -38,9 +39,7 @@
                     <span id="cart_total_price"></span>
                 </div>
                 <div class="order_btn clearfix">
-                    <form action="">
-                        <button>立即结算</button>
-                    </form>
+                    <button id="settlementBtn">立即结算</button>
                 </div>
             </div>
         </div>
