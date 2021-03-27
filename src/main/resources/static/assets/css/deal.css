@@ -46,6 +46,9 @@
     padding-bottom: 25px;
     border-bottom: 1px solid #e7e7e7;
 }
+#order_saveAddr{
+    margin-left: 110px;
+}
 /*备注留言*/
 .pickup_msg .layui-form-item .layui-inline{
     margin-top: 15px;
@@ -54,10 +57,10 @@
     padding-bottom: 25px;
     border-bottom: 1px solid #e7e7e7;
 }
-#order_msg_input{
+#pick_order_msg_input{
     width: 1120px;
 }
-#order_msg_input1{
+#take_order_msg_input{
     width: 1120px;
 }
 /*支付方式*/
@@ -71,16 +74,16 @@
 /*订单结算*/
 .summation_box{
     width: 1120px;
-    height: 120px;
+    height: 150px;
     border: 1px solid #e7e7e7;
     padding: 22px 0;
     margin-top: 28px;
-    margin-botom: 50px;
 }
 .sum_bar_right{
     float: right;
     margin-right: 10px;
     margin-top: 15px;
+    margin-bottom: 10px;
 }
 .order_btn{
     float: right;

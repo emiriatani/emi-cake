@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myf.emicake.mapper.MemberAddressMapper">
+  <resultMap id="BaseResultMap" type="com.myf.emicake.domain.MemberAddress">
+    <!--@mbg.generated-->
+    <!--@Table member_address-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="orderer_name" jdbcType="VARCHAR" property="ordererName" />
+    <result column="orderer_phone" jdbcType="BIGINT" property="ordererPhone" />
+    <result column="consignee_name" jdbcType="VARCHAR" property="consigneeName" />
+    <result column="consignee_phone" jdbcType="BIGINT" property="consigneePhone" />
+    <result column="consignee_provinces" jdbcType="VARCHAR" property="consigneeProvinces" />
+    <result column="consignee_city" jdbcType="VARCHAR" property="consigneeCity" />
+    <result column="consignee_region" jdbcType="VARCHAR" property="consigneeRegion" />
+    <result column="consignee_address" jdbcType="VARCHAR" property="consigneeAddress" />
+    <result column="consignee_zip" jdbcType="INTEGER" property="consigneeZip" />
+    <result column="default_address" jdbcType="TINYINT" property="defaultAddress" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, member_id, orderer_name, orderer_phone, consignee_name, consignee_phone, consignee_provinces, 
+    consignee_city, consignee_region, consignee_address, consignee_zip, default_address, 
+    create_time, update_time, `state`, delete_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from member_address
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from member_address
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.MemberAddress" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into member_address (member_id, orderer_name, orderer_phone, 
+      consignee_name, consignee_phone, consignee_provinces, 
+      consignee_city, consignee_region, consignee_address, 
+      consignee_zip, default_address, create_time, 
+      update_time, `state`, delete_time
+      )
+    values (#{memberId,jdbcType=INTEGER}, #{ordererName,jdbcType=VARCHAR}, #{ordererPhone,jdbcType=BIGINT}, 
+      #{consigneeName,jdbcType=VARCHAR}, #{consigneePhone,jdbcType=BIGINT}, #{consigneeProvinces,jdbcType=VARCHAR}, 
+      #{consigneeCity,jdbcType=VARCHAR}, #{consigneeRegion,jdbcType=VARCHAR}, #{consigneeAddress,jdbcType=VARCHAR}, 
+      #{consigneeZip,jdbcType=INTEGER}, #{defaultAddress,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=TINYINT}, #{deleteTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.MemberAddress" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into member_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="ordererName != null">
+        orderer_name,
+      </if>
+      <if test="ordererPhone != null">
+        orderer_phone,
+      </if>
+      <if test="consigneeName != null">
+        consignee_name,
+      </if>
+      <if test="consigneePhone != null">
+        consignee_phone,
+      </if>
+      <if test="consigneeProvinces != null">
+        consignee_provinces,
+      </if>
+      <if test="consigneeCity != null">
+        consignee_city,
+      </if>
+      <if test="consigneeRegion != null">
+        consignee_region,
+      </if>
+      <if test="consigneeAddress != null">
+        consignee_address,
+      </if>
+      <if test="consigneeZip != null">
+        consignee_zip,
+      </if>
+      <if test="defaultAddress != null">
+        default_address,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="ordererName != null">
+        #{ordererName,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererPhone != null">
+        #{ordererPhone,jdbcType=BIGINT},
+      </if>
+      <if test="consigneeName != null">
+        #{consigneeName,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneePhone != null">
+        #{consigneePhone,jdbcType=BIGINT},
+      </if>
+      <if test="consigneeProvinces != null">
+        #{consigneeProvinces,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeCity != null">
+        #{consigneeCity,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeRegion != null">
+        #{consigneeRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeAddress != null">
+        #{consigneeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeZip != null">
+        #{consigneeZip,jdbcType=INTEGER},
+      </if>
+      <if test="defaultAddress != null">
+        #{defaultAddress,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.MemberAddress">
+    <!--@mbg.generated-->
+    update member_address
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="ordererName != null">
+        orderer_name = #{ordererName,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererPhone != null">
+        orderer_phone = #{ordererPhone,jdbcType=BIGINT},
+      </if>
+      <if test="consigneeName != null">
+        consignee_name = #{consigneeName,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneePhone != null">
+        consignee_phone = #{consigneePhone,jdbcType=BIGINT},
+      </if>
+      <if test="consigneeProvinces != null">
+        consignee_provinces = #{consigneeProvinces,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeCity != null">
+        consignee_city = #{consigneeCity,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeRegion != null">
+        consignee_region = #{consigneeRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeAddress != null">
+        consignee_address = #{consigneeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeZip != null">
+        consignee_zip = #{consigneeZip,jdbcType=INTEGER},
+      </if>
+      <if test="defaultAddress != null">
+        default_address = #{defaultAddress,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.MemberAddress">
+    <!--@mbg.generated-->
+    update member_address
+    set member_id = #{memberId,jdbcType=INTEGER},
+      orderer_name = #{ordererName,jdbcType=VARCHAR},
+      orderer_phone = #{ordererPhone,jdbcType=BIGINT},
+      consignee_name = #{consigneeName,jdbcType=VARCHAR},
+      consignee_phone = #{consigneePhone,jdbcType=BIGINT},
+      consignee_provinces = #{consigneeProvinces,jdbcType=VARCHAR},
+      consignee_city = #{consigneeCity,jdbcType=VARCHAR},
+      consignee_region = #{consigneeRegion,jdbcType=VARCHAR},
+      consignee_address = #{consigneeAddress,jdbcType=VARCHAR},
+      consignee_zip = #{consigneeZip,jdbcType=INTEGER},
+      default_address = #{defaultAddress,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=TINYINT},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
