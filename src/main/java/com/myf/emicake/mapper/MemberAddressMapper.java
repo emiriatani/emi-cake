@@ -2,6 +2,8 @@ package com.myf.emicake.mapper;
 
 import com.myf.emicake.domain.MemberAddress;
 
+import java.util.List;
+
 public interface MemberAddressMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -15,5 +17,6 @@ public interface MemberAddressMapper {
 
     int updateByPrimaryKey(MemberAddress record);
 
+    List<MemberAddress> selectByMemberId(Integer memberId);
 
 }

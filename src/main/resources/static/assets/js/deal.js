@@ -1,8 +1,15 @@
 var allShop = null;
+var allMemberAddressInfo = null;
+var allOrdererInfo = null;
+var allconsigneeInfo = null;
+var defaultFlag = null;
+
 
 $(function () {
     initShopData();
+    initAddrData();
     orderProdData();
+    selectOtherAddr();
     submit();
 
 })
@@ -63,6 +70,101 @@ function initShopData() {
         error: function () {
 
         }
+    })
+}
+
+function initAddrData() {
+    $.ajax({
+        url: '/memberAddress/all',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (response) {
+            if (response[successKey] == true && response[codeKey] == 200) {
+                console.log(response);
+
+                /*用户所有地址信息*/
+                allMemberAddressInfo = response[dataKey];
+
+                /*该用户下所有订货人信息*/
+                allOrdererInfo = allMemberAddressInfo.ordererInfo;
+                /*该用户下所有收货人以及收货地址信息*/
+                allconsigneeInfo = allMemberAddressInfo.ordererAddressInfo;
+
+                for (let i = 0; i <allOrdererInfo.length ; i++) {
+                   if (allOrdererInfo[i].defaultAddress === 1){
+                       defaultFlag = true;
+                       break;
+                   }else {
+                       defaultFlag =  false;
+                   }
+
+                }
+
+                if (defaultFlag == true) {
+
+                    $("#noDefault_delivery_info").hide();
+                    $("#default_delivery_info").show();
+
+                    $.each(allOrdererInfo, function (index, item) {
+                        if (item.defaultAddress === 1){
+                            /*订货人姓名*/
+                            var ordererName = item.ordererName;
+                            $("#orderer_name").val(ordererName);
+                            $("#orderer_name").html(ordererName);
+                            /*订货人手机*/
+                            var ordererPhone = item.ordererPhone;
+                            $("#orderer_phone").val(ordererPhone);
+                            $("#orderer_phone").html(ordererPhone);
+                        }
+
+
+                    });
+                    $.each(allconsigneeInfo, function (index, item) {
+
+                        if (item.defaultAddress === 1){
+                            /*收货人姓名*/
+                            var consigneeName = item.consigneeName;
+                            $("#receiver_name").val(consigneeName);
+                            $("#receiver_name").html(consigneeName);
+                            /*收货人手机*/
+                            var consigneePhone = item.consigneePhone;
+                            $("#receiver_phone").val(consigneePhone);
+                            $("#receiver_phone").html(consigneePhone);
+
+                            /*收货人所在省份*/
+                            var consigneeProvinces = item.consigneeProvinces;
+                            /*收货人所在城市*/
+                            var consigneeCity = item.consigneeCity;
+                            /*收货人所在地区*/
+                            var consigneeRegion = item.consigneeRegion;
+
+                            $("select[name='region'] option").each(function () {
+                                var regionName = $(this).text();
+                                if (consigneeRegion == regionName) {
+                                    $(this).attr("selected", "selected");
+                                }
+                            })
+
+                            /*收货人所在地址*/
+                            var consigneeAddress = item.consigneeAddress;
+                            $("#order_addr").val(consigneeAddress);
+                            $("#order_addr").html(consigneeAddress);
+
+                        }
+
+                    })
+                }else{
+                    $("#noDefault_delivery_info").show();
+                    $("#default_delivery_info").hide();
+                }
+
+
+            }
+        },
+        error: function () {
+
+        }
+
     })
 }
 
@@ -197,7 +299,6 @@ function pickOrderSubmit() {
         alert(JSON.stringify(memberCart));
 
 
-
     })
 }
 
@@ -213,8 +314,6 @@ function takeOrderSubmit() {
         alert(payment);
 
 
-
-
     })
 }
 
@@ -226,6 +325,7 @@ function pickOrderVerify() {
 function takeOrderVerify() {
 
 }
+
 
 function saveAddr() {
     $("#order_saveAddr").click(function () {
@@ -253,6 +353,23 @@ function saveAddr() {
         var orderAddr = $("#order_addr").val();
         alert(orderAddr);
 
-
     })
+}
+
+
+function selectOtherAddr() {
+        $("#select_addr").click(function () {
+            layui.use(['layer'], function () {
+                var layer = layui.layer;
+                layer.open({
+                    type: 2,
+                    title: '添加新地址',
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['830px','450px'],
+                    content: 'addAccountAddress.html', //iframe的url
+                    resize: false
+                });
+            })
+        })
 }

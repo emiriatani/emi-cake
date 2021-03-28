@@ -1,6 +1,10 @@
 package com.myf.emicake.service;
 
 import com.myf.emicake.domain.MemberAddress;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+
 public interface MemberAddressService{
 
 
@@ -15,5 +19,7 @@ public interface MemberAddressService{
     int updateByPrimaryKeySelective(MemberAddress record);
 
     int updateByPrimaryKey(MemberAddress record);
+
+    Map<String,Object> selectByMemberId(Integer memberId) throws InvocationTargetException, IllegalAccessException;
 
 }

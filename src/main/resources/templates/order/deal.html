@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="common/common :: common_head(~{::title},~{::link})">
     <title>收银台-emicake艾米蛋糕</title>
     <link rel="stylesheet" th:href="@{/static/assets/css/cart.css}" href="../../static/assets/css/cart.css">
@@ -114,7 +113,23 @@
                     <!--外卖配送-->
                     <form class="layui-tab-item layui-form">
                         <h1>填写收货信息</h1>
-                        <div class="delivery_info">
+                        <div id="noDefault_delivery_info">
+                            <div id="choose_orderer_box" class="layui-form-item">
+                                <button type="submit"
+                                        class="layui-btn layui-btn-primary"
+                                        id="choose_orderer"
+                                        lay-submit=""
+                                        lay-filter="demo1">选择订货人</button>
+                            </div>
+                            <div id="choose_receiver_box" class="layui-form-item">
+                                <button type="submit"
+                                        class="layui-btn layui-btn-primary"
+                                        id="choose_receiver"
+                                        lay-submit=""
+                                        lay-filter="demo1">选择收货人</button>
+                            </div>
+                        </div>
+                        <div id="default_delivery_info">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">订货人</label>
                                 <div class="layui-input-inline">
@@ -149,22 +164,22 @@
                                 <label class="layui-form-label">所在地区</label>
                                 <div class="layui-input-inline">
                                     <select  name="province">
-                                        <option value="浙江" selected>浙江</option>
+                                        <option value="zj" selected>浙江</option>
                                     </select>
                                 </div>
                                 <div class="layui-input-inline">
                                     <select  name="city">
-                                        <option value="宁波" selected>宁波</option>
+                                        <option value="nb" selected>宁波</option>
                                     </select>
                                 </div>
                                 <div class="layui-input-inline">
                                     <select  name="region">
-                                        <option value="海曙区">海曙区</option>
-                                        <option value="江北区">江北区</option>
-                                        <option value="镇海区">镇海区</option>
-                                        <option value="北仑区">北仑区</option>
-                                        <option value="鄞州区">鄞州区</option>
-                                        <option value="奉化区">奉化区</option>
+                                        <option value="hs">海曙区</option>
+                                        <option value="jb">江北区</option>
+                                        <option value="zh">镇海区</option>
+                                        <option value="bl">北仑区</option>
+                                        <option value="yz">鄞州区</option>
+                                        <option value="fh">奉化区</option>
                                     </select>
                                 </div>
                             </div>
@@ -180,11 +195,11 @@
                                         class="layui-btn layui-btn-primary"
                                         id="order_saveAddr"
                                         lay-submit=""
-                                        lay-filter="demo1">保存地址</button>
+                                        lay-filter="demo1">添加新地址</button>
                                 <button type="button"
                                         class="layui-btn layui-btn-primary"
                                         id="select_addr"
-                                        >更多地址</button>
+                                        >选择其他地址</button>
                             </div>
                         </div>
 
