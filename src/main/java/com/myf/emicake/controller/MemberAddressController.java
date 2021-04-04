@@ -3,16 +3,21 @@ package com.myf.emicake.controller;
 import com.myf.emicake.common.Result;
 import com.myf.emicake.common.StatusCode;
 import com.myf.emicake.domain.Member;
+import com.myf.emicake.domain.MemberAddress;
+import com.myf.emicake.dto.MemberFullAddressDTO;
 import com.myf.emicake.service.MemberAddressService;
 import com.myf.emicake.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
@@ -33,9 +38,8 @@ public class MemberAddressController {
     private MemberAddressService memberAddressService;
 
     @RequestMapping("/all")
-    public Result getAllMemberAddress() throws InvocationTargetException, IllegalAccessException {
+    public Result getAll() throws InvocationTargetException, IllegalAccessException {
 
-        log.info("test");
         Subject subject = SecurityUtils.getSubject();
         Member principal = (Member) subject.getPrincipal();
 
@@ -47,6 +51,40 @@ public class MemberAddressController {
 
         return ResultUtils.error(StatusCode.UNKNOWN_ERROR.getCode(), StatusCode.UNKNOWN_ERROR.getMsg());
     }
+
+    @RequestMapping("/add")
+    public Result add(@RequestBody @Valid MemberFullAddressDTO memberFullAddressDTO){
+
+        MemberAddress memberAddress = new MemberAddress();
+        BeanUtils.copyProperties(memberFullAddressDTO, memberAddress);
+
+        int result = memberAddressService.insertSelective(memberAddress);
+
+        if (result > 0) {
+            return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+        } else {
+            return ResultUtils.error(StatusCode.UNKNOWN_ERROR.getCode(), StatusCode.UNKNOWN_ERROR.getMsg());
+        }
+    }
+
+    @RequestMapping("/update")
+    public Result update(@RequestBody @Valid MemberFullAddressDTO MemberFullAddressDTO){
+
+        System.out.println(MemberFullAddressDTO);
+        MemberAddress memberAddress = new MemberAddress();
+        BeanUtils.copyProperties(MemberFullAddressDTO, memberAddress);
+
+        int update = memberAddressService.updateByPrimaryKeySelective(memberAddress);
+
+        if (update > 0) {
+            return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+        } else {
+            return ResultUtils.error(StatusCode.UNKNOWN_ERROR.getCode(), StatusCode.UNKNOWN_ERROR.getMsg());
+
+        }
+
+    }
+
 
 
 }

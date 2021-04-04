@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberAddressDTO  implements Serializable {
+public class MemberFullAddressDTO implements Serializable {
     private static final long serialVersionUID = -7644647901542839422L;
 
     //@NotNull(message = "收货地址id不能为空")
@@ -27,6 +27,11 @@ public class MemberAddressDTO  implements Serializable {
 
     @NotNull(message = "用户id不能为空")
     private Integer memberId;
+
+    private String ordererName;
+
+    @NotNull(message = "订货人手机不能为空")
+    private Long ordererPhone;
 
     @NotBlank(message = "收货人姓名不能为空")
     private String consigneeName;
@@ -48,5 +53,6 @@ public class MemberAddressDTO  implements Serializable {
 
     private Byte defaultAddress;
 
+    private Byte state;
 
 }

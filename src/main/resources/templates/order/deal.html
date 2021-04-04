@@ -17,7 +17,7 @@
                 <h1>配送方式</h1>
                 <ul class="layui-tab-title">
                     <li class="layui-this">门店自提</li>
-                    <li>外卖配送</li>
+                    <li >外卖配送</li>
                 </ul>
                 <div class="layui-tab-content" style="height: 100px;">
                     <!--门店自提-->
@@ -190,17 +190,22 @@
                                            placeholder="" autocomplete="off" class="layui-input" id="order_addr">
                                 </div>
                             </div>
-                            <div class="layui-form-item">
-                                <button type="submit"
+                            <div class="layui-form-item" >
+                                <button type="button"
                                         class="layui-btn layui-btn-primary"
-                                        id="order_saveAddr"
+                                        id="order_saveDefaultAddr"
                                         lay-submit=""
-                                        lay-filter="demo1">添加新地址</button>
+                                        lay-filter="demo1">修改默认地址</button>
+                                <button type="button"
+                                        class="layui-btn layui-btn-primary"
+                                        id="order_addDefaultAddr"
+                                        >添加默认地址</button>
                                 <button type="button"
                                         class="layui-btn layui-btn-primary"
                                         id="select_addr"
                                         >选择其他地址</button>
                             </div>
+
                         </div>
 
                         <!--订单留言-->

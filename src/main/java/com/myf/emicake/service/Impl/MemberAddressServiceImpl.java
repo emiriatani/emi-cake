@@ -62,7 +62,6 @@ public class MemberAddressServiceImpl implements MemberAddressService{
     @Override
     public Map<String, Object> selectByMemberId(Integer memberId) throws InvocationTargetException, IllegalAccessException {
 
-
         /*根据主键查找*/
         Member member = memberMapper.selectByPrimaryKey(memberId);
 

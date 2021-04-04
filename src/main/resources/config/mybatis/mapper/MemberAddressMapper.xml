@@ -229,6 +229,6 @@
       <include refid="Base_Column_List" />
       from
       member_address
-      where member_id = #{memberId,jdbcType=INTEGER}
+      where member_id = #{memberId,jdbcType=INTEGER} and state = 1;
     </select>
 </mapper>

@@ -81,7 +81,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.Cart">
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.Cart" >
     <!--@mbg.generated-->
     update cart
     <set>
@@ -106,7 +106,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.Cart">
+  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.Cart" >
     <!--@mbg.generated-->
     update cart
     set member_id = #{memberId,jdbcType=INTEGER},

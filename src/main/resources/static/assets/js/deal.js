@@ -3,15 +3,19 @@ var allMemberAddressInfo = null;
 var allOrdererInfo = null;
 var allconsigneeInfo = null;
 var defaultFlag = null;
+var defaultAddrId = null;
+var memberId = null;
 
 
 $(function () {
     initShopData();
     initAddrData();
     orderProdData();
+    saveAddr();
+    addAddress();
     selectOtherAddr();
-    submit();
-
+    pickOrderSubmit();
+    takeOrderSubmit();
 })
 
 
@@ -19,7 +23,6 @@ layui.use(['form', 'element', 'laydate'], function () {
     var element = layui.element
         , form = layui.form
         , laydate = layui.laydate;
-
     laydate.render({
         elem: '#pick_date'
     });
@@ -81,32 +84,33 @@ function initAddrData() {
         success: function (response) {
             if (response[successKey] == true && response[codeKey] == 200) {
                 console.log(response);
-
                 /*用户所有地址信息*/
                 allMemberAddressInfo = response[dataKey];
-
                 /*该用户下所有订货人信息*/
                 allOrdererInfo = allMemberAddressInfo.ordererInfo;
                 /*该用户下所有收货人以及收货地址信息*/
                 allconsigneeInfo = allMemberAddressInfo.ordererAddressInfo;
 
-                for (let i = 0; i <allOrdererInfo.length ; i++) {
-                   if (allOrdererInfo[i].defaultAddress === 1){
-                       defaultFlag = true;
-                       break;
-                   }else {
-                       defaultFlag =  false;
-                   }
-
+                for (let i = 0; i < allOrdererInfo.length; i++) {
+                    if (allOrdererInfo[i].defaultAddress === 1) {
+                        defaultFlag = true;
+                        defaultAddrId = allOrdererInfo[i].id;
+                        break;
+                    } else {
+                        defaultFlag = false;
+                    }
                 }
 
-                if (defaultFlag == true) {
+                if (defaultFlag) {
 
                     $("#noDefault_delivery_info").hide();
+                    $("#order_addDefaultAddr").hide();
                     $("#default_delivery_info").show();
+                    $("#order_saveDefaultAddr").show();
+                    $("#select_addr").show();
 
                     $.each(allOrdererInfo, function (index, item) {
-                        if (item.defaultAddress === 1){
+                        if (item.defaultAddress === 1) {
                             /*订货人姓名*/
                             var ordererName = item.ordererName;
                             $("#orderer_name").val(ordererName);
@@ -116,12 +120,10 @@ function initAddrData() {
                             $("#orderer_phone").val(ordererPhone);
                             $("#orderer_phone").html(ordererPhone);
                         }
-
-
                     });
                     $.each(allconsigneeInfo, function (index, item) {
 
-                        if (item.defaultAddress === 1){
+                        if (item.defaultAddress === 1) {
                             /*收货人姓名*/
                             var consigneeName = item.consigneeName;
                             $("#receiver_name").val(consigneeName);
@@ -130,7 +132,6 @@ function initAddrData() {
                             var consigneePhone = item.consigneePhone;
                             $("#receiver_phone").val(consigneePhone);
                             $("#receiver_phone").html(consigneePhone);
-
                             /*收货人所在省份*/
                             var consigneeProvinces = item.consigneeProvinces;
                             /*收货人所在城市*/
@@ -144,27 +145,23 @@ function initAddrData() {
                                     $(this).attr("selected", "selected");
                                 }
                             })
-
                             /*收货人所在地址*/
                             var consigneeAddress = item.consigneeAddress;
                             $("#order_addr").val(consigneeAddress);
                             $("#order_addr").html(consigneeAddress);
-
                         }
 
                     })
-                }else{
-                    $("#noDefault_delivery_info").show();
-                    $("#default_delivery_info").hide();
+                } else {
+                    $("#noDefault_delivery_info").hide();
+                    $("#default_delivery_info > div:not(:last-child)").hide();
+                    $("#default_delivery_info > div:last-child > button:first-child").hide();
                 }
-
-
             }
         },
         error: function () {
 
         }
-
     })
 }
 
@@ -178,6 +175,8 @@ function orderProdData() {
 
                 console.log(response);
                 memberCart = response[dataKey];
+
+                memberId = memberCart.memberId;
 
                 /*订单商品数量*/
                 $("#pick_goods_num").html(memberCart.size);
@@ -196,7 +195,6 @@ function orderProdData() {
                 $("#pick_pay_total_price").val(memberCart.totalPrice);
                 $("#take_pay_total_price").html(memberCart.totalPrice);
                 $("#take_pay_total_price").val(memberCart.totalPrice);
-
 
                 /*订单商品列表*/
                 var cartItemList = memberCart.cartItemDTOList;
@@ -256,17 +254,12 @@ function orderProdData() {
             }
         },
         error: function (response) {
-
         }
 
     })
 }
 
-
 function submit() {
-    pickOrderSubmit();
-    takeOrderSubmit();
-    saveAddr();
 
 }
 
@@ -294,18 +287,14 @@ function pickOrderSubmit() {
         /*支付方式*/
         var payment = $("input[type='radio']:checked").val();
         alert(payment);
-
         /*订单商品信息*/
         alert(JSON.stringify(memberCart));
-
-
     })
 }
 
 function takeOrderSubmit() {
     $("#take_order_submit_btn").click(function () {
         alert("外卖下单");
-
         /*订单留言*/
         var takeOrderMsg = $("#take_order_msg_input").val();
         alert(takeOrderMsg);
@@ -328,48 +317,102 @@ function takeOrderVerify() {
 
 
 function saveAddr() {
-    $("#order_saveAddr").click(function () {
+    $("#order_saveDefaultAddr").click(function () {
+        //修改默认地址
+        /*需要修改的默认地址id*/
+        var addrId = defaultAddrId;
+        /*会员id*/
+        var id = memberId;
         /*订货人姓名*/
         var ordererName = $("#orderer_name").val();
-        alert(ordererName);
         /*订货人手机*/
         var ordererPhone = $("#orderer_phone").val();
-        alert(ordererPhone);
         /*收货人姓名*/
         var receiverName = $("#receiver_name").val();
-        alert(receiverName);
         /*收货人手机*/
         var receiverPhone = $("#receiver_phone").val();
-        alert(receiverPhone);
-        var provinceName = $("select[name='province'] option:selected").val();
-        alert(provinceName);
+        var provinceName = $("select[name='province'] option:selected").html();
         /*所在城市*/
-        var cityName = $("select[name='city'] option:selected").val();
-        alert(cityName);
+        var cityName = $("select[name='city'] option:selected").html();
         /*所在地区*/
-        var regionName = $("select[name='region'] option:selected").val();
-        alert(regionName);
+        var regionName = $("select[name='region'] option:selected").html();
         /*收货地址*/
         var orderAddr = $("#order_addr").val();
-        alert(orderAddr);
 
+        var memberFullAddressJsonData = {
+            id: addrId,
+            memberId: id,
+            ordererName: ordererName,
+            ordererPhone: ordererPhone,
+            consigneeName: receiverName,
+            consigneePhone: receiverPhone,
+            consigneeProvinces: provinceName,
+            consigneeCity: cityName,
+            consigneeRegion: regionName,
+            consigneeAddress: orderAddr,
+            defaultAddress: 1
+        };
+        alert(JSON.stringify(memberFullAddressJsonData));
+        $.ajax({
+            url: '/memberAddress/update',
+            type: 'POST',
+            data: JSON.stringify(memberFullAddressJsonData),
+            dataType: 'JSON',
+            contentType: 'application/json',
+            success: function (res) {
+                console.log(res);
+                if (res[successKey] == true && res[codeKey] === 200) {
+
+                    alertMsg("默认配送地址修改成功")
+                }
+            },
+            error: function (res) {
+                if (res[successKey] == false && res[codeKey] === 400) {
+                    alertMsg("默认配送地址修改失败，请重试")
+                }
+            }
+        })
+
+
+    })
+}
+
+function addAddress() {
+    $("#order_addDefaultAddr").click(function () {
+        layui.use(['layer'], function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 2,
+                title: '添加默认地址',
+                shadeClose: false,
+                shade: 0.8,
+                area: ['900px', '570px'],
+                content: 'addAccountAddress.html', //iframe的url
+                resize: false,
+                success: function (dom) {
+                    let $iframeDom = $(dom[0]).find("iframe").eq(0).contents();
+                    $iframeDom.find("#memberIdBox").val(memberId);
+                }
+            });
+        })
     })
 }
 
 
 function selectOtherAddr() {
-        $("#select_addr").click(function () {
-            layui.use(['layer'], function () {
-                var layer = layui.layer;
-                layer.open({
-                    type: 2,
-                    title: '添加新地址',
-                    shadeClose: false,
-                    shade: 0.8,
-                    area: ['830px','450px'],
-                    content: 'addAccountAddress.html', //iframe的url
-                    resize: false
-                });
-            })
+    //选择其他地址
+    $("#select_addr").click(function () {
+        layui.use(['layer'], function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 2,
+                title: '添加新地址',
+                shadeClose: false,
+                shade: 0.8,
+                area: ['830px', '450px'],
+                content: 'addAccountAddress.html', //iframe的url
+                resize: false
+            });
         })
+    })
 }

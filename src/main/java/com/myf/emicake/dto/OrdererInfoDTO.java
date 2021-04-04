@@ -20,12 +20,11 @@ import java.io.Serializable;
 public class OrdererInfoDTO implements Serializable {
     private static final long serialVersionUID = -1683522244538251599L;
 
-    @NotNull(message = "收货地址id不能为空")
+    //@NotNull(message = "收货地址id不能为空")
     private Integer id;
 
     @NotNull(message = "用户id不能为空")
     private Integer memberId;
-
 
     private String ordererName;
 
