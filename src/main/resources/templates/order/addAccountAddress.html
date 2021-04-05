@@ -2,83 +2,84 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/common :: common_head(~{::title},~{::link})">
     <title>添加默认地址-emicake艾米蛋糕</title>
-    <link rel="stylesheet" th:href="@{/static/assets/css/addAccountAddress.css}" href="../../static/assets/css/addAccountAddress.css">
+    <link rel="stylesheet" th:href="@{/static/assets/css/addAccountAddress.css}"
+          href="../../static/assets/css/addAccountAddress.css">
 </head>
 
 <body>
 <div class="main_content">
-        <form class="layui-form" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">订货人</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="name" autocomplete="off" lay-verify="required" placeholder=""
-                           class="layui-input" id="orderer_name">
-                </div>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">订货人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" autocomplete="off" lay-verify="required" placeholder=""
+                       class="layui-input" id="orderer_name">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">订货人手机</label>
-                <div class="layui-input-inline">
-                    <input type="tel" name="phone" lay-verify="required|phone"
-                           lay-reqtext="订货人手机不能为空" placeholder="" autocomplete="off"
-                           class="layui-input" id="orderer_phone">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">订货人手机</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" lay-verify="required|phone"
+                       lay-reqtext="订货人手机不能为空" placeholder="" autocomplete="off"
+                       class="layui-input" id="orderer_phone">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">收货人</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="name" autocomplete="off" lay-verify="required"
-                           placeholder="" class="layui-input" id="receiver">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收货人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" autocomplete="off" lay-verify="required"
+                       placeholder="" class="layui-input" id="receiver">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">收货人手机</label>
-                <div class="layui-input-inline">
-                    <input type="tel" name="phone" lay-verify="required|phone"
-                           lay-reqtext="收货人手机不能为空" placeholder="" autocomplete="off"
-                           class="layui-input" id="receiverPhone">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收货人手机</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" lay-verify="required|phone"
+                       lay-reqtext="收货人手机不能为空" placeholder="" autocomplete="off"
+                       class="layui-input" id="receiverPhone">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">所在地区</label>
-                <div class="layui-input-inline">
-                    <select name="province">
-                        <option value="zj" selected>浙江</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="city">
-                        <option value="nb" selected>宁波</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="region">
-                        <option value="hs">海曙区</option>
-                        <option value="jb" selected>江北区</option>
-                        <option value="zh">镇海区</option>
-                        <option value="bl">北仑区</option>
-                        <option value="zy">鄞州区</option>
-                        <option value="fh">奉化区</option>
-                    </select>
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所在地区</label>
+            <div class="layui-input-inline">
+                <select id="province" name="province">
+                    <option value="zj" selected>浙江</option>
+                </select>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">收货地址</label>
-                <div class="layui-input-block">
-                    <input type="text" name="address" lay-verify="required" lay-reqtext="收货地址不能为空"
-                           placeholder="" autocomplete="off" class="layui-input" id="addr">
-                </div>
+            <div class="layui-input-inline">
+                <select id="city" name="city">
+                    <option value="nb" selected>宁波</option>
+                </select>
             </div>
-            <div id="memberIdBox"></div>
-            <div class="layui-form-item">
-                <div class="layui-input-inline">
-                    <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1" id="saveAddrBtn">保存</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">取消</button>
-                </div>
+            <div class="layui-input-inline">
+                <select id="region" name="region">
+                    <option value="hs">海曙区</option>
+                    <option value="jb" selected>江北区</option>
+                    <option value="zh">镇海区</option>
+                    <option value="bl">北仑区</option>
+                    <option value="zy">鄞州区</option>
+                    <option value="fh">奉化区</option>
+                </select>
             </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收货地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="address" lay-verify="required" lay-reqtext="收货地址不能为空"
+                       placeholder="" autocomplete="off" class="layui-input" id="addr">
+            </div>
+        </div>
+        <div id="memberIdBox"></div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1" id="saveAddrBtn">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+            </div>
+        </div>
 
-        </form>
+    </form>
 
-    </div>
+</div>
 
 <script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"
         src="../../static/assets/js/jquery-3.4.1.min.js"></script>
@@ -118,41 +119,46 @@
             var receiverPhone = $("#receiverPhone").val();
 
             var province = $("#province > option:selected").html();
+            alert(province);
             var city = $("#city > option:selected").html();
+            alert(city);
             var region = $("#region > option:selected").html();
+            alert(region);
 
             var addr = $("#addr").val();
 
             var JsonData = {
-                memberId:memberId,
-                ordererName:orderer_name,
-                ordererPhone:orderer_phone,
-                consigneeName:receiver,
-                consigneePhone:receiverPhone,
-                consigneeProvinces:province,
-                consigneeCity:city,
-                consigneeRegion:region,
-                consigneeAddress:addr,
-                defaultAddress:1,
-                state:1
+                memberId: memberId,
+                ordererName: orderer_name,
+                ordererPhone: orderer_phone,
+                consigneeName: receiver,
+                consigneePhone: receiverPhone,
+                consigneeProvinces: province,
+                consigneeCity: city,
+                consigneeRegion: region,
+                consigneeAddress: addr,
+                defaultAddress: 1,
+                state: 1
             };
 
             alert(JSON.stringify(JsonData));
 
             $.ajax({
-                url:'/memberAddress/add',
-                type:'POST',
-                data:JSON.stringify(JsonData),
-                dataType:'JSON',
-                contentType:'application/json',
+                url: '/memberAddress/add',
+                type: 'POST',
+                data: JSON.stringify(JsonData),
+                dataType: 'JSON',
+                contentType: 'application/json',
                 success: function (res) {
                     if (res[successKey] == true && res[codeKey] === 200) {
-                            alert("新增默认地址成功");
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.addDefaultSuccessFallBack();
                     }
                 },
                 error: function (response) {
                     if (res[successKey] == false && res[codeKey] === 400) {
-                        alert("新增默认地址失败,请重试");
+                        alertMsg("新增默认地址失败,请重试");
                     }
                 }
             })

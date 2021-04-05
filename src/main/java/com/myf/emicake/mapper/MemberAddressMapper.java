@@ -19,4 +19,5 @@ public interface MemberAddressMapper {
 
     List<MemberAddress> selectByMemberId(Integer memberId);
 
+    MemberAddress selectDefaultByMemberId(Integer memberId);
 }

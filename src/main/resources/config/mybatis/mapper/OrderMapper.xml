@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myf.emicake.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.myf.emicake.domain.Order">
+    <!--@mbg.generated-->
+    <!--@Table order-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="product_amount_total" jdbcType="INTEGER" property="productAmountTotal" />
+    <result column="product_total_price" jdbcType="DECIMAL" property="productTotalPrice" />
+    <result column="order_total_price" jdbcType="DECIMAL" property="orderTotalPrice" />
+    <result column="order_status" jdbcType="TINYINT" property="orderStatus" />
+    <result column="delivery_type" jdbcType="TINYINT" property="deliveryType" />
+    <result column="payment_type" jdbcType="TINYINT" property="paymentType" />
+    <result column="payment_time" jdbcType="TIMESTAMP" property="paymentTime" />
+    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+    <result column="order_message" jdbcType="VARCHAR" property="orderMessage" />
+    <result column="order_settlement_status" jdbcType="TINYINT" property="orderSettlementStatus" />
+    <result column="order_completion_time" jdbcType="TIMESTAMP" property="orderCompletionTime" />
+    <result column="order_close_time" jdbcType="TIMESTAMP" property="orderCloseTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_id, member_id, product_amount_total, product_total_price, order_total_price, 
+    order_status, delivery_type, payment_type, payment_time, delivery_time, order_message, 
+    order_settlement_status, order_completion_time, order_close_time, create_time, update_time, 
+    delete_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Order" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into order (order_id, member_id, product_amount_total, 
+      product_total_price, order_total_price, order_status, 
+      delivery_type, payment_type, payment_time, 
+      delivery_time, order_message, order_settlement_status, 
+      order_completion_time, order_close_time, 
+      create_time, update_time, delete_time
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{productAmountTotal,jdbcType=INTEGER}, 
+      #{productTotalPrice,jdbcType=DECIMAL}, #{orderTotalPrice,jdbcType=DECIMAL}, #{orderStatus,jdbcType=TINYINT}, 
+      #{deliveryType,jdbcType=TINYINT}, #{paymentType,jdbcType=TINYINT}, #{paymentTime,jdbcType=TIMESTAMP}, 
+      #{deliveryTime,jdbcType=TIMESTAMP}, #{orderMessage,jdbcType=VARCHAR}, #{orderSettlementStatus,jdbcType=TINYINT}, 
+      #{orderCompletionTime,jdbcType=TIMESTAMP}, #{orderCloseTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Order" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="productAmountTotal != null">
+        product_amount_total,
+      </if>
+      <if test="productTotalPrice != null">
+        product_total_price,
+      </if>
+      <if test="orderTotalPrice != null">
+        order_total_price,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="deliveryType != null">
+        delivery_type,
+      </if>
+      <if test="paymentType != null">
+        payment_type,
+      </if>
+      <if test="paymentTime != null">
+        payment_time,
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time,
+      </if>
+      <if test="orderMessage != null">
+        order_message,
+      </if>
+      <if test="orderSettlementStatus != null">
+        order_settlement_status,
+      </if>
+      <if test="orderCompletionTime != null">
+        order_completion_time,
+      </if>
+      <if test="orderCloseTime != null">
+        order_close_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="productAmountTotal != null">
+        #{productAmountTotal,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalPrice != null">
+        #{productTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderTotalPrice != null">
+        #{orderTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="deliveryType != null">
+        #{deliveryType,jdbcType=TINYINT},
+      </if>
+      <if test="paymentType != null">
+        #{paymentType,jdbcType=TINYINT},
+      </if>
+      <if test="paymentTime != null">
+        #{paymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryTime != null">
+        #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderMessage != null">
+        #{orderMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSettlementStatus != null">
+        #{orderSettlementStatus,jdbcType=TINYINT},
+      </if>
+      <if test="orderCompletionTime != null">
+        #{orderCompletionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderCloseTime != null">
+        #{orderCloseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.Order">
+    <!--@mbg.generated-->
+    update order
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="productAmountTotal != null">
+        product_amount_total = #{productAmountTotal,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalPrice != null">
+        product_total_price = #{productTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderTotalPrice != null">
+        order_total_price = #{orderTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="deliveryType != null">
+        delivery_type = #{deliveryType,jdbcType=TINYINT},
+      </if>
+      <if test="paymentType != null">
+        payment_type = #{paymentType,jdbcType=TINYINT},
+      </if>
+      <if test="paymentTime != null">
+        payment_time = #{paymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderMessage != null">
+        order_message = #{orderMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSettlementStatus != null">
+        order_settlement_status = #{orderSettlementStatus,jdbcType=TINYINT},
+      </if>
+      <if test="orderCompletionTime != null">
+        order_completion_time = #{orderCompletionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderCloseTime != null">
+        order_close_time = #{orderCloseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.Order">
+    <!--@mbg.generated-->
+    update order
+    set order_id = #{orderId,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      product_amount_total = #{productAmountTotal,jdbcType=INTEGER},
+      product_total_price = #{productTotalPrice,jdbcType=DECIMAL},
+      order_total_price = #{orderTotalPrice,jdbcType=DECIMAL},
+      order_status = #{orderStatus,jdbcType=TINYINT},
+      delivery_type = #{deliveryType,jdbcType=TINYINT},
+      payment_type = #{paymentType,jdbcType=TINYINT},
+      payment_time = #{paymentTime,jdbcType=TIMESTAMP},
+      delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      order_message = #{orderMessage,jdbcType=VARCHAR},
+      order_settlement_status = #{orderSettlementStatus,jdbcType=TINYINT},
+      order_completion_time = #{orderCompletionTime,jdbcType=TIMESTAMP},
+      order_close_time = #{orderCloseTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

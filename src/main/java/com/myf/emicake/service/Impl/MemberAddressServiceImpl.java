@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.myf.emicake.domain.Member;
 import com.myf.emicake.domain.MemberAddress;
 import com.myf.emicake.dto.MemberAddressDTO;
+import com.myf.emicake.dto.MemberFullAddressDTO;
 import com.myf.emicake.dto.OrdererInfoDTO;
 import com.myf.emicake.mapper.MemberAddressMapper;
 import com.myf.emicake.mapper.MemberMapper;
@@ -26,8 +27,6 @@ public class MemberAddressServiceImpl implements MemberAddressService{
     private MemberAddressMapper memberAddressMapper;
     @Autowired
     private MemberMapper memberMapper;
-
-
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -89,6 +88,19 @@ public class MemberAddressServiceImpl implements MemberAddressService{
             return map;
         }
         return null;
+
+    }
+
+    @Override
+    public MemberFullAddressDTO selectDefaultByMemberId(Integer memberId) throws InvocationTargetException, IllegalAccessException {
+
+        /*根据主键查找*/
+        MemberAddress memberAddress = memberAddressMapper.selectDefaultByMemberId(memberId);
+
+        MemberFullAddressDTO memberFullAddressDTO = new MemberFullAddressDTO();
+        BeanUtils.copyProperties(memberFullAddressDTO, memberAddress);
+
+        return memberFullAddressDTO;
 
     }
 

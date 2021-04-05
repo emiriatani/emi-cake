@@ -5,7 +5,9 @@ import com.myf.emicake.common.StatusCode;
 import com.myf.emicake.domain.Member;
 import com.myf.emicake.domain.MemberAddress;
 import com.myf.emicake.dto.MemberFullAddressDTO;
+import com.myf.emicake.exception.GlobalException;
 import com.myf.emicake.service.MemberAddressService;
+import com.myf.emicake.service.MemberService;
 import com.myf.emicake.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -36,6 +39,8 @@ public class MemberAddressController {
 
     @Autowired
     private MemberAddressService memberAddressService;
+    @Autowired
+    private MemberService memberService;
 
     @RequestMapping("/all")
     public Result getAll() throws InvocationTargetException, IllegalAccessException {
@@ -82,6 +87,21 @@ public class MemberAddressController {
             return ResultUtils.error(StatusCode.UNKNOWN_ERROR.getCode(), StatusCode.UNKNOWN_ERROR.getMsg());
 
         }
+
+    }
+
+    @RequestMapping("/get")
+    public Result getDefault(@RequestParam("memberId") Integer memberId) throws InvocationTargetException, IllegalAccessException {
+
+        Member member = memberService.selectByPrimaryKey(memberId);
+
+        if (ObjectUtils.isEmpty(member)){
+            throw new GlobalException(StatusCode.UNKNOWN_ERROR.getCode(), StatusCode.UNKNOWN_ERROR.getMsg());
+        }
+
+        MemberFullAddressDTO memberFullAddressDTO = memberAddressService.selectDefaultByMemberId(memberId);
+
+        return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg(),memberFullAddressDTO);
 
     }
 

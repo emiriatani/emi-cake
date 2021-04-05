@@ -111,8 +111,7 @@ public class CartServiceImpl implements CartService {
                 /*查询出已经存在的商品项*/
                 Object existedCartItemObj = redisUtils.hget(Constants.CART_KEY_PREFIX + member.getId(), cartItemDTO.getProductId() + ":" + cartItemDTO.getProductSkuId());
                 /*手动类型转换，existedCartItemObj为LinkedHashMap*/
-                CartItemDTO existedCartItem = jsonUtils.myValueTypeConvert(existedCartItemObj, new TypeReference<CartItemDTO>() {
-                });
+                CartItemDTO existedCartItem = jsonUtils.myValueTypeConvert(existedCartItemObj, new TypeReference<CartItemDTO>() {});
                 /*与新添加的商品数量相加*/
                 existedCartItem.setNumber(existedCartItem.getNumber() + cartItemDTO.getNumber());
                 existedCartItem.setTotalPrice(existedCartItem.getPrice(), existedCartItem.getNumber());
@@ -164,7 +163,6 @@ public class CartServiceImpl implements CartService {
                     log.info(cartItemDTO.getPrice().toString());
                     log.info(productSku.getPrice().toString());
                     if (cartItemDTO.getPrice().compareTo(productSku.getPrice()) != 0) {
-
                         log.info("商品价格发生变化");
                         if (cartItemDTO.getPrice().compareTo(productSku.getPrice()) == 1) {
                             /*商品价格比加入购物车时下降了*/
@@ -303,8 +301,7 @@ public class CartServiceImpl implements CartService {
      * @param cartItemDTO
      * @return
      */
-    @Override
-    public Cart DTOToCart(Integer memberId, CartItemDTO cartItemDTO) {
+    private Cart DTOToCart(Integer memberId, CartItemDTO cartItemDTO) {
         Cart cart = new Cart();
         cart.setMemberId(memberId);
         cart.setItemId(cartItemDTO.getProductSkuId());

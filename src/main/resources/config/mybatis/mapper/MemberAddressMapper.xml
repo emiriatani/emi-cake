@@ -231,4 +231,11 @@
       member_address
       where member_id = #{memberId,jdbcType=INTEGER} and state = 1;
     </select>
+    <select id="selectDefaultByMemberId" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from
+      member_address
+      where member_id = #{memberId,jdbcType=INTEGER}  and  default_address = 1 and state = 1;
+    </select>
 </mapper>

@@ -76,8 +76,8 @@
                             <h1>支付方式</h1>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
-                                    <input type="radio" name="payment" value="1" title="支付宝支付" checked="">
-                                    <input type="radio" name="payment" value="2" title="微信支付">
+                                    <input type="radio" name="pick_payment" value="0" title="支付宝支付" checked>
+                                    <input type="radio" name="pick_payment" value="1" title="微信支付">
                                 </div>
                             </div>
                         </div>
@@ -130,6 +130,7 @@
                             </div>
                         </div>
                         <div id="default_delivery_info">
+                            <div id="addrId" hidden></div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">订货人</label>
                                 <div class="layui-input-inline">
@@ -163,17 +164,17 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">所在地区</label>
                                 <div class="layui-input-inline">
-                                    <select  name="province">
-                                        <option value="zj" selected>浙江</option>
+                                    <select id="province" name="province">
+                                        <option value="zj" selected >浙江</option>
                                     </select>
                                 </div>
                                 <div class="layui-input-inline">
-                                    <select  name="city">
+                                    <select id="city" name="city">
                                         <option value="nb" selected>宁波</option>
                                     </select>
                                 </div>
                                 <div class="layui-input-inline">
-                                    <select  name="region">
+                                    <select id="region" name="region">
                                         <option value="hs">海曙区</option>
                                         <option value="jb">江北区</option>
                                         <option value="zh">镇海区</option>

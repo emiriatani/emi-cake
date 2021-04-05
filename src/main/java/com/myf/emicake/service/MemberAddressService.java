@@ -1,6 +1,7 @@
 package com.myf.emicake.service;
 
 import com.myf.emicake.domain.MemberAddress;
+import com.myf.emicake.dto.MemberFullAddressDTO;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -22,4 +23,5 @@ public interface MemberAddressService{
 
     Map<String,Object> selectByMemberId(Integer memberId) throws InvocationTargetException, IllegalAccessException;
 
+    MemberFullAddressDTO selectDefaultByMemberId(Integer memberId) throws InvocationTargetException, IllegalAccessException;
 }
