@@ -2,6 +2,7 @@ package com.myf.emicake.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @ClassName com.myf.emicake.dto OrderDTO
@@ -42,11 +43,11 @@ public class OrderDTO implements Serializable {
     private String orderMessage;
 
     /*订单详情DTO*/
-    private OrderDetailDTO  orderDetail;
+    private List<OrderDetailDTO>  orderDetail;
     /*订单自提DTO*/
-
+    private OrderPickUpDTO orderPickup;
     /*订单配送DTO*/
-
+    private OrderAddressDTO orderAddress;
 
 
 

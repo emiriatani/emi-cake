@@ -295,15 +295,20 @@ function pickOrderSubmit() {
         // var pickTime = $("#pick_time").val();
         // alert(pickTime);
 
-        /*订单留言*/
-        var pickOrderMsg = $("#pick_order_msg_input").val();
-        alert(pickOrderMsg);
         /*支付方式*/
         var payment = $("input[name='pick_payment']:checked").val();
         alert(payment);
+        /*订单留言*/
+        var pickOrderMsg = $("#pick_order_msg_input").val();
+        alert(pickOrderMsg);
+
         // /*订单商品信息*/
         // alert(JSON.stringify(memberCart));
 
+        $.each(memberCart.cartItemDTOList,function (index,item) {
+            //封装OrderDetailDTO
+
+        })
 
 
     })
