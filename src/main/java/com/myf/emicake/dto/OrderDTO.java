@@ -1,5 +1,9 @@
 package com.myf.emicake.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,6 +15,9 @@ import java.util.List;
  * @Date 2021/3/27 21:49
  * @Version V1.0
  **/
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDTO implements Serializable {
     private static final long serialVersionUID = 4906752978973836634L;
 

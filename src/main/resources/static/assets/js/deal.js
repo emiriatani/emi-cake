@@ -267,12 +267,6 @@ function pickOrderSubmit() {
 
     $("#pick_order_submit_btn").click(function () {
 
-        // /*自提门店Id*/
-        // var shopId = $("input[name='store']:checked").val();
-        // alert(shopId);
-
-        /*会员id*/
-        alert(memberId);
         /*商品总数量*/
         var productAmountTotal = memberCart.size;
         /*商品总价*/
@@ -281,47 +275,93 @@ function pickOrderSubmit() {
         var orderTotalPrice = $("#pick_pay_total_price").html();
         /*配送方式 0 门店自提*/
         var deliveryType = 0;
-
-        // /*提货人姓名*/
-        // var pickPersonName = $("#pick_person_name").val();
-        // alert(pickPersonName);
-        // /*提货人手机*/
-        // var pickPersonPhone = $("#pick_person_phone").val();
-        // alert(pickPersonPhone);
-        // /*自提日期*/
-        // var pickDate = $("#pick_date").val();
-        // alert(pickDate);
-        // /*自提时间段*/
-        // var pickTime = $("#pick_time").val();
-        // alert(pickTime);
-
         /*支付方式*/
         var payment = $("input[name='pick_payment']:checked").val();
-        alert(payment);
         /*订单留言*/
         var pickOrderMsg = $("#pick_order_msg_input").val();
-        alert(pickOrderMsg);
 
-        // /*订单商品信息*/
-        // alert(JSON.stringify(memberCart));
+        var orderDetailDTOArray = [];
 
         $.each(memberCart.cartItemDTOList,function (index,item) {
-            //封装OrderDetailDTO
+                //封装OrderDetailDTO
+                var productId = item.productId;
 
+                var productName = item.title;
+
+                var productSku = item.productSkuId;
+
+                var productImage = item.thumbnail;
+
+                var productPrice = item.currentPrice;
+
+                var purchaseQuantity = item.number;
+
+                var subtotalAmount = item.totalPrice;
+
+                var orderDetailDTO = {
+                    memberId:memberId,
+                    productId:productId,
+                    productName:productName,
+                    productSku:productSku,
+                    productImage:productImage,
+                    productPrice:productPrice,
+                    purchaseQuantity:purchaseQuantity,
+                    subtotalAmount:subtotalAmount
+                };
+
+                orderDetailDTOArray[index] = orderDetailDTO;
         })
 
+        /*自提门店Id*/
+        var shopId = $("input[name='store']:checked").val();
+        /*提货人姓名*/
+        var pickPersonName = $("#pick_person_name").val();
+        /*提货人手机*/
+        var pickPersonPhone = $("#pick_person_phone").val();
+        /*自提日期*/
+        var pickDate = $("#pick_date").val();
+        /*自提时间段*/
+        var pickTime = $("#pick_time").val();
+        var pickTimeStrArray = pickTime.split("-");
 
+        var orderPickupDTO = {
+            memberId:memberId,
+            storeId:shopId,
+            pickupName:pickPersonName,
+            pickupPhone:pickPersonPhone,
+            pickupDate:pickDate,
+            pickupTimeStart:pickTimeStrArray[0],
+            pickupTimeEnd:pickTimeStrArray[1],
+            pickupTime:pickDate + " " + pickTimeStrArray[0] + "-" + pickTimeStrArray[1]
+        }
+
+        var orderDTO = {
+            memberId:memberId,
+            productAmountTotal:productAmountTotal,
+            productTotalPrice:productTotalPrice,
+            orderTotalPrice:orderTotalPrice,
+            deliveryType:deliveryType,
+            paymentType:payment,
+            orderMessage:pickOrderMsg,
+            orderDetail:orderDetailDTOArray,
+            orderPickup:orderPickupDTO
+        }
+
+        alert(JSON.stringify(orderDTO));
+        reqToGenerateOrder(orderDTO);
     })
 
-    function reqToGenerateOrder(orderData,orderDetailData) {
+    function reqToGenerateOrder(orderData) {
         $.ajax({
-            url:'',
+            url:'/order/add',
             type:'POST',
             data:JSON.stringify(orderData),
             dataType:'JSON',
             contentType: 'application/json',
             success: function (res) {
-
+                if (res[successKey] == true && res[codeKey] === 200) {
+                    console.log(res);
+                }
             },
             error: function (res) {
 

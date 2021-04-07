@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class ProductSkuServiceImpl implements ProductSkuService{
 
-
     @Resource
     private ProductSkuMapper productSkuMapper;
 
@@ -67,5 +66,10 @@ public class ProductSkuServiceImpl implements ProductSkuService{
 
         return prodSkuDTOList;
     }
+
+
+
+
+
 
 }

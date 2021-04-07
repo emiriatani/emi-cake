@@ -9,5 +9,7 @@ package com.myf.emicake.service;
  **/
 public interface AlipayService {
 
+    /*支付宝支付*/
+    String alipay(String orderId,String orderName,double price,String orderDesc);
 
 }

@@ -1,11 +1,14 @@
 package com.myf.emicake.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * @ClassName com.myf.emicake.dto OrderPickUpDTO
@@ -22,7 +25,6 @@ public class OrderPickUpDTO implements Serializable {
 
 
     private Integer id;
-
     /*订单id*/
     private Integer orderId;
     /*会员id*/
@@ -33,10 +35,23 @@ public class OrderPickUpDTO implements Serializable {
     private String pickupName;
     /*自提人手机*/
     private Long pickupPhone;
+    /*自提日期*/
+    /*格式化处理前端传来的数据*/
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
+    /*格式化后台传给前端的数据*/
+    private LocalDate pickupDate;
     /*自提时间 开始*/
-    private LocalDateTime pickupTimeStart;
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="HH:mm:ss")
+    private LocalTime pickupTimeStart;
     /*自提时间 结束*/
-    private LocalDateTime pickupTimeEnd;
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="HH:mm:ss")
+    private LocalTime pickupTimeEnd;
+
+    /*自提时间完整显示*/
+    private String pickupTime;
 
 
 

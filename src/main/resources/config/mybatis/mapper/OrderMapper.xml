@@ -5,7 +5,7 @@
     <!--@mbg.generated-->
     <!--@Table order-->
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="member_id" jdbcType="INTEGER" property="memberId" />
     <result column="product_amount_total" jdbcType="INTEGER" property="productAmountTotal" />
     <result column="product_total_price" jdbcType="DECIMAL" property="productTotalPrice" />
@@ -51,7 +51,7 @@
       order_completion_time, order_close_time, 
       create_time, update_time, delete_time
       )
-    values (#{orderId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{productAmountTotal,jdbcType=INTEGER}, 
+    values (#{orderId,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, #{productAmountTotal,jdbcType=INTEGER},
       #{productTotalPrice,jdbcType=DECIMAL}, #{orderTotalPrice,jdbcType=DECIMAL}, #{orderStatus,jdbcType=TINYINT}, 
       #{deliveryType,jdbcType=TINYINT}, #{paymentType,jdbcType=TINYINT}, #{paymentTime,jdbcType=TIMESTAMP}, 
       #{deliveryTime,jdbcType=TIMESTAMP}, #{orderMessage,jdbcType=VARCHAR}, #{orderSettlementStatus,jdbcType=TINYINT}, 
@@ -61,7 +61,7 @@
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Order" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into order
+    insert into emi_cake.order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
         order_id,
@@ -117,7 +117,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
-        #{orderId,jdbcType=INTEGER},
+        #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="memberId != null">
         #{memberId,jdbcType=INTEGER},
@@ -174,7 +174,7 @@
     update order
     <set>
       <if test="orderId != null">
-        order_id = #{orderId,jdbcType=INTEGER},
+        order_id = #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
@@ -230,7 +230,7 @@
   <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.Order">
     <!--@mbg.generated-->
     update order
-    set order_id = #{orderId,jdbcType=INTEGER},
+    set order_id = #{orderId,jdbcType=VARCHAR},
       member_id = #{memberId,jdbcType=INTEGER},
       product_amount_total = #{productAmountTotal,jdbcType=INTEGER},
       product_total_price = #{productTotalPrice,jdbcType=DECIMAL},
@@ -249,4 +249,10 @@
       delete_time = #{deleteTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByOrderId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from emi_cake.order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -1,23 +1,25 @@
 package com.myf.emicake.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order implements Serializable {
+
     private Integer id;
 
     /**
     * 订单编号
     */
-    private Integer orderId;
+    private String orderId;
 
     /**
     * 用户id

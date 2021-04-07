@@ -46,7 +46,6 @@ public class RabbitMqConfig {
         return ExchangeBuilder.topicExchange(rabbitMqMsgProperties.getDeadExchangeName()).build();
     }
 
-
     /*定义操作数据库普通队列*/
     @Bean
     public Queue daoQueue(){

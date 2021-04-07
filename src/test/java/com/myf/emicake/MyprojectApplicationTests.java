@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,5 +65,13 @@ class MyprojectApplicationTests {
         BeanUtils.copyProperties(productDTO, product);
 
         System.out.println(productDTO);
+    }
+
+    @Test
+    public void test02(){
+
+        String format = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+
+        System.out.println(format);
     }
 }

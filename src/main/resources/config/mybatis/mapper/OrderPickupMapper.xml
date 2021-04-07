@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myf.emicake.mapper.OrderPickupMapper">
+  <resultMap id="BaseResultMap" type="com.myf.emicake.domain.OrderPickup">
+    <!--@mbg.generated-->
+    <!--@Table order_pickup-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="pickup_name" jdbcType="VARCHAR" property="pickupName" />
+    <result column="pickup_phone" jdbcType="BIGINT" property="pickupPhone" />
+    <result column="pickup_date" jdbcType="DATE" property="pickupDate" />
+    <result column="pickup_time_start" jdbcType="TIME" property="pickupTimeStart" />
+    <result column="pickup_time_end" jdbcType="TIME" property="pickupTimeEnd" />
+    <result column="pickup_time" jdbcType="VARCHAR" property="pickupTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_id, member_id, store_id, pickup_name, pickup_phone, pickup_date, pickup_time_start, 
+    pickup_time_end, pickup_time, create_time, update_time, delete_time, `state`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from order_pickup
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from order_pickup
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.myf.emicake.domain.OrderPickup">
+    <!--@mbg.generated-->
+    insert into order_pickup (id, order_id, member_id, 
+      store_id, pickup_name, pickup_phone, 
+      pickup_date, pickup_time_start, pickup_time_end, 
+      pickup_time, create_time, update_time, 
+      delete_time, `state`)
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
+      #{storeId,jdbcType=INTEGER}, #{pickupName,jdbcType=VARCHAR}, #{pickupPhone,jdbcType=BIGINT}, 
+      #{pickupDate,jdbcType=DATE}, #{pickupTimeStart,jdbcType=TIME}, #{pickupTimeEnd,jdbcType=TIME}, 
+      #{pickupTime,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteTime,jdbcType=TIMESTAMP}, #{state,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.myf.emicake.domain.OrderPickup">
+    <!--@mbg.generated-->
+    insert into order_pickup
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="pickupName != null">
+        pickup_name,
+      </if>
+      <if test="pickupPhone != null">
+        pickup_phone,
+      </if>
+      <if test="pickupDate != null">
+        pickup_date,
+      </if>
+      <if test="pickupTimeStart != null">
+        pickup_time_start,
+      </if>
+      <if test="pickupTimeEnd != null">
+        pickup_time_end,
+      </if>
+      <if test="pickupTime != null">
+        pickup_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupName != null">
+        #{pickupName,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupPhone != null">
+        #{pickupPhone,jdbcType=BIGINT},
+      </if>
+      <if test="pickupDate != null">
+        #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="pickupTimeStart != null">
+        #{pickupTimeStart,jdbcType=TIME},
+      </if>
+      <if test="pickupTimeEnd != null">
+        #{pickupTimeEnd,jdbcType=TIME},
+      </if>
+      <if test="pickupTime != null">
+        #{pickupTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.OrderPickup">
+    <!--@mbg.generated-->
+    update order_pickup
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupName != null">
+        pickup_name = #{pickupName,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupPhone != null">
+        pickup_phone = #{pickupPhone,jdbcType=BIGINT},
+      </if>
+      <if test="pickupDate != null">
+        pickup_date = #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="pickupTimeStart != null">
+        pickup_time_start = #{pickupTimeStart,jdbcType=TIME},
+      </if>
+      <if test="pickupTimeEnd != null">
+        pickup_time_end = #{pickupTimeEnd,jdbcType=TIME},
+      </if>
+      <if test="pickupTime != null">
+        pickup_time = #{pickupTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.OrderPickup">
+    <!--@mbg.generated-->
+    update order_pickup
+    set order_id = #{orderId,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      store_id = #{storeId,jdbcType=INTEGER},
+      pickup_name = #{pickupName,jdbcType=VARCHAR},
+      pickup_phone = #{pickupPhone,jdbcType=BIGINT},
+      pickup_date = #{pickupDate,jdbcType=DATE},
+      pickup_time_start = #{pickupTimeStart,jdbcType=TIME},
+      pickup_time_end = #{pickupTimeEnd,jdbcType=TIME},
+      pickup_time = #{pickupTime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

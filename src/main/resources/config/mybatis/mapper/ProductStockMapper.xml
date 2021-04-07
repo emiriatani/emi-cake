@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myf.emicake.mapper.ProductStockMapper">
+  <resultMap id="BaseResultMap" type="com.myf.emicake.domain.ProductStock">
+    <!--@mbg.generated-->
+    <!--@Table product_stock-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_spec_id" jdbcType="INTEGER" property="productSpecId" />
+    <result column="available_stock" jdbcType="INTEGER" property="availableStock" />
+    <result column="total_stock" jdbcType="INTEGER" property="totalStock" />
+    <result column="warning_stock" jdbcType="INTEGER" property="warningStock" />
+    <result column="stock_state" jdbcType="TINYINT" property="stockState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, product_id, product_spec_id, available_stock, total_stock, warning_stock, stock_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from product_stock
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from product_stock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.ProductStock" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into product_stock (product_id, product_spec_id, available_stock, 
+      total_stock, warning_stock, stock_state
+      )
+    values (#{productId,jdbcType=INTEGER}, #{productSpecId,jdbcType=INTEGER}, #{availableStock,jdbcType=INTEGER}, 
+      #{totalStock,jdbcType=INTEGER}, #{warningStock,jdbcType=INTEGER}, #{stockState,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.ProductStock" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into product_stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productSpecId != null">
+        product_spec_id,
+      </if>
+      <if test="availableStock != null">
+        available_stock,
+      </if>
+      <if test="totalStock != null">
+        total_stock,
+      </if>
+      <if test="warningStock != null">
+        warning_stock,
+      </if>
+      <if test="stockState != null">
+        stock_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productSpecId != null">
+        #{productSpecId,jdbcType=INTEGER},
+      </if>
+      <if test="availableStock != null">
+        #{availableStock,jdbcType=INTEGER},
+      </if>
+      <if test="totalStock != null">
+        #{totalStock,jdbcType=INTEGER},
+      </if>
+      <if test="warningStock != null">
+        #{warningStock,jdbcType=INTEGER},
+      </if>
+      <if test="stockState != null">
+        #{stockState,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.ProductStock">
+    <!--@mbg.generated-->
+    update product_stock
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productSpecId != null">
+        product_spec_id = #{productSpecId,jdbcType=INTEGER},
+      </if>
+      <if test="availableStock != null">
+        available_stock = #{availableStock,jdbcType=INTEGER},
+      </if>
+      <if test="totalStock != null">
+        total_stock = #{totalStock,jdbcType=INTEGER},
+      </if>
+      <if test="warningStock != null">
+        warning_stock = #{warningStock,jdbcType=INTEGER},
+      </if>
+      <if test="stockState != null">
+        stock_state = #{stockState,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.ProductStock">
+    <!--@mbg.generated-->
+    update product_stock
+    set product_id = #{productId,jdbcType=INTEGER},
+      product_spec_id = #{productSpecId,jdbcType=INTEGER},
+      available_stock = #{availableStock,jdbcType=INTEGER},
+      total_stock = #{totalStock,jdbcType=INTEGER},
+      warning_stock = #{warningStock,jdbcType=INTEGER},
+      stock_state = #{stockState,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByProductSkuId" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from product_stock
+      where product_spec_id = #{productSkuId,jdbcType=INTEGER}
+    </select>
+
+</mapper>
