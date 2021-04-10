@@ -54,7 +54,13 @@ public enum StatusCode implements Serializable {
     NOT_EXIST_IN_CART(Constants.FAIL,"请先添加商品再操作"),
     UPDATE_NUMBER_ERROR(Constants.FAIL, "修改商品数量失败，请重试"),
     DELETE_ERROR(Constants.FAIL,"删除商品失败，请重试"),
-    DELETE_ALL_ERROR(Constants.FAIL,"清空购物车失败，请重试");
+    DELETE_ALL_ERROR(Constants.FAIL,"清空购物车失败，请重试"),
+
+    /*订单*/
+    ORDER_ALREADY_PAY(Constants.FAIL,"该订单已经支付过，请勿重复支付,若已扣款，请联系客户申请退款"),
+    NO_STOCK(Constants.FAIL,"订单中存在无库存或已失效的商品"),
+    ORDER_CREATE_ERROR(Constants.FAIL,"订单创建失败，请重试");
+
 
     private Integer code;
     private String msg;

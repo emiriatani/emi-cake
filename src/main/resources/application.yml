@@ -113,6 +113,9 @@ spring:
           max-attempts: 5
         concurrency: 1
         max-concurrency: 1
+      direct:
+        # Consumer ACK机制：设置为手动签收
+        acknowledge-mode: manual
 #rabbitmq自定义配置
 rabbit:
   msg:
@@ -135,9 +138,19 @@ rabbit:
         dead:
           name: msg.order.dead.deal
     route:
-      dao: msg.dao.update
-      sms: msg.sms.send
-      order: msg.order.deal
+      dao:
+        name: msg.dao.update
+        dead:
+          name: msg.dao.dead.update
+      sms:
+        name: msg.sms.send
+        dead:
+          name: msg.sms.dead.send
+      order:
+        name: msg.order.deal
+        dead:
+          name: msg.order.dead.deal
+
 #aliyun服务自定义配置
 aliyun:
   sms:
@@ -148,8 +161,8 @@ aliyun:
     regionId: cn-hangzhou
     sysVersion: 2017-05-25
     sysAction: SendSms
-    accessKeyId:
-    accessKeySecret:
+    accessKeyId: LTAI4GD4zszMZV2dBT87cUJm
+    accessKeySecret: QKs6wjrsJkbpTYOpekzyrudaBC3bYm
     signName: 打工人的技术沉淀屋
 # mybatis配置
 mybatis:

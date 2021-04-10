@@ -16,5 +16,7 @@ public interface SmsService {
 
     boolean send(String phoneNum, String templateCode, Map<String, Object> code) throws ClientException, JsonProcessingException;
 
+    boolean deleteSmsCode(String memberId);
+
     Map<String, Object> generateRandomSmsCode(int number);
 }

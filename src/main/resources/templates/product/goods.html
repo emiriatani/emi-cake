@@ -138,8 +138,8 @@
                 success: function (response) {
                     if (response[successKey]==true){
                         alertMsg("加入购物车成功");
-                    }else {
-                        alertMsg("加入购物车失败，请重试");
+                    }else{
+                        alertMsg(response[msgKey]);
                     }
                 },
                 error: function (response) {
@@ -150,7 +150,48 @@
 
 
         $("#nowToPurchase").click(function () {
-            
+
+            var productId = $("#productId").val();
+            var productSkuId = $("#itemId").val();
+            var productTitle = $("#title").val();
+            var productSpec = $("#productSkuSpec").val();
+            var productPrice = $("#price").val();
+            var thumbnail = $("#itemThumbnail").val();
+            var productNumber = val[0].innerHTML;
+            var memberId = $("#loginFlagDiv").attr("value");
+
+            if (memberId === undefined){
+                memberId = -1;
+            }
+
+            var reqData = {
+                productId:productId,
+                productSkuId: productSkuId,
+                title: productTitle,
+                spec: productSpec,
+                price: productPrice,
+                thumbnail: thumbnail,
+                number: productNumber
+            };
+            //alert(JSON.stringify(reqData));
+            $.ajax({
+                url:'/cart/add',
+                type: 'post',
+                data:JSON.stringify(reqData),
+                contentType: 'application/json',
+                dataType:'json',
+                success: function (response) {
+                    if (response[successKey]==true){
+                        window.location.href = '/shop/cart.html';
+                    }else{
+                        alertMsg(response[msgKey]);
+                    }
+                },
+                error: function (response) {
+                    alert(response);
+                }
+            })
+
 
         })
 

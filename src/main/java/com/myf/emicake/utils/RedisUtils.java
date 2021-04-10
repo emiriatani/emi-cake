@@ -103,7 +103,6 @@ public class RedisUtils {
     @SuppressWarnings("unchecked")
     public long remove(String... keys) {
         long count = 0L;
-
         if (keys != null && keys.length > 0) {
             if (keys.length == 1) {
                 boolean result = this.redisTemplate.delete(keys[0]);

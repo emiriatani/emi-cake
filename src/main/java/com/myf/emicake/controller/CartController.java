@@ -51,6 +51,7 @@ public class CartController {
         return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg(), cart);
 
     }
+
     @GetMapping("/toCartPage")
     public Result toCartPage(HttpSession httpSession){
 
@@ -81,8 +82,10 @@ public class CartController {
     public Result deleteCartItem(@RequestBody CartItemDTO cartItemDTO){
         boolean deleteResult = cartService.deleteCartItem(cartItemDTO);
         if (deleteResult){
+            log.info("删除购物车商品项成功");
             return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
         }else {
+            log.info("删除购物车商品项失败");
             return ResultUtils.error(StatusCode.DELETE_ERROR.getCode(), StatusCode.DELETE_ERROR.getMsg());
         }
     }

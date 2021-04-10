@@ -168,8 +168,8 @@ public class CartServiceImpl implements CartService {
                             /*商品价格比加入购物车时下降了*/
                             cartItemDTO.setPriceChangeFlag(1);
                             log.info("商品加入购物车时的价格:" + cartItemDTO.getPrice());
-                            log.info("商品现在的价格:" + productSku.getPrice());
-                            BigDecimal subtract = cartItemDTO.getPrice().subtract(productSku.getPrice());
+                            log.info("商品现在的价格:" + cartItemDTO.getCurrentPrice());
+                            BigDecimal subtract = cartItemDTO.getPrice().subtract(cartItemDTO.getCurrentPrice());
                             log.info("商品下降了:" + subtract.toString());
                             cartItemDTO.setPriceChangeNumber(subtract);
                             cartItemDTO.setTotalPrice(cartItemDTO.getCurrentPrice(), cartItemDTO.getNumber());
@@ -178,8 +178,8 @@ public class CartServiceImpl implements CartService {
                             cartItemDTO.setPriceChangeFlag(2);
                             /*差价*/
                             log.info("商品加入购物车时的价格:" + cartItemDTO.getPrice());
-                            log.info("商品现在的价格:" + productSku.getPrice());
-                            BigDecimal subtract = productSku.getPrice().subtract(cartItemDTO.getPrice());
+                            log.info("商品现在的价格:" + cartItemDTO.getCurrentPrice());
+                            BigDecimal subtract = cartItemDTO.getCurrentPrice().subtract(cartItemDTO.getPrice());
                             log.info("商品上涨了" + subtract.toString());
                             cartItemDTO.setPriceChangeNumber(subtract);
                             cartItemDTO.setTotalPrice(cartItemDTO.getCurrentPrice(), cartItemDTO.getNumber());

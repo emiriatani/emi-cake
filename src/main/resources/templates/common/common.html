@@ -26,7 +26,7 @@
                 <li><a th:href="@{/product/category.html}">全部商品</a></li>
                 <li><a href="#3">甄选蛋糕</a></li>
                 <li><a href="#4">精选食材</a></li>
-                <li><a href="#5">会员中心</a></li>
+                <li><a th:href="@{/member/toCentre}" href="/member/toCentre">会员中心</a></li>
             </ul>
             <div th:if="${session.loginMember != null}" class="search_box">
                 <form action="#">
@@ -47,6 +47,34 @@
                 <a th:href="@{/member/register.html}" target="_self">注册</a>
             </div>
         </div>
+    </div>
+
+    <!--membercentre common side bar-->
+    <!--左侧导航栏-->
+    <div class="side_bar clearfix" th:fragment="side_bar">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;">
+            <li class="layui-nav-item">
+                <a th:href="@{/member/memberCentre.html}">我的emicake</a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/member/accountOrder.html}">我的订单</a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/member/accountEdit.html}">修改会员信息</a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/member/accountAddress.html}">我的地址</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">修改密码</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">会员权益</a>
+            </li>
+            <li class="layui-nav-item">
+                <a id="logout" href="javascript:;">注销账号</a>
+            </li>
+        </ul>
     </div>
 </body>
 </html>

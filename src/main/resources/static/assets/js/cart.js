@@ -114,7 +114,6 @@ function initCart() {
                         '                </div>';
 
                     $("#cart_item_area").append(cartItemStr);
-
                 })
 
             }
@@ -191,13 +190,16 @@ function deleteItem(e) {
         success: function (response) {
             if (response[successKey] == true && response[codeKey] == 200) {
                 console.log(response);
-                $(".remove_item")[e.target.dataset.index].parentElement.parentElement.remove();
+                var array = $(".remove_item");
+                //alert($(".remove_item")[e.target.dataset.index].parentElement)
+                //alert($(".remove_item")[e.target.dataset.index].parentElement.parentElement);
+                e.target.parentElement.parentElement.remove();
                 count();
                 sum();
             }
         },
         error: function () {
-            if (response[successKey] == true && response[codeKey] == 200) {
+            if (response[successKey] == false && response[codeKey] == 400) {
                 alertMsg("删除商品失败，请重试！");
 
             }

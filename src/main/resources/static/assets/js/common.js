@@ -27,8 +27,23 @@ var dataKey = "data";
                 console.log(response);
             }
         })
-    })
+    });
 // }
+
+/*退出账号*/
+$("#logout").click(function () {
+    $.ajax({
+        url:'/member/logout',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (res) {
+            if (res[successKey] == true && res[codeKey] == 200){
+                window.location.href = "/";
+            }
+        },
+    })
+
+});
 
 /*msg弹窗*/
 function alertMsg(str) {
@@ -42,10 +57,8 @@ function alertMsg(str) {
     })
 }
 
-
 /*获取url中的参数*/
-function getQueryVariable(variable)
-{
+function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
     for (var i=0;i<vars.length;i++) {

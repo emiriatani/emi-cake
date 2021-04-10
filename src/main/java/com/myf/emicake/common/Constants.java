@@ -25,13 +25,16 @@ public class Constants {
     public static final String LOGIN_MEMBER_KEY = "loginMember";
     public static final String BANNER_LIST_KEY = "bannerList";
     public static final String CART_KEY_PREFIX = "cart:";
-
+    public static final String ORDER_NAME = "emicake order";
     /*日期格式化样式*/
     public static final String FORMAT_DATE_DEFAULT = "yyyy-MM-dd HH:mm:ss";
 
     /*整型常量*/
     public static final int HASH_ITERATIONS = 1024;
     public static final int NO_LOGIN_MEMBER_FLAG = -1;
+
+
+
 
 
     /*----------------请求响应状态码---------------*/

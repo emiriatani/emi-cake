@@ -79,17 +79,23 @@ public class OrderServiceImpl implements OrderService{
         Map<Integer, Integer> map = new HashMap<>();
         for (OrderDetailDTO item :
                 orderDTO.getOrderDetail()) {
+            System.out.println("订单详情购物项:" + item);
+
+            log.info("订单购物项sku id:" + item.getProductSku().toString());
             /*该商品库存信息*/
             ProductStock productStock = productStockService.selectByProductSkuId(item.getProductSku());
+            System.out.println("该商品库存信息:" + productStock);
             /*该商品信息*/
             ProductSku productSku = productSkuService.selectByPrimaryKey(item.getProductSku());
+            System.out.println("该商品信息:" + productSku);
+
             Integer productSkuId = productSku.getId();
 
-            if (productStock.getStockState() ==  1){
+            if (productStock.getStockState() ==  (byte)1){
                 /*该商品无库存*/
                  map.put(2, productSkuId);
             }
-            if (item.getPurchaseQuantity() > productStock.getAvailableStock()){
+            if (item.getPurchaseQuantity().intValue() > productStock.getAvailableStock().intValue()){
                 /*该商品购买数量大于库存数量*/
                 map.put(1, productSkuId);
             }else {
@@ -103,7 +109,6 @@ public class OrderServiceImpl implements OrderService{
                 }
             }
         }
-        map.put(0,0);
         return map;
     }
 

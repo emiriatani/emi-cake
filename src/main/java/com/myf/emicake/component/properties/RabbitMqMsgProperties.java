@@ -43,12 +43,21 @@ public class RabbitMqMsgProperties {
     @Value("${rabbit.msg.queue.order.dead.name}")
     private String orderDeadQueueName;
 
-    @Value("${rabbit.msg.route.dao}")
+    @Value("${rabbit.msg.route.dao.name}")
     private String daoRoutekey;
 
-    @Value("${rabbit.msg.route.sms}")
+    @Value("${rabbit.msg.route.sms.name}")
     private String smsRoutekey;
 
-    @Value("${rabbit.msg.route.order}")
+    @Value("${rabbit.msg.route.order.name}")
     private String orderRoutekey;
+
+    @Value("${rabbit.msg.route.dao.dead.name}")
+    private String daoDeadRoutekey;
+
+    @Value("${rabbit.msg.route.sms.dead.name}")
+    private String smsDeadRoutekey;
+
+    @Value("${rabbit.msg.route.order.dead.name}")
+    private String orderDeadRoutekey;
 }

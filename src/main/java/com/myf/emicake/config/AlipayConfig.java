@@ -25,17 +25,14 @@ public class AlipayConfig {
     public static final String GATEWAY_URL = "https://openapi.alipaydev.com/gateway.do";
 
     /*支付宝异步通知路径，付款完毕后会异步调用本项目的方法，必须为公网地址，格式为(http://)开头*/
-    public static final String NOTIFY_URL = "http://uweu5n.natappfree.cc/pay/paydone";
+    public static final String NOTIFY_URL = "http://qn7cwq.natappfree.cc/pay/done/";
 
     /*支付宝同步通知路径，也就是当付款完毕后跳转本项目的页面，可以不是公网地址，格式为(http://)开头*/
-    public static  final String RETURN_URL = "http://localhost:8080/success.html";
-
+    public static  final String RETURN_URL = "http://qn7cwq.natappfree.cc/order/success.html";
     /*签名方式*/
     public static final  String SIGN_TYPE = "RSA2";
-
     /*编码类型*/
     public static final String CHARSET = "UTF-8";
-
     /*数据类型*/
     public static final String FORMAT = "json";
 

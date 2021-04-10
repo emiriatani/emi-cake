@@ -1,75 +1,15 @@
 <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/memberCentre.css">
-
-    <title>我的emicake-emicake艾米蛋糕</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common :: common_head(~{::title},~{::link})">
+    <title>会员中心-emicake艾米蛋糕</title>
+    <link rel="stylesheet" th:href="@{/static/assets/css/memberCentre.css}" href="../../static/assets/css/memberCentre.css">
 </head>
 <body>
 <div class="main_content">
     <!--main header-->
-    <div class="main_header">
-        <div class="main_header_content clearfix">
-            <h1>
-                <a href="../common/index.html" title="艾米甜品">Emi Cake</a>
-            </h1>
-            <ul class="header_nav_bar">
-                <li><a href="../common/index.html">首页</a></li>
-                <li><a href="#2">全部商品</a></li>
-                <li><a href="#3">甄选蛋糕</a></li>
-                <li><a href="#4">精选食材</a></li>
-                <li><a c href="#5">会员中心</a></li>
-            </ul>
-            <div class="search_box">
-                <form action="#">
-                    <input type="text" placeholder="请输入手机号或订单号查询订单" name="orderSearch">
-                    <button type="submit"></button>
-                </form>
-            </div>
-            <div class="cart_box">
-                <a href="../cart/cart.html">购物车</a>
-            </div>
-            <div class="login_box">
-                <img src="" alt="">
-                <a href="login.html">登录</a>
-                <span>|</span>
-                <a href="register.html">注册</a>
-            </div>
-        </div>
-    </div>
-
-    <!--main content-->
+    <div th:replace="common/common :: menu_bar"></div>
     <!--左侧导航栏-->
-    <div class="side_bar clearfix">
-        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;">
-            <li class="layui-nav-item">
-                <a href="memberCentre.html">我的emicake</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="accountOrder.html">我的订单</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="accountEdit.html">修改会员信息</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">我的地址</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">修改密码</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">会员权益</a>
-            </li>
-        </ul>
-    </div>
+    <div th:replace="common/common :: side_bar"></div>
 
     <div class="member_info_box">
         <div class="member_title">
@@ -113,7 +53,12 @@
     </div>
 </div>
 
-<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"
+        src="../../static/assets/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
+        src="../../static/assets/layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/common.js}"
+        src="../../static/assets/js/common.js"></script>
 <script>
 
     layui.use('element', function () {

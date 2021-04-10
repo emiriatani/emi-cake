@@ -31,6 +31,17 @@ layui.use(['form', 'element', 'laydate'], function () {
         , type: 'time'
         , range: true
     });
+    /*
+    监听自提订单
+    表单提交
+    */
+    form.on('submit(OrderSubmit)', function (data) {
+        console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
+        console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
+        console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+
 })
 
 
@@ -260,11 +271,9 @@ function orderProdData() {
 }
 
 function submit() {
-
 }
 
 function pickOrderSubmit() {
-
     $("#pick_order_submit_btn").click(function () {
 
         /*商品总数量*/
@@ -333,7 +342,7 @@ function pickOrderSubmit() {
             pickupTimeStart:pickTimeStrArray[0],
             pickupTimeEnd:pickTimeStrArray[1],
             pickupTime:pickDate + " " + pickTimeStrArray[0] + "-" + pickTimeStrArray[1]
-        }
+        };
 
         var orderDTO = {
             memberId:memberId,
@@ -346,52 +355,109 @@ function pickOrderSubmit() {
             orderDetail:orderDetailDTOArray,
             orderPickup:orderPickupDTO
         }
-
         alert(JSON.stringify(orderDTO));
         reqToGenerateOrder(orderDTO);
     })
 
-    function reqToGenerateOrder(orderData) {
-        $.ajax({
-            url:'/order/add',
-            type:'POST',
-            data:JSON.stringify(orderData),
-            dataType:'JSON',
-            contentType: 'application/json',
-            success: function (res) {
-                if (res[successKey] == true && res[codeKey] === 200) {
-                    console.log(res);
-                }
-            },
-            error: function (res) {
-
-            }
-        })
-    }
-
 }
 
-function takeOrderSubmit() {
-    $("#take_order_submit_btn").click(function () {
-        alert("外卖下单");
-        /*订单留言*/
-        var takeOrderMsg = $("#take_order_msg_input").val();
-        alert(takeOrderMsg);
-        /*支付方式*/
-        var payment = $("input[type='radio']:checked").val();
-        alert(payment);
+// function takeOrderSubmit() {
+//     $("#take_order_submit_btn").click(function () {
+//
+//         /*配送地址及订货收货人信息id*/
+//         var addressId = defaultAddrId;
+//         var orderAddressDTO = {
+//             addressId:defaultAddrId
+//         }
+//
+//         /*订单商品详情*/
+//         var orderDetailDTOArray = [];
+//         $.each(memberCart.cartItemDTOList,function (index,item) {
+//             //封装OrderDetailDTO
+//             var productId = item.productId;
+//
+//             var productName = item.title;
+//
+//             var productSku = item.productSkuId;
+//
+//             var productImage = item.thumbnail;
+//
+//             var productPrice = item.currentPrice;
+//
+//             var purchaseQuantity = item.number;
+//
+//             var subtotalAmount = item.totalPrice;
+//
+//             var orderDetailDTO = {
+//                 memberId:memberId,
+//                 productId:productId,
+//                 productName:productName,
+//                 productSku:productSku,
+//                 productImage:productImage,
+//                 productPrice:productPrice,
+//                 purchaseQuantity:purchaseQuantity,
+//                 subtotalAmount:subtotalAmount
+//             };
+//
+//             orderDetailDTOArray[index] = orderDetailDTO;
+//         })
+//
+//         /*商品总数量*/
+//         var productAmountTotal = memberCart.size;
+//         /*商品总价*/
+//         var productTotalPrice = memberCart.totalPrice;
+//         /*实际付款*/
+//         var orderTotalPrice = $("#take_pay_total_price").html();
+//         /*配送方式 1 外卖配送*/
+//         var deliveryType = 1;
+//         /*订单留言*/
+//         var takeOrderMsg = $("#take_order_msg_input").val();
+//         /*支付方式*/
+//         var payment = $("input[name='take_payment']:checked").val();
+//
+//         var orderDTO = {
+//             memberId:memberId,
+//             productAmountTotal:productAmountTotal,
+//             productTotalPrice:productTotalPrice,
+//             orderTotalPrice:orderTotalPrice,
+//             deliveryType:deliveryType,
+//             paymentType:payment,
+//             orderMessage:takeOrderMsg,
+//             orderDetail:orderDetailDTOArray,
+//             orderAddress:orderAddressDTO
+//         };
+//         alert(JSON.stringify(orderDTO));
+//         reqToGenerateOrder(orderDTO);
+//
+//     })
+// }
 
+function reqToGenerateOrder(orderData) {
+    $.ajax({
+        url:'/order/add',
+        type:'POST',
+        data:JSON.stringify(orderData),
+        dataType:'JSON',
+        contentType: 'application/json',
+        success: function (res) {
+            if (res[successKey] == true && res[codeKey] === 200) {
+                console.log(res);
+                window.location.href = "trade.html?orderId=" + res[dataKey].id;
+            }else {
+                alertMsg(res[msgKey]);
+            }
+        },
+        error: function (res) {
 
+        }
     })
 }
 
 
 function pickOrderVerify() {
-
 }
 
 function takeOrderVerify() {
-
 }
 
 function saveAddr() {
@@ -431,7 +497,7 @@ function saveAddr() {
             consigneeAddress: orderAddr,
             defaultAddress: 1
         };
-        alert(JSON.stringify(memberFullAddressJsonData));
+
         $.ajax({
             url: '/memberAddress/update',
             type: 'POST',

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -64,7 +64,12 @@
 
     </div>
 
-<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"
+        src="../../static/assets/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
+        src="../../static/assets/layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/common.js}"
+        src="../../static/assets/js/common.js"></script>
 <script>
     layui.use(['form'],function () {
             var form = layui.form;

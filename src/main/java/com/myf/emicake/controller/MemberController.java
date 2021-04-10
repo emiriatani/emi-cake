@@ -11,6 +11,7 @@ import com.myf.emicake.dto.RegisterDTO;
 import com.myf.emicake.dto.SmsLoginDTO;
 import com.myf.emicake.exception.GlobalException;
 import com.myf.emicake.service.MemberService;
+import com.myf.emicake.service.SmsService;
 import com.myf.emicake.utils.MyBeanUtils;
 import com.myf.emicake.utils.RedisUtils;
 import com.myf.emicake.utils.ResultUtils;
@@ -49,6 +50,8 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private SmsService smsService;
 
 
     /**
@@ -77,7 +80,10 @@ public class MemberController {
                     /*封装用户信息*/
                     Member member = MyBeanUtils.param2bean(phone, request);
                     /*保存用户*/
-                    memberService.insertSelective(member);
+                    int i = memberService.insertSelective(member);
+                    if (i>0){
+                        smsService.deleteSmsCode(member.getId().toString());
+                    }
                     log.info("该会员id为:" + member.getId().toString());
                     /*查询出该用户的完整信息*/
                     member = memberService.selectByPrimaryKey(member.getId());
@@ -145,6 +151,7 @@ public class MemberController {
         UserPhoneToken userPhoneToken = new UserPhoneToken(phone, reqSmsCode);
         if (ShiroUtils.isAuthenticatedLoginUser(subject, userPhoneToken)) {
             Member member = (Member) subject.getPrincipal();
+            smsService.deleteSmsCode(member.getId().toString());
             memberService.updateByPrimaryKeySelective(MyBeanUtils.param2bean(member, request));
             BeanUtils.copyProperties(memberDTO, member);
             httpSession.setAttribute(Constants.LOGIN_MEMBER_KEY, memberDTO);
@@ -183,5 +190,28 @@ public class MemberController {
         return ResultUtils.error(StatusCode.LOGIN_FAILED.getCode(), StatusCode.LOGIN_FAILED.getMsg());
     }
 
+
+    @ResponseBody
+    @GetMapping("/logout")
+    public Result<Object> logout(){
+
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()){
+            subject.logout();
+        }
+
+        return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+    }
+
+    @GetMapping("/toCentre")
+    public String toMemberCentre(){
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()){
+           return "member/memberCentre";
+        }else {
+            return "member/login";
+        }
+
+    }
 
 }

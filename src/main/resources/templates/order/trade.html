@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common :: common_head(~{::title},~{::link})">
+
+    <title>创建订单-emicake艾米蛋糕</title>
+    <link rel="stylesheet" th:href="@{/static/assets/css/cart.css}" href="../../static/assets/css/cart.css">
+</head>
+
+
+<body>
+<div class="main_content">
+    <!--main header-->
+    <div th:replace="common/common :: menu_bar"></div>
+    <!--main content-->
+    <div class="main_content_area">
+        <div class="cart_contentBox">
+            <div class="cart_title">
+                <h1 style="padding-bottom: 35px;" id="tips"></h1>
+            </div>
+            <p style="margin-bottom: 20px;" class="main_line"></p>
+            <!--每个商品项-->
+            <div id="cart_item_area">
+                <div>
+                    <span style="font-size: 22px;" >订单金额：</span>
+                    <span style="font-size: 30px;color: #1E9FFF" id="orderPrice"></span>
+                </div>
+            </div>
+            <!--结算块-->
+            <div class="summation_box">
+                <div class="order_btn clearfix">
+                    <form action="/pay/toPay" method="post">
+                        <input type="hidden" name="orderId">
+                        <button id="settlementBtn" type="submit">立即支付</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/static/assets/js/jquery-3.4.1.min.js}"
+        src="../../static/assets/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/layui/layui.js}"
+        src="../../static/assets/layui/layui.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/common.js}"
+        src="../../static/assets/js/common.js"></script>
+<script type="text/javascript" th:src="@{/static/assets/js/trade.js}"
+        src="../../static/assets/js/trade.js"></script>
+<script>
+
+</script>
+</body>
+</html>

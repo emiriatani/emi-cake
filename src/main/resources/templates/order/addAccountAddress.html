@@ -110,21 +110,14 @@
     function saveDefaultAddr() {
         $("#saveAddrBtn").click(function () {
 
-
             var memberId = $("#memberIdBox").val();
             var orderer_name = $("#orderer_name").val();
             var orderer_phone = $("#orderer_phone").val();
-
             var receiver = $("#receiver").val();
             var receiverPhone = $("#receiverPhone").val();
-
             var province = $("#province > option:selected").html();
-            alert(province);
             var city = $("#city > option:selected").html();
-            alert(city);
             var region = $("#region > option:selected").html();
-            alert(region);
-
             var addr = $("#addr").val();
 
             var JsonData = {
@@ -140,9 +133,7 @@
                 defaultAddress: 1,
                 state: 1
             };
-
             alert(JSON.stringify(JsonData));
-
             $.ajax({
                 url: '/memberAddress/add',
                 type: 'POST',

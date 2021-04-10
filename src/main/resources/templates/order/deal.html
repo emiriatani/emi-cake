@@ -17,11 +17,11 @@
                 <h1>配送方式</h1>
                 <ul class="layui-tab-title">
                     <li class="layui-this">门店自提</li>
-                    <li >外卖配送</li>
+                    <li>外卖配送</li>
                 </ul>
                 <div class="layui-tab-content" style="height: 100px;">
                     <!--门店自提-->
-                    <form class="layui-tab-item layui-show layui-form">
+                    <form id="pickupOrderForm" class="layui-tab-item layui-show layui-form">
                         <h1>门店自提点</h1>
                         <div class="store_add_box">
                         </div>
@@ -31,14 +31,16 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">提货人</label>
                                     <div class="layui-input-inline">
-                                        <input id="pick_person_name" type="text" name="name" autocomplete="off" placeholder=""
+                                        <input id="pick_person_name" type="text" name="name" autocomplete="off"
+                                               placeholder=""
                                                class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">手机号</label>
                                     <div class="layui-input-inline">
-                                        <input id="pick_person_phone" type="tel" name="phone" lay-verify="required|phone"
+                                        <input id="pick_person_phone" type="tel" name="phone"
+                                               lay-verify="required|phone"
                                                autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
@@ -49,11 +51,11 @@
                             <div class="layui-form-item">
                                 <div class="layui-inline">
                                     <div class="layui-input-inline">
-                                        <input  type="text" name="date" id="pick_date" lay-verify="date"
+                                        <input type="text" name="date" id="pick_date" lay-verify="date"
                                                placeholder="请选择日期" autocomplete="off" class="layui-input">
                                     </div>
                                     <div class="layui-input-inline">
-                                        <input id="pick_time" type="text" class="layui-input"  placeholder="请选择时间段">
+                                        <input id="pick_time" type="text" class="layui-input" placeholder="请选择时间段">
                                     </div>
                                 </div>
                             </div>
@@ -101,40 +103,41 @@
                                 <span id="pick_pay_total_price"></span>
                             </div>
                             <div class="order_btn clearfix">
-                                <form action="">
-                                    <button id="pick_order_submit_btn" type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">
-                                        确认并提交订单
-                                    </button>
-                                </form>
+                                <button id="pick_order_submit_btn" type="submit" class="layui-btn" lay-submit=""
+                                        lay-filter="OrderSubmit">
+                                    确认并提交订单
+                                </button>
                             </div>
                         </div>
-
                     </form>
                     <!--外卖配送-->
                     <form class="layui-tab-item layui-form">
                         <h1>填写收货信息</h1>
                         <div id="noDefault_delivery_info">
-                            <div id="choose_orderer_box" class="layui-form-item">
-                                <button type="submit"
-                                        class="layui-btn layui-btn-primary"
-                                        id="choose_orderer"
-                                        lay-submit=""
-                                        lay-filter="demo1">选择订货人</button>
-                            </div>
-                            <div id="choose_receiver_box" class="layui-form-item">
-                                <button type="submit"
-                                        class="layui-btn layui-btn-primary"
-                                        id="choose_receiver"
-                                        lay-submit=""
-                                        lay-filter="demo1">选择收货人</button>
-                            </div>
+<!--                            <div id="choose_orderer_box" class="layui-form-item">-->
+<!--                                <button type="submit"-->
+<!--                                        class="layui-btn layui-btn-primary"-->
+<!--                                        id="choose_orderer"-->
+<!--                                        lay-submit=""-->
+<!--                                        lay-filter="demo1">选择订货人-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div id="choose_receiver_box" class="layui-form-item">-->
+<!--                                <button type="submit"-->
+<!--                                        class="layui-btn layui-btn-primary"-->
+<!--                                        id="choose_receiver"-->
+<!--                                        lay-submit=""-->
+<!--                                        lay-filter="demo1">选择收货人-->
+<!--                                </button>-->
+<!--                            </div>-->
                         </div>
                         <div id="default_delivery_info">
                             <div id="addrId" hidden></div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">订货人</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="name" autocomplete="off" lay-verify="required" placeholder=""
+                                    <input type="text" name="name" autocomplete="off" lay-verify="required"
+                                           placeholder=""
                                            class="layui-input" id="orderer_name">
                                 </div>
                             </div>
@@ -165,7 +168,7 @@
                                 <label class="layui-form-label">所在地区</label>
                                 <div class="layui-input-inline">
                                     <select id="province" name="province">
-                                        <option value="zj" selected >浙江</option>
+                                        <option value="zj" selected>浙江</option>
                                     </select>
                                 </div>
                                 <div class="layui-input-inline">
@@ -191,20 +194,23 @@
                                            placeholder="" autocomplete="off" class="layui-input" id="order_addr">
                                 </div>
                             </div>
-                            <div class="layui-form-item" >
+                            <div class="layui-form-item">
                                 <button type="button"
                                         class="layui-btn layui-btn-primary"
                                         id="order_saveDefaultAddr"
                                         lay-submit=""
-                                        lay-filter="demo1">修改默认地址</button>
+                                        lay-filter="demo1">修改默认地址
+                                </button>
                                 <button type="button"
                                         class="layui-btn layui-btn-primary"
                                         id="order_addDefaultAddr"
-                                        >添加默认地址</button>
+                                >添加默认地址
+                                </button>
                                 <button type="button"
                                         class="layui-btn layui-btn-primary"
                                         id="select_addr"
-                                        >选择其他地址</button>
+                                >选择其他地址
+                                </button>
                             </div>
 
                         </div>
@@ -226,8 +232,8 @@
                             <h1>支付方式</h1>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
-                                    <input type="radio" name="payment" value="1" title="支付宝支付" checked="">
-                                    <input type="radio" name="payment" value="2" title="微信支付">
+                                    <input type="radio" name="take_payment" value="0" title="支付宝支付" checked="">
+                                    <input type="radio" name="take_payment" value="1" title="微信支付">
                                 </div>
                             </div>
                         </div>
@@ -251,11 +257,12 @@
                                 <span id="take_pay_total_price"></span>
                             </div>
                             <div class="order_btn clearfix">
-                                <form action="">
-                                    <button id="take_order_submit_btn" type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">
+
+                                    <button id="take_order_submit_btn" type="submit" class="layui-btn" lay-submit=""
+                                            lay-filter="OrderSubmit">
                                         确认并提交订单
                                     </button>
-                                </form>
+
                             </div>
                         </div>
 

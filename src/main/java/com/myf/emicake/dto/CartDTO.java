@@ -24,7 +24,6 @@ public class CartDTO implements Serializable {
 
     private static final long serialVersionUID = -8546019102121921418L;
 
-
     /*会员id*/
     @NotNull(message = "会员id不能为空")
     private Integer memberId;

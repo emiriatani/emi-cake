@@ -34,17 +34,17 @@
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
-    from order
+    from emi_cake.order
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
-    delete from order
+    delete from emi_cake.order
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.myf.emicake.domain.Order" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into order (order_id, member_id, product_amount_total, 
+    insert into emi_cake.order (order_id, member_id, product_amount_total,
       product_total_price, order_total_price, order_status, 
       delivery_type, payment_type, payment_time, 
       delivery_time, order_message, order_settlement_status, 
@@ -171,7 +171,7 @@
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.myf.emicake.domain.Order">
     <!--@mbg.generated-->
-    update order
+    update emi_cake.order
     <set>
       <if test="orderId != null">
         order_id = #{orderId,jdbcType=VARCHAR},
@@ -229,7 +229,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.myf.emicake.domain.Order">
     <!--@mbg.generated-->
-    update order
+    update emi_cake.order
     set order_id = #{orderId,jdbcType=VARCHAR},
       member_id = #{memberId,jdbcType=INTEGER},
       product_amount_total = #{productAmountTotal,jdbcType=INTEGER},
@@ -249,7 +249,7 @@
       delete_time = #{deleteTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByOrderId" resultMap="BaseResultMap">
+  <select id="selectByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"></include>
     from emi_cake.order

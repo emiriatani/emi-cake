@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -70,6 +71,17 @@ public class SmsController {
             log.error("异常信息", new Exception("短信验证码发送失败,请重新获取"));
             throw new GlobalException(StatusCode.SMS_SEND_ERROR.getCode(), StatusCode.SMS_ALREADY_SEND.getMsg());
         }
+    }
+
+    @PostMapping("/sms/remove")
+    public Result deleteSmsCode(@RequestParam("id") String id){
+
+        boolean b = smsService.deleteSmsCode(id);
+        if (b) {
+            return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+        }
+        return ResultUtils.error(StatusCode.UNKNOWN_ERROR.getCode(), StatusCode.UNKNOWN_ERROR.getMsg());
+
     }
 }
 

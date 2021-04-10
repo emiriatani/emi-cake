@@ -42,7 +42,7 @@ public class Order implements Serializable {
     private BigDecimal orderTotalPrice;
 
     /**
-    * 订单状态 0未付款 1已付款
+    * 订单状态 0未付款 1已付款 2已取消
     */
     private Byte orderStatus;
 
@@ -72,7 +72,7 @@ public class Order implements Serializable {
     private String orderMessage;
 
     /**
-    * 订单结算状态 0未结算 1已结算
+    * 订单结算状态 0未结算 1已结算 2已取消
     */
     private Byte orderSettlementStatus;
 

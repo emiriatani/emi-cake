@@ -2,6 +2,8 @@ package com.myf.emicake.controller;
 
 import com.myf.emicake.common.Result;
 import com.myf.emicake.common.StatusCode;
+import com.myf.emicake.component.Producter;
+import com.myf.emicake.component.properties.RabbitMqMsgProperties;
 import com.myf.emicake.domain.Order;
 import com.myf.emicake.domain.ProductSku;
 import com.myf.emicake.dto.CartDTO;
@@ -16,6 +18,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.InvocationTargetException;
@@ -40,13 +43,17 @@ public class OrderController {
     private ProductSkuService productSkuService;
     @Autowired
     private AlipayService alipayService;
+    @Autowired
+    private Producter producter;
+    @Autowired
+    private RabbitMqMsgProperties rabbitMqMsgProperties;
 
     @RequestMapping("/toDeal")
-    public Result toDeal(@RequestBody @Validated CartDTO cartDTO){
+    public Result toDeal(@RequestBody @Validated CartDTO cartDTO) {
 
-          if (!ObjectUtils.isEmpty(cartDTO)){
-              return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
-          }
+        if (!ObjectUtils.isEmpty(cartDTO)) {
+            return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg());
+        }
 
         return ResultUtils.error(StatusCode.UNKNOWN_ERROR.getCode(), StatusCode.UNKNOWN_ERROR.getMsg());
 
@@ -57,59 +64,58 @@ public class OrderController {
 
         //1.检验商品状态(库存,有效,上下架)
         Map<Integer, Integer> map = orderService.isValid(orderDTO);
-        if (map.containsKey(0)){
+
+        if (map.isEmpty()) {
+            /*有库存,生成订单*/
             Order order = orderService.generateOrder(orderDTO);
             int i = orderService.insertSelective(order);
-            if (i>0){
-
-                /*
-                异步通知Mq来锁定库存
-                成功锁定后调用支付接口发起支付
-                */
-
-
-                /*
-                支付接口调用成功后，
-                把订单发送给MQ
-
-                1.若30分钟未支付，进入死信队列处理，自动取消该订单(修改订单结算状态为已取消)
-
-                ps:所有未成功支付的结果后需要回滚库存
-                */
-
-
-
-                /*
-                支付成功后，
-                异步通知MQ 更新库存，保存订单详情信息、自提订单信息/外卖配送订单信息
-
-                 */
+            if (i > 0) {
                 log.info("订单保存成功...");
-                log.info("开始调用支付接口...");
+                /*
+                一、异步通知Mq来锁定库存
+                */
                 Order fullOrder = orderService.selectByOrderId(order.getOrderId());
-
-
-
-            }else {
-                /*订单保存失败*/
+                System.out.println("创建完成的订单信息：" + fullOrder);
+                /*通过MQ发送消息，
+                设置订单的超时时间，
+                若超时会自动取消订单，并回滚锁定的库存*/
+                //producter.sendMessage(rabbitMqMsgProperties.getTopicExchangeName(), rabbitMqMsgProperties.getOrderRoutekey(), fullOrder);
+                /*返回创建成功的订单给前端*/
+                return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg(), fullOrder);
+            } else {
+                /*订单创建失败*/
+                return ResultUtils.error(StatusCode.ORDER_CREATE_ERROR.getCode(), StatusCode.ORDER_CREATE_ERROR.getMsg());
             }
-        }else {
-            if (map.containsKey(1)){
+        } else {
+            if (map.containsKey(1)) {
                 ProductSku productSku = productSkuService.selectByPrimaryKey(map.get(1));
             }
-            if (map.containsKey(2)){
+            if (map.containsKey(2)) {
                 ProductSku productSku = productSkuService.selectByPrimaryKey(map.get(2));
             }
-            if (map.containsKey(3)){
+            if (map.containsKey(3)) {
                 ProductSku productSku = productSkuService.selectByPrimaryKey(map.get(3));
             }
             if (map.containsKey(4)) {
                 ProductSku productSku = productSkuService.selectByPrimaryKey(map.get(4));
             }
-            //给前端返回生成订单失败的信息.
+            //给前端返回订单中商品库存不足或无效的信息.
+            return ResultUtils.error(StatusCode.NO_STOCK.getCode(), StatusCode.NO_STOCK.getMsg());
         }
 
-        return null;
+    }
+
+    @RequestMapping("/get")
+    public Result getOrder(@RequestParam("orderId")Integer orderId){
+
+        Order order = orderService.selectByPrimaryKey(orderId);
+
+        if (!ObjectUtils.isEmpty(order)){
+            return ResultUtils.success(StatusCode.REQUEST_SUCCESS.getCode(), StatusCode.REQUEST_SUCCESS.getMsg(), order);
+        }
+
+        return ResultUtils.error(StatusCode.UNKNOWN_ERROR.getCode(), StatusCode.UNKNOWN_ERROR.getMsg());
+
     }
 
 

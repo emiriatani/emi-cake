@@ -51,7 +51,7 @@ public class RabbitMqConfig {
     public Queue daoQueue(){
         return QueueBuilder.durable(rabbitMqMsgProperties.getDaoQueueName())
                 .withArgument("x-dead-letter-exchange",rabbitMqMsgProperties.getDeadExchangeName())//绑定死信交换机
-                .withArgument("x-dead-letter-routing-key",rabbitMqMsgProperties.getDaoRoutekey())//绑定routingKey
+                .withArgument("x-dead-letter-routing-key",rabbitMqMsgProperties.getDaoDeadRoutekey())//绑定routingKey
                 .withArgument("x-message-ttl",10000)//给这个队列添加过期时间 测试就使用10秒过期时间
                 .build();
     }
@@ -61,7 +61,7 @@ public class RabbitMqConfig {
     public Queue smsQueue(){
         return QueueBuilder.durable(rabbitMqMsgProperties.getSmsQueueName())
                 .withArgument("x-dead-letter-exchange",rabbitMqMsgProperties.getDeadExchangeName())//绑定死信交换机
-                .withArgument("x-dead-letter-routing-key",rabbitMqMsgProperties.getSmsRoutekey())//绑定routingKey
+                .withArgument("x-dead-letter-routing-key",rabbitMqMsgProperties.getSmsDeadRoutekey())//绑定routingKey
                 .withArgument("x-message-ttl",10000)//给这个队列添加过期时间 测试就使用10秒过期时间
                 .build();
     }
@@ -71,8 +71,8 @@ public class RabbitMqConfig {
     public Queue orderQueue(){
         return QueueBuilder.durable(rabbitMqMsgProperties.getOrderQueueName())
                 .withArgument("x-dead-letter-exchange",rabbitMqMsgProperties.getDeadExchangeName())//绑定死信交换机
-                .withArgument("x-dead-letter-routing-key",rabbitMqMsgProperties.getOrderRoutekey())//绑定routingKey
-                .withArgument("x-message-ttl",10000)//给这个队列添加过期时间 测试就使用10秒过期时间
+                .withArgument("x-dead-letter-routing-key",rabbitMqMsgProperties.getOrderDeadRoutekey())//绑定routingKey
+                .withArgument("x-message-ttl",60000)//给这个队列添加过期时间 测试就使用60秒过期时间
                 .build();
     }
 
@@ -109,15 +109,15 @@ public class RabbitMqConfig {
     /*将死信交换机与死信队列绑定*/
     @Bean
     public Binding daoDeadBinding(@Qualifier("deadExchange") Exchange exchange, @Qualifier("daoDeadQueue") Queue queue){
-        return BindingBuilder.bind(queue).to(exchange).with(rabbitMqMsgProperties.getDaoRoutekey()).noargs();
+        return BindingBuilder.bind(queue).to(exchange).with(rabbitMqMsgProperties.getDaoDeadRoutekey()).noargs();
     }
     @Bean
     public Binding smsDeadBinding(@Qualifier("deadExchange") Exchange exchange, @Qualifier("smsDeadQueue") Queue queue){
-        return BindingBuilder.bind(queue).to(exchange).with(rabbitMqMsgProperties.getSmsRoutekey()).noargs();
+        return BindingBuilder.bind(queue).to(exchange).with(rabbitMqMsgProperties.getSmsDeadRoutekey()).noargs();
     }
     @Bean
     public Binding orderDeadBinding(@Qualifier("deadExchange") Exchange exchange, @Qualifier("orderDeadQueue") Queue queue){
-        return BindingBuilder.bind(queue).to(exchange).with(rabbitMqMsgProperties.getOrderRoutekey()).noargs();
+        return BindingBuilder.bind(queue).to(exchange).with(rabbitMqMsgProperties.getOrderDeadRoutekey()).noargs();
     }
 
     @Bean
